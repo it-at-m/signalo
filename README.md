@@ -1,54 +1,114 @@
-## Customize this file after creating the new REPO and remove this lines.
-What to adjust:  
-* Add the your project or repo name direct under the logo.
-* Add a short and long desciption.
-* Add links for your final repo to report a bug or request a feature.
-* Add list of used technologies.
-* If you have, add a roadmap or remove this section.
-* Fill up the section for set up and documentation.
- * Start in this file only with documentation and link to the docs folder.
-* Add more project shields. Use [shields.io](https://shields.io/) with style `for-the-badge`.
-
-## ------- end to remove -------
-<!-- add Project Logo, if existing -->
-
-# repo or project name
+# Signalo
 
 [![Made with love by it@M][made-with-love-shield]][itm-opensource]
-<!-- feel free to add more shields, style 'for-the-badge' -> see https://shields.io/badges -->
 
-*Add a description from your project here.*
-
+**Signalo** is a native Android app which enables users to monitor live network stats of their
+device. The main purpose is to view the Signal Strength (dBm) for both Cellular and Wifi in a gauge
+graph.
 
 ### Built With
+Native Android development with Kotlin and XML
 
-The documentation project is built with technologies we use in our projects:
+**Used Libraries**
 
-* *write here the list of used technologies*
-
-## Roadmap
-
-*if you have a ROADMAP for your project add this here*
-
-
-See the [open issues](#) for a full list of proposed features (and known issues).
-
-
+* [better-gauge-android](https://github.com/Magnus987/better-gauge-android/tree/Signalo)
+* [Material Components](https://github.com/material-components)
+* [timber](https://github.com/JakeWharton/timber)
 ## Set up
-*how can i start and fly this project*
+If you want to modify or build this app just clone this repo:
+```bash
+git clone https://github.com/it-at-m/signalo.git
+```
+And use your favorite editor and import this library into your folder structure:
+
+<a href="https://github.com/Magnus987/better-gauge-android/tree/Signalo">https://github.com/Magnus987/better-gauge-android/tree/Signalo</a>
 
 ## Documentation
-*what insights do you have to tell*
+The main purpose is to view the Signal Strength (dBm) for both Cellular and Wifi in a gauge
+graph. But also some extra stats are displayed:
 
-```mermaid
-graph TD;
-    A-->B;
-    A-->C;
-    B-->D;
-    C-->D;
-```
+**Cellular**
 
-use [diagrams](https://docs.github.com/en/get-started/writing-on-github/working-with-advanced-formatting/creating-diagrams).
+* Internet Provider
+* Network Type
+* Frequency Band
+* Cell ID (ECI)
+
+**Wifi**
+
+* SSID
+* Frequency Band
+* Encryption
+* Linkspeed
+
+**Supported Features**
+
+* Manual Wifi Refresh
+    * A swipe down on the Wifi page triggers a manual Wifi refresh which directly asks the Android
+      system to rescan to receive the newest and most precise Signal Strength values.
+* Dual-SIM Support
+    * When the app detects 2 usable SIM cards, it switches the view to not only display a button for
+      Cellular but for SIM1 and SIM2, so the user can choose which SIM to use and compare.
+* Single-SIM Detection
+    * When the app finds no usable SIM cards, it automatically switches the view to Wifi and
+      disables the Cellular page.
+
+**Screenshots**
+<p>
+  <img src="images/Screenshot_Welcomepage.jpg" width="250" />
+  <img src="images/Screenshot_Mainpage.jpg" width="250" />
+</p>
+
+**Technical details**
+
+* Signal Strength (dBm)
+    * **dBm** (decibel-milliwatts) measures the absolute power level of a signal relative to 1
+      milliwatt (mW). The closer the value is to 0, the stronger the signal. Every 3 dBm the signal
+      strength is doubled or halved.
+    * **Cellular** dBm value is requested via a Callback, which means the value should always be the
+      most accurate value your device offers.
+    * **Wifi** dBm value is manually requested each second. But due to energy saving reasons the
+      Android system is lazy when it comes to offering an accurate value over time. That's why a
+      manual Wifi refresh is possible as mentioned above.
+    * **Gauge (visualization)** is an open-source library which I forked to optimize things for
+      Signalo. It makes it easier to understand if the signal is getting better or worse. It also
+      has 3 different color ranges (green, yellow, red) which can be adjusted to the desired
+      threshold.
+* **Cellular**
+    * All cellular data is requested via the TelephonyManager registered on the selected SIM.
+        * Internet Provider
+            * Name and logo of the internet provider from your connected cell tower. So if you have a
+              SIM from Telekom but it connects you to an A1 cell tower, the app shows A1.
+        * Network Type
+            * Name and logo of the used cellular technology. If it differs from your system's display,
+              it's probably because of marketing ;) Android shows that you are connected via 5G but in
+              reality it's 5G NSA (Non Standalone) which means your device uses 5G for data but still
+              relies on a 4G/LTE anchor for connection management – true standalone 5G (SA) operates
+              entirely on 5G infrastructure.
+        * Frequency Band
+            * Frequency bands are displayed with their standard 3GPP prefix: B for LTE bands and n for
+              5G NR bands.
+            * Access fine location permission is needed to display this value.
+            * Read Phone state permission is needed to display this value.
+        * Cell ID (ECI)
+            * The ECI (E-UTRAN Cell Identifier) uniquely identifies the cell you're connected to. It's
+              unique within your country and your provider.
+            * Access fine location permission is needed to display this value.
+            * Read Phone state permission is needed to display this value.
+
+
+* **Wifi**
+    * All Wifi data is received from the WifiInfo object from the ConnectivityManager.
+        * SSID
+            * The current Wifi name (SSID) is displayed as a string.
+            * Access fine location permission is needed to display this value.
+        * Frequency Band
+            * The used frequency band is displayed (5 GHz or 2.4 GHz).
+        * Encryption
+            * The encryption standard of the connected Wifi is displayed (e.g. WPA3).
+        * Linkspeed
+            * The link speed of the connected Wifi is displayed in Megabits per second.
+
 
 ## Contributing
 
