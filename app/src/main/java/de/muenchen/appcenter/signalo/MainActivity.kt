@@ -38,7 +38,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         this.binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(this.binding.root)
-        ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         initNavDrawer()
         initRefreshInfo()
         handleBackPressed()

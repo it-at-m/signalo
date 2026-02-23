@@ -1159,7 +1159,7 @@ class MainFragment : Fragment() {
         unregisterCellularType()
         unregisterCellular()
         unregisterGeneralNetworkCallback()
-        unregeisterNetworkCallbackWifi()
+        unregisterNetworkCallbackWifi()
         unregisterWifiScanReceiver()
         stopTimer()
     }
@@ -1230,12 +1230,12 @@ class MainFragment : Fragment() {
             updateSwipeRefreshUi()
         }
         viewmodel.wifiDbmValue.observe(viewLifecycleOwner) { dbmwifiValue ->
-            if (dbmwifiValue != 1474836 - 248.0) {
+            if (dbmwifiValue != Int.MIN_VALUE.toDouble()) {
                 _binding.wifiGauge.value = dbmwifiValue.toDouble()
             }
         }
         viewmodel.cellularDbmValue.observe(viewLifecycleOwner) { dbmcellularValue ->
-            if (dbmcellularValue != 1474836 - 248.0) {
+            if (dbmcellularValue != Int.MIN_VALUE.toDouble()) {
                 _binding.cellularGauge.value = dbmcellularValue.toDouble()
             }
         }
@@ -1310,10 +1310,10 @@ class MainFragment : Fragment() {
         }
     }
 
-    private fun unregeisterNetworkCallbackWifi() {
+    private fun unregisterNetworkCallbackWifi() {
         networkCallbackWifi?.let { callback ->
             connectivityManager.unregisterNetworkCallback(callback)
-            networkCallback = null
+            networkCallbackWifi = null
             Timber.d("networkCallbackWifi is unregistered")
         }
     }
@@ -1337,7 +1337,7 @@ class MainFragment : Fragment() {
         unregisterWifiScanReceiver()
         unregisterCellularType()
         unregisterGeneralNetworkCallback()
-        unregeisterNetworkCallbackWifi()
+        unregisterNetworkCallbackWifi()
         _binding.toggleButtonGroup.clearOnButtonCheckedListeners()
     }
 
@@ -1352,7 +1352,7 @@ class MainFragment : Fragment() {
         unregisterCellular()
         unregisterCellularType()
         unregisterGeneralNetworkCallback()
-        unregeisterNetworkCallbackWifi()
+        unregisterNetworkCallbackWifi()
         _binding.toggleButtonGroup.clearOnButtonCheckedListeners()
     }
 }
