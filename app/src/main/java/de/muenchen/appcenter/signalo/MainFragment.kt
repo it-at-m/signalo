@@ -494,7 +494,7 @@ class MainFragment : Fragment() {
             Timber.d("Usable simcards detected: 2")
             viewmodel.simState.postValue("dual")
             fetchDualSimInfos()
-            setDualSimUi(isDual = true)
+            setDualSimUi()
         } else if (simState0 == SIM_STATE_READY && simState1 != SIM_STATE_READY) {
             Timber.d("Usable simcards detected: 1")
             viewmodel.simState.postValue("single")
@@ -535,7 +535,7 @@ class MainFragment : Fragment() {
      * make secondSim button visible
      * reduce title textsize
      */
-    private fun setDualSimUi(isDual: Boolean) {
+    private fun setDualSimUi() {
         if (hasSinglePermission(READ_PHONE_STATE)) {
             Timber.d("setDualSimUi is Called")
             _binding.btnDefaultSim.text = getString(R.string.sim_slot1_displayname)
