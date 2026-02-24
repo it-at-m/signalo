@@ -1,0 +1,78 @@
+<resources>
+    <string name="app_name">Signalo</string>
+
+    <string name="version">v%s</string>
+    <string name="buildNumber">(%1d)</string>
+    <string name="action_settings">Settings</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">Signalo</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <!-- Cellular Values-->
+    <string name="card_value1">%s</string>
+    <string name="card_value3">%s</string>
+    <string name="card_value2">%s</string>
+    <string name="card_value4">%s</string>
+
+    <!--Cellular Descriptions-->
+    <string name="card_description1">Internet Provider</string>
+    <string name="card_description3">Frequenzband</string>
+    <string name="card_description2">Funkstandard</string>
+    <string name="card_description4">Cell ID (ECI)</string>
+
+    <!--Wifi Values-->
+    <string name="wifi_value_SSID">%s</string>
+    <string name="wifi_value_freq">%s</string>
+    <string name="wifi_value_encryptionType">%s</string>
+    <string name="wifi_value_linkspeed">%s</string>
+
+    <!--Wifi Descriptions-->
+    <string name="wifi_desc_SSID">SSID</string>
+    <string name="wifi_desc_freq">Frequenzband</string>
+    <string name="wifi_desc_Channel">Verschlüsselung</string>
+    <string name="wifi_desc_linkspeed">Linkspeed</string>
+
+    <!--    Welcome Dialog -->
+    <string name="welcome_dialog_heading">Willkommen bei Signalo!</string>
+    <string name="erforderlich">Erforderlich</string>
+    <string name="Datenschutz_Hinweis">Alle in dieser App erfassten Daten werden niemals gespeichert, weitergegeben oder verkauft. Die Daten werden ausschließlich zur Anzeige verwendet.</string>
+
+    <string name="permission_name2">Genauer Standort </string>
+    <string name="permission_desc2">Ist erforderlich um die CellID sowie das Frequenzband anzuzeigen. Die Berechtigung dient nur dem Zugriff auf Netzwerk-Informationen, dein echter Standort wird nicht erfasst.</string>
+
+    <string name="permission_name1">Telefon Status verwalten</string>
+    <string name="permission_desc1">Ist erforderlich um die SIM-Karten-Erkennung (Dual-SIM) zu ermöglichen. Es wird nicht auf Telefonate zugegriffen.</string>
+
+    <string name="info_btn_desc">Refresh Info Button</string>
+
+    <string name="datenschutz1_desc"><b>Datensicherheit / Ort der Verarbeitung</b></string>
+    <string name="datenschutz1_text">Die Signalo App ist eine Eigenentwicklung des App Centers (Team: IBS144) bei it@M. Die Verarbeitung und Speicherung der Daten erfolgt ausschließlich lokal auf deinem Gerät. \nEs werden niemals Daten weitergegeben, verkauft oder gesammelt. \nBei Fragen zu Verarbeitung der Daten kannst Du Dich gerne an uns wenden. :)</string>
+    <string name="datenschutz2_desc">Kontaktinformationen</string>
+    <string name="datenschutz2_text">Bei Fragen zu Verarbeitung der Daten kannst Du Dich gerne an das Gruppenpostfach apps@muenchen.de wenden. :)</string>
+    <string name="impressum1_head"><b>Impressum:</b></string>
+    <string name="impressum1_desc">it@M IBS144 AppCenter</string>
+    <string name="impressum1_text"><b>Anschrift:</b> \nAgnes-Pockels-Bogen 33 \n80992 München</string>
+    <string name="impressum2_text"><b>E-Mail:</b> \napps@muenchen.de</string>
+    <string name="impressum3_text"><b>WiLMA:</b> \nhttps://wilma.muenchen.de/workspaces/mobile-services-support</string>
+    <string name="title_infodialog_refresh">Aktualisierung der Daten</string>
+    <string name="description_infodialog_refresh"><![CDATA[Die Mobilfunk-Signalstärke (dbm-Wert) wird automatisch aktualisiert. Bei Wifi kann dies allerdings unregelmäßig sein. <br><br> Für eine manuelle Aktualisierung wische von oben nach unten. <b>Das ist nur alle 30 Sekunden möglich</b>.]]></string>
+    <string name="message_cellid_missing_permission">(Berechtigung fehlt)</string>
+    <string name="message_network_disconnected">Selected Network is not Connected - OFFLINE</string>
+    <string name="title_cooldown_info_button">Cooldown aktiv</string>
+    <string name="description_cooldown_info_button"><![CDATA[Die WLAN-Signalstärke wurde soeben aktualisiert.<br><br> Um die Systemressourcen zu schonen, ist eine erneute Aktualisierung erst in <b>30 Sekunden</b> möglich. Das Schloss-Symbol verschwindet automatisch, sobald wieder aktualisieren werden kann.]]></string>
+    <string name="sim_slot1_displayname">SIM1</string>
+    <string name="sim_slot2_displayname">SIM2</string>
+    <string name="opensource_Signalo_title"><b>Signalo Source Code</b></string>
+    <string name="opensource_signalo_text1">Du kannst den Sourcecode von Signalo \njederzeit auf GitHub prüfen:</string>
+    <string name="opensource_signalo_link">https://github.com/it-at-m/signalo</string>
+    <string name="opensource_appache_title"><b>Apache License 2.0 Libraries</b></string>
+    <string name="opensource_betterGauge_link">https://github.com/Magnus987/better-gauge-android/tree/Signalo</string>
+    <string name="open_source_label">Open Source</string>
+    <string name="datenschutz_impressum_label"><![CDATA[Datenschutz & Impressum]]></string>
+    <string name="app_icon_desc">App Icon</string>
+    <string name="app_logo_content_desc">App_Logo</string>
+    <string name="optional">Optional</string>
+
+
+</resources>

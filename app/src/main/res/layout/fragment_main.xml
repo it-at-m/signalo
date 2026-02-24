@@ -1,0 +1,412 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/swiperefresh"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:context=".MainFragment">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layout1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="16dp">
+
+                <com.ekn.gruzer.gaugelibrary.ArcGauge
+                    android:id="@+id/cellularGauge"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="15dp"
+                    app:layout_constraintBottom_toTopOf="@+id/materialCardView"
+                    app:layout_constraintDimensionRatio="1:1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintWidth_percent="0.75"
+                    tools:visibility="visible" />
+
+                <com.ekn.gruzer.gaugelibrary.ArcGauge
+                    android:id="@+id/wifiGauge"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="15dp"
+                    android:visibility="gone"
+                    app:layout_constraintWidth_percent="0.75"
+                    app:layout_constraintDimensionRatio="1:1"
+                    app:layout_constraintBottom_toTopOf="@+id/materialCardView"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/materialCardView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginBottom="40dp"
+                    app:cardBackgroundColor="?attr/colorSurfaceContainerHigh"
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="1dp"
+                    app:cardForegroundColor="@android:color/transparent"
+                    app:cardMaxElevation="1dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.493"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:rippleColor="?attr/colorOnSurfaceVariant"
+                    app:shapeAppearance="?attr/shapeAppearanceCornerMedium"
+                    app:strokeWidth="0dp">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <com.google.android.material.button.MaterialButtonToggleGroup
+                            android:id="@+id/toggleButtonGroup"
+                            style="@style/Widget.Material3.MaterialButtonToggleGroup"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="15dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginEnd="15dp"
+                            android:layout_marginBottom="10dp"
+                            app:checkedButton="@id/btnDefaultSim"
+                            app:layout_constraintBottom_toTopOf="@+id/cellularContainer"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:selectionRequired="true"
+                            app:singleSelection="true">
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/btnDefaultSim"
+                                style="?attr/materialButtonOutlinedStyle"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:autoHandwritingEnabled="false"
+                                android:minHeight="60dp"
+                                android:checkable="true"
+                                android:checked="false"
+                                android:fontFamily="@font/aldrich"
+                                android:text="Cellular"
+                                android:textSize="20sp"
+                                android:textStyle="bold" />
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/btnSecondSim"
+                                style="?attr/materialButtonOutlinedStyle"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:minHeight="60dp"
+                                android:autoHandwritingEnabled="false"
+                                android:checkable="true"
+                                android:checked="false"
+                                android:fontFamily="@font/aldrich"
+                                android:text="Sim1"
+                                android:textSize="20sp"
+                                android:textStyle="bold"
+                                android:visibility="gone" />
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/btnWifi"
+                                style="?attr/materialButtonOutlinedStyle"
+                                android:minHeight="60dp"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/aldrich"
+                                android:text="Wifi"
+                                android:textSize="20sp"
+                                android:textStyle="bold" />
+
+                        </com.google.android.material.button.MaterialButtonToggleGroup>
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/cellularContainer"
+                            android:layout_width="291dp"
+                            android:layout_height="272dp"
+                            android:layout_marginTop="8dp"
+                            android:visibility="visible"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.5"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/toggleButtonGroup"
+                            tools:visibility="visible">
+
+                            <ImageView
+                                android:id="@+id/imageViewCellularProvider"
+                                android:layout_width="36dp"
+                                android:layout_height="39dp"
+                                android:layout_marginStart="16dp"
+                                android:layout_marginTop="16dp"
+                                android:src="@drawable/help_center_24px"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                android:id="@+id/textViewCellularProviderValue"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="16dp"
+                                android:text="@string/card_value1"
+                                android:textSize="20sp"
+                                app:layout_constraintStart_toEndOf="@+id/imageViewCellularProvider"
+                                app:layout_constraintTop_toTopOf="@+id/imageViewCellularProvider" />
+
+                            <TextView
+                                android:id="@+id/textViewCellularProviderDesc"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="16dp"
+                                android:text="@string/card_description1"
+                                android:textSize="12sp"
+                                app:layout_constraintStart_toEndOf="@+id/imageViewCellularProvider"
+                                app:layout_constraintTop_toBottomOf="@+id/textViewCellularProviderValue" />
+
+                            <ImageView
+                                android:id="@+id/imageViewNetType"
+                                android:layout_width="36dp"
+                                android:layout_height="39dp"
+                                android:layout_marginStart="16dp"
+                                android:layout_marginTop="24dp"
+                                android:src="@drawable/lte_mobiledata_24px"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/imageViewCellularProvider" />
+
+                            <TextView
+                                android:id="@+id/textViewNetTypeValue"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="16dp"
+                                android:text="@string/card_value2"
+                                android:textSize="20sp"
+                                app:layout_constraintStart_toEndOf="@+id/imageViewNetType"
+                                app:layout_constraintTop_toTopOf="@+id/imageViewNetType" />
+
+                            <TextView
+                                android:id="@+id/textViewNetTypeDesc"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="16dp"
+                                android:text="@string/card_description2"
+                                android:textSize="12sp"
+                                app:layout_constraintStart_toEndOf="@+id/imageViewNetType"
+                                app:layout_constraintTop_toBottomOf="@+id/textViewNetTypeValue" />
+
+                            <ImageView
+                                android:id="@+id/imageViewIp"
+                                android:layout_width="36dp"
+                                android:layout_height="39dp"
+                                android:layout_marginStart="16dp"
+                                android:layout_marginTop="24dp"
+                                android:src="@drawable/waves_24px"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/imageViewNetType" />
+
+                            <TextView
+                                android:id="@+id/textViewCellularIpValue"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="16dp"
+                                android:text="@string/card_value3"
+                                android:textSize="20sp"
+                                app:layout_constraintStart_toEndOf="@+id/imageViewIp"
+                                app:layout_constraintTop_toTopOf="@+id/imageViewIp" />
+
+                            <TextView
+                                android:id="@+id/textViewCellularIpDesc"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="16dp"
+                                android:text="@string/card_description3"
+                                android:textSize="12sp"
+                                app:layout_constraintStart_toEndOf="@+id/imageViewIp"
+                                app:layout_constraintTop_toBottomOf="@+id/textViewCellularIpValue" />
+
+                            <ImageView
+                                android:id="@+id/imageViewCellId"
+                                android:layout_width="36dp"
+                                android:layout_height="39dp"
+                                android:layout_marginStart="16dp"
+                                android:layout_marginTop="24dp"
+                                android:src="@drawable/cell_tower_24px"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/imageViewIp" />
+
+                            <TextView
+                                android:id="@+id/textViewCellIdValue"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="16dp"
+                                android:text="@string/card_value4"
+                                android:textSize="20sp"
+                                app:layout_constraintStart_toEndOf="@+id/imageViewCellId"
+                                app:layout_constraintTop_toTopOf="@+id/imageViewCellId" />
+
+                            <TextView
+                                android:id="@+id/textViewCellIdDesc"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="16dp"
+                                android:text="@string/card_description4"
+                                android:textSize="12sp"
+                                app:layout_constraintStart_toEndOf="@+id/imageViewCellId"
+                                app:layout_constraintTop_toBottomOf="@+id/textViewCellIdValue" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/wifiContainer"
+                            android:layout_width="291dp"
+                            android:layout_height="272dp"
+                            android:layout_marginTop="8dp"
+                            android:visibility="gone"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/toggleButtonGroup"
+                            tools:visibility="invisible">
+
+                            <ImageView
+                                android:id="@+id/imageViewSSID"
+                                android:layout_width="36dp"
+                                android:layout_height="39dp"
+                                android:layout_marginStart="16dp"
+                                android:layout_marginTop="16dp"
+                                android:src="@drawable/wifi_24px"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                android:id="@+id/textViewSSIDValue"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="16dp"
+                                android:text="@string/wifi_value_SSID"
+                                android:textSize="20sp"
+                                app:layout_constraintStart_toEndOf="@+id/imageViewSSID"
+                                app:layout_constraintTop_toTopOf="@+id/imageViewSSID" />
+
+                            <TextView
+                                android:id="@+id/textViewSSIDdesc"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="16dp"
+                                android:text="@string/wifi_desc_SSID"
+                                android:textSize="12sp"
+                                app:layout_constraintStart_toEndOf="@+id/imageViewSSID"
+                                app:layout_constraintTop_toBottomOf="@+id/textViewSSIDValue" />
+
+                            <ImageView
+                                android:id="@+id/imageViewfreq"
+                                android:layout_width="36dp"
+                                android:layout_height="39dp"
+                                android:layout_marginStart="16dp"
+                                android:layout_marginTop="24dp"
+                                android:src="@drawable/wifi_channel_24px"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/imageViewSSID" />
+
+                            <TextView
+                                android:id="@+id/textViewFreqValue"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="16dp"
+                                android:text="@string/wifi_value_freq"
+                                android:textSize="20sp"
+                                app:layout_constraintStart_toEndOf="@+id/imageViewfreq"
+                                app:layout_constraintTop_toTopOf="@+id/imageViewfreq" />
+
+                            <TextView
+                                android:id="@+id/textViewFreqDesc"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="16dp"
+                                android:text="@string/wifi_desc_freq"
+                                android:textSize="12sp"
+                                app:layout_constraintStart_toEndOf="@+id/imageViewfreq"
+                                app:layout_constraintTop_toBottomOf="@+id/textViewFreqValue" />
+
+                            <ImageView
+                                android:id="@+id/imageViewchannel"
+                                android:layout_width="36dp"
+                                android:layout_height="39dp"
+                                android:layout_marginStart="16dp"
+                                android:layout_marginTop="24dp"
+                                android:src="@drawable/shield_lock_24px"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/imageViewfreq" />
+
+                            <TextView
+                                android:id="@+id/textViewEncryptionTypeValue"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="16dp"
+                                android:text="@string/wifi_value_encryptionType"
+                                android:textSize="20sp"
+                                app:layout_constraintStart_toEndOf="@+id/imageViewchannel"
+                                app:layout_constraintTop_toTopOf="@+id/imageViewchannel" />
+
+                            <TextView
+                                android:id="@+id/textViewChannelDesc"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="16dp"
+                                android:text="@string/wifi_desc_Channel"
+                                android:textSize="12sp"
+                                app:layout_constraintStart_toEndOf="@+id/imageViewchannel"
+                                app:layout_constraintTop_toBottomOf="@+id/textViewEncryptionTypeValue" />
+
+                            <ImageView
+                                android:id="@+id/imageViewLinkspeed"
+                                android:layout_width="36dp"
+                                android:layout_height="39dp"
+                                android:layout_marginStart="16dp"
+                                android:layout_marginTop="24dp"
+                                android:src="@drawable/speed_24px"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/imageViewchannel" />
+
+                            <TextView
+                                android:id="@+id/textViewLinkspeedValue"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="16dp"
+                                android:text="@string/wifi_value_linkspeed"
+                                android:textSize="20sp"
+                                app:layout_constraintStart_toEndOf="@+id/imageViewLinkspeed"
+                                app:layout_constraintTop_toTopOf="@+id/imageViewLinkspeed" />
+
+                            <TextView
+                                android:id="@+id/textViewLinkspeedDesc"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="16dp"
+                                android:text="@string/wifi_desc_linkspeed"
+                                android:textSize="12sp"
+                                app:layout_constraintStart_toEndOf="@+id/imageViewLinkspeed"
+                                app:layout_constraintTop_toBottomOf="@+id/textViewLinkspeedValue" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@+id/FirstFragment">
+
+    <fragment
+        android:id="@+id/FirstFragment"
+        android:name="com.example.test.signalo.MainFragment"
+        android:label="@string/first_fragment_label"
+        tools:layout="@layout/fragment_main">
+
+    </fragment>
+    <fragment
+        android:id="@+id/OpenSourceBib"
+        android:name="com.example.test.signalo.OpenSourceBib"
+        android:label="@string/open_source_label"
+        tools:layout="@layout/fragment_open_source_bib">
+
+    </fragment>
+    <fragment
+        android:id="@+id/DatenschutzPage"
+        android:name="com.example.test.signalo.DatenschutzPage"
+        android:label="@string/datenschutz_impressum_label"
+        tools:layout="@layout/fragment_datenschutz_page">
+    </fragment>
+</navigation>
