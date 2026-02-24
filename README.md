@@ -1,3 +1,7 @@
+<a href="#">
+  <img src="app/src/main/res/mipmap-xxxhdpi/ic_launcher.webp" alt="Logo" height="100">
+</a>
+
 # Signalo
 
 [![Made with love by it@M][made-with-love-shield]][itm-opensource]
@@ -5,6 +9,13 @@
 **Signalo** is a native Android app which enables users to monitor live network stats of their
 device. The main purpose is to view the Signal Strength (dBm) for both Cellular and Wifi in a gauge
 graph.
+
+## Screenshots
+<p>
+  <img src="images/Screenshot_Welcomepage.jpg" width="250" />
+  <img src="images/Screenshot_Mainpage.jpg" width="250" />
+  <img src="images/Screenshot_Mainpage_Cellular.jpg" width="250" />
+</p>
 
 ## Built With
 Native Android development with Kotlin and XML
@@ -15,15 +26,17 @@ Native Android development with Kotlin and XML
 * [Material Components](https://github.com/material-components)
 * [timber](https://github.com/JakeWharton/timber)
 ## Set up
-If you want to modify or build this app just clone this repo:
+
+1. Clone the repository:
 ```bash
-git clone https://github.com/it-at-m/signalo.git
+    git clone https://github.com/it-at-m/signalo.git
 ```
-And use your favorite editor and import this library into your folder structure:
 
-<a href="https://github.com/Magnus987/better-gauge-android/tree/Signalo">https://github.com/Magnus987/better-gauge-android/tree/Signalo</a>
+2. Clone the required [gauge library](https://github.com/Magnus987/better-gauge-android/tree/Signalo) and import it into your project structure.
 
-Don't forget to change the App ID in the build.gradle.kts file.
+3. Change the App ID in `build.gradle.kts` to your own.
+
+4. Open the project in your preferred IDE, sync Gradle, and build.
 ## Documentation
 The main purpose is to view the Signal Strength (dBm) for both Cellular and Wifi in a gauge
 graph. But also some extra stats are displayed:
@@ -54,11 +67,6 @@ graph. But also some extra stats are displayed:
     * When the app finds no usable SIM cards, it automatically switches the view to Wifi and
       disables the Cellular page.
 
-**Screenshots**
-<p>
-  <img src="images/Screenshot_Welcomepage.jpg" width="250" />
-  <img src="images/Screenshot_Mainpage.jpg" width="250" />
-</p>
 
 **Technical details**
 
@@ -68,7 +76,7 @@ graph. But also some extra stats are displayed:
       strength is doubled or halved.
     * **Cellular** dBm value is requested via a Callback, which means the value should always be the
       most accurate value your device offers.
-    * **Wifi** dBm value is manually requested each second. But due to energy-saving reasons the
+    * **Wifi** dBm value is manually requested each second. But due to energy saving reasons the
       Android system is lazy when it comes to offering an accurate value over time. That's why a
       manual Wifi refresh is possible as mentioned above.
     * **Gauge (visualization)** is an open-source library which I forked to optimize things for
@@ -83,7 +91,7 @@ graph. But also some extra stats are displayed:
         * Network Type
             * Name and logo of the used cellular technology. If it differs from your system's display,
               it's probably because of marketing ;) Android shows that you are connected via 5G but in
-              reality it's 5G NSA (Non-Standalone) which means your device uses 5G for data but still
+              reality it's 5G NSA (Non Standalone) which means your device uses 5G for data but still
               relies on a 4G/LTE anchor for connection management – true standalone 5G (SA) operates
               entirely on 5G infrastructure.
         * Frequency Band
