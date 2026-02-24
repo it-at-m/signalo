@@ -60,16 +60,12 @@ import de.muenchen.appcenter.signalo.databinding.FragmentMainBinding
 import de.muenchen.appcenter.signalo.utils.Constants
 import kotlinx.coroutines.Job
 import timber.log.Timber
-
-private const val i = 1
-
 /**
  * This class handles most of the logic of the mainpage, fetching Networkstats, changing UI stuff...
  */
 class MainFragment : Fragment() {
     private lateinit var _binding: FragmentMainBinding
     private val viewmodel: MainViewModel by activityViewModels()
-    private var networkCallback: ConnectivityManager.NetworkCallback? = null
     private var networkCallbackWifi: ConnectivityManager.NetworkCallback? = null
     private var generalNetworkCallback: ConnectivityManager.NetworkCallback? = null
     private var subscriptionManager: SubscriptionManager? = null

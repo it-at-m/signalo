@@ -7,8 +7,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:fitsSystemWindows="true"
-    android:name=".MainActivity"
-    android:screenOrientation="locked"
     tools:context=".MainActivity">
 
     <androidx.drawerlayout.widget.DrawerLayout

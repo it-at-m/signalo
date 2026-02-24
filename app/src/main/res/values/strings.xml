@@ -68,6 +68,9 @@
     <string name="opensource_signalo_link">https://github.com/it-at-m/signalo</string>
     <string name="opensource_appache_title"><b>Apache License 2.0 Libraries</b></string>
     <string name="opensource_betterGauge_link">https://github.com/Magnus987/better-gauge-android/tree/Signalo</string>
+    <string name="open_source_lable">Open Source</string>
+    <string name="datenschutz_impressum_lable"><![CDATA[Datenschutz & Impressum]]></string>
+    <string name="app_icon_desc">App Icon</string>
 
 
 </resources>

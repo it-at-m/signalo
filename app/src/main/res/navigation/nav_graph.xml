@@ -15,16 +15,14 @@
     <fragment
         android:id="@+id/OpenSourceBib"
         android:name="de.muenchen.appcenter.signalo.OpenSourceBib"
-        android:label="Open Source"
+        android:label="@string/open_source_lable"
         tools:layout="@layout/fragment_open_source_bib">
 
     </fragment>
-
     <fragment
-
         android:id="@+id/DatenschutzPage"
         android:name="de.muenchen.appcenter.signalo.DatenschutzPage"
-        android:label="Datenschutz &amp; Impressum"
-        tools:layout="@layout/fragment_datenschutz_page"></fragment>
-
+        android:label="@string/datenschutz_impressum_lable"
+        tools:layout="@layout/fragment_datenschutz_page">
+    </fragment>
 </navigation>

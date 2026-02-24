@@ -1,6 +1,5 @@
 package de.muenchen.appcenter.signalo
 
-import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.text.Html
 import android.view.Menu
@@ -152,7 +151,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
         infoMenuItem = menu.findItem(R.id.infoButton)
-        if (viewmodel.refreshState.value == "onCooldown") {
+        if (viewmodel.refreshState.value == Constants.REFRESH_ON_COOLDOWN) {
             Timber.d("Info icon is not visible, because of running refresh")
             infoMenuItem?.isVisible = false
         }
