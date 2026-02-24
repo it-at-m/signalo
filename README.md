@@ -6,7 +6,7 @@
 device. The main purpose is to view the Signal Strength (dBm) for both Cellular and Wifi in a gauge
 graph.
 
-### Built With
+## Built With
 Native Android development with Kotlin and XML
 
 **Used Libraries**
@@ -68,7 +68,7 @@ graph. But also some extra stats are displayed:
       strength is doubled or halved.
     * **Cellular** dBm value is requested via a Callback, which means the value should always be the
       most accurate value your device offers.
-    * **Wifi** dBm value is manually requested each second. But due to energy saving reasons the
+    * **Wifi** dBm value is manually requested each second. But due to energy-saving reasons the
       Android system is lazy when it comes to offering an accurate value over time. That's why a
       manual Wifi refresh is possible as mentioned above.
     * **Gauge (visualization)** is an open-source library which I forked to optimize things for
@@ -83,7 +83,7 @@ graph. But also some extra stats are displayed:
         * Network Type
             * Name and logo of the used cellular technology. If it differs from your system's display,
               it's probably because of marketing ;) Android shows that you are connected via 5G but in
-              reality it's 5G NSA (Non Standalone) which means your device uses 5G for data but still
+              reality it's 5G NSA (Non-Standalone) which means your device uses 5G for data but still
               relies on a 4G/LTE anchor for connection management – true standalone 5G (SA) operates
               entirely on 5G infrastructure.
         * Frequency Band

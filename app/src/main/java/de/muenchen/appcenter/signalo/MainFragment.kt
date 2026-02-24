@@ -309,7 +309,6 @@ class MainFragment : Fragment() {
                         viewmodel.setCellId("[unknown]")
                         viewmodel.setCurrentCellularBand("[unknown]")
                         viewmodel.setcurrentNetProvider("[unknown]")
-                        viewmodel.setcurrentNetProvider("[unknown]")
                         Timber.d("noNetwork is Called by cellular")
 
                     }
@@ -416,8 +415,9 @@ class MainFragment : Fragment() {
                     }
                     viewmodel.setCurrentCellularBand(formattedBand)
                     viewmodel.setCellId(cellId.toString())
+                } else {
+                    Timber.d("no CellID Match for: ${getMccMnc(info)}")
                 }
-                Timber.d("no CellID Match found")
             }
 
         } else {
@@ -513,8 +513,8 @@ class MainFragment : Fragment() {
     @SuppressLint("MissingPermission")
     private fun fetchDualSimInfos() {
         if (hasSinglePermission(READ_PHONE_STATE)) {
-            val simInfos = subscriptionManager?.activeSubscriptionInfoList
-            for (sim in simInfos!!) {
+            val simInfos = subscriptionManager?.activeSubscriptionInfoList ?: return
+            for (sim in simInfos) {
                 if (sim.subscriptionId == SubscriptionManager.getDefaultVoiceSubscriptionId()) {
                     mainSimName = sim.displayName.toString()
                     mainSimSubId = sim.subscriptionId
@@ -525,8 +525,9 @@ class MainFragment : Fragment() {
                     secondSimMCCMNC = sim.mccString + sim.mncString
                 }
             }
+        } else {
+            Timber.d("Permission READ PHONE STATE is missing")
         }
-        Timber.d("Permission READ PHONE STATE is missing")
     }
 
     /**
