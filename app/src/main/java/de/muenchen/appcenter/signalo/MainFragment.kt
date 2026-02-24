@@ -1,4 +1,4 @@
-package de.muenchen.appcenter.signalo
+package com.example.test.signalo
 
 import android.Manifest
 import android.Manifest.permission.ACCESS_COARSE_LOCATION
@@ -56,8 +56,8 @@ import androidx.transition.TransitionManager
 import com.ekn.gruzer.gaugelibrary.Range
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.transition.MaterialSharedAxis
-import de.muenchen.appcenter.signalo.databinding.FragmentMainBinding
-import de.muenchen.appcenter.signalo.utils.Constants
+import com.example.test.signalo.databinding.FragmentMainBinding
+import com.example.test.signalo.utils.Constants
 import kotlinx.coroutines.Job
 import timber.log.Timber
 /**

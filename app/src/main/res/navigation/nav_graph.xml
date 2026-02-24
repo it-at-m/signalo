@@ -7,21 +7,21 @@
 
     <fragment
         android:id="@+id/FirstFragment"
-        android:name="de.muenchen.appcenter.signalo.MainFragment"
+        android:name="com.example.test.signalo.MainFragment"
         android:label="@string/first_fragment_label"
         tools:layout="@layout/fragment_main">
 
     </fragment>
     <fragment
         android:id="@+id/OpenSourceBib"
-        android:name="de.muenchen.appcenter.signalo.OpenSourceBib"
+        android:name="com.example.test.signalo.OpenSourceBib"
         android:label="@string/open_source_label"
         tools:layout="@layout/fragment_open_source_bib">
 
     </fragment>
     <fragment
         android:id="@+id/DatenschutzPage"
-        android:name="de.muenchen.appcenter.signalo.DatenschutzPage"
+        android:name="com.example.test.signalo.DatenschutzPage"
         android:label="@string/datenschutz_impressum_label"
         tools:layout="@layout/fragment_datenschutz_page">
     </fragment>

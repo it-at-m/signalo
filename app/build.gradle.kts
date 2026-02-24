@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "de.muenchen.appcenter.signalo"
+    namespace = "com.example.test.signalo"
     compileSdk = 35
 
     defaultConfig {

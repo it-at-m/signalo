@@ -1,4 +1,4 @@
-package de.muenchen.appcenter.signalo
+package com.example.test.signalo
 
 import android.os.Bundle
 import android.text.Html
@@ -19,8 +19,8 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.navigation.NavigationView
-import de.muenchen.appcenter.signalo.databinding.ActivityMainBinding
-import de.muenchen.appcenter.signalo.utils.Constants
+import com.example.test.signalo.databinding.ActivityMainBinding
+import com.example.test.signalo.utils.Constants
 import timber.log.Timber
 
 

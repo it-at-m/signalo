@@ -1,4 +1,4 @@
-package de.muenchen.appcenter.signalo.utils
+package com.example.test.signalo.utils
 
 class Constants {
     companion object {
