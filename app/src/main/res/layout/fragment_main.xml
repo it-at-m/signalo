@@ -365,7 +365,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="16dp"
-                                android:text="@string/wifi_desc_Chanel"
+                                android:text="@string/wifi_desc_Channel"
                                 android:textSize="12sp"
                                 app:layout_constraintStart_toEndOf="@+id/imageViewchannel"
                                 app:layout_constraintTop_toBottomOf="@+id/textViewEncryptionTypeValue" />

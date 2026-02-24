@@ -22,7 +22,7 @@ git clone https://github.com/it-at-m/signalo.git
 And use your favorite editor and import this library into your folder structure:
 
 <a href="https://github.com/Magnus987/better-gauge-android/tree/Signalo">https://github.com/Magnus987/better-gauge-android/tree/Signalo</a>
-
+Don't forget to change the AppID in the build.gradle.kts file. 
 ## Documentation
 The main purpose is to view the Signal Strength (dBm) for both Cellular and Wifi in a gauge
 graph. But also some extra stats are displayed:

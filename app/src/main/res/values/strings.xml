@@ -30,7 +30,7 @@
     <!--Wifi Descriptions-->
     <string name="wifi_desc_SSID">SSID</string>
     <string name="wifi_desc_freq">Frequenzband</string>
-    <string name="wifi_desc_Chanel">Verschlüsselung</string>
+    <string name="wifi_desc_Channel">Verschlüsselung</string>
     <string name="wifi_desc_linkspeed">Linkspeed</string>
 
     <!--    Welcome Dialog -->
@@ -71,6 +71,8 @@
     <string name="open_source_lable">Open Source</string>
     <string name="datenschutz_impressum_lable"><![CDATA[Datenschutz & Impressum]]></string>
     <string name="app_icon_desc">App Icon</string>
+    <string name="app_logo_content_desc">App_Logo</string>
+    <string name="optional">Optional</string>
 
 
 </resources>

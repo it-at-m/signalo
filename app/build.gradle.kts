@@ -8,7 +8,7 @@ android {
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "de.muenchen.appcenter.signalo_beta"
+        applicationId = "com.example.test.signalo"
         minSdk = 35
         targetSdk = 35
         versionCode = 8

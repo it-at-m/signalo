@@ -8,7 +8,7 @@ import de.muenchen.appcenter.signalo.utils.Constants
 
 class MainViewModel(application: Application) : AndroidViewModel(application) {
 
-    var refreshState: MutableLiveData<String> = MutableLiveData("idle")
+    var refreshState: MutableLiveData<String> = MutableLiveData(Constants.REFRESH_IDLE)
     var onWifi: MutableLiveData<Boolean> = MutableLiveData(false)
     var onCellular: MutableLiveData<Boolean> = MutableLiveData(true)
     var activeCooldown: MutableLiveData<Boolean> = MutableLiveData(false)
