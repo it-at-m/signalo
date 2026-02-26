@@ -1,8 +1,10 @@
-<a href="#">
-  <img src="app/src/main/res/mipmap-xxxhdpi/ic_launcher.webp" alt="Logo" height="100">
-</a>
-
-# Signalo
+<h1>
+  <a href="#">
+    <img src="app/src/main/res/mipmap-xxxhdpi/ic_launcher.webp" alt="Logo" height="100">
+  </a>
+  <br>
+  Signalo
+</h1>
 
 [![Made with love by it@M][made-with-love-shield]][itm-opensource]
 
@@ -32,9 +34,9 @@ Native Android development with Kotlin and XML
     git clone https://github.com/it-at-m/signalo.git
 ```
 
-2. Clone the required [gauge library](https://github.com/Magnus987/better-gauge-android/tree/Signalo) and import it into your project structure.
+2. Clone the required [gauge library](https://github.com/Magnus987/better-gauge-android/tree/Signalo) and copy the "gaugelibrary" folder it into your root project structure.
 
-3. Change the App ID in `build.gradle.kts` to your own.
+3. If you like, change the App ID in `build.gradle.kts` to your own.
 
 4. Open the project in your preferred IDE, sync Gradle, and build.
 ## Documentation
