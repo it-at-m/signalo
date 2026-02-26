@@ -34,7 +34,7 @@ Native Android development with Kotlin and XML
     git clone https://github.com/it-at-m/signalo.git
 ```
 
-2. Clone the required [gauge library](https://github.com/Magnus987/better-gauge-android/tree/Signalo) and copy the "gaugelibrary" folder it into your root project structure.
+2. Clone the required [gauge library](https://github.com/Magnus987/better-gauge-android/tree/Signalo) and copy the "gaugelibrary" folder into your root project structure.
 
 3. If you like, change the App ID in `build.gradle.kts` to your own.
 
