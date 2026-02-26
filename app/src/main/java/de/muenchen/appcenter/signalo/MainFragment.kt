@@ -80,7 +80,6 @@ class MainFragment : Fragment() {
     private lateinit var wifiManager: WifiManager
     private var isRunning = false
     private var switchJob: Job? = null
-    private var permissionRequestedThisSession = false
     private var mainSimName = ""
     private var mainSimSubId = -1
     private var secondSimName = ""
@@ -337,8 +336,8 @@ class MainFragment : Fragment() {
 
     //only check if  permissions are present,if not present open up WelcomeDialog to ask the user again once in a session
     private fun checkPermissions() {
-        if ((!hasSinglePermission(ACCESS_FINE_LOCATION) || !hasSinglePermission(READ_PHONE_STATE)) && !permissionRequestedThisSession) {
-            permissionRequestedThisSession = true
+        if ((!hasSinglePermission(ACCESS_FINE_LOCATION) || !hasSinglePermission(READ_PHONE_STATE)) && viewmodel.permissionRequestedThisSession.value!=true) {
+            viewmodel.permissionRequestedThisSession.value= true
             startWelcomeDialog(force = true)
         }
     }
@@ -1173,7 +1172,7 @@ class MainFragment : Fragment() {
         if (firstOpen || force) {
             prefs.edit() { putBoolean("firstOpen", false) }
             Timber.d("firstOpen is True")
-            permissionRequestedThisSession = true
+            viewmodel.permissionRequestedThisSession.value = true
             val dialog = WelcomeDialogFragment()
             dialog.isCancelable = false
             dialog.show(getParentFragmentManager(), "welcomeDialog")
