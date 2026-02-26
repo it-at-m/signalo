@@ -76,14 +76,10 @@ class MainFragment : Fragment() {
     private var cellularType = "[int]"
     private lateinit var telephonyManager: TelephonyManager
     private lateinit var connectivityManager: ConnectivityManager
-    private lateinit var userManager: UserManager
     private lateinit var wifiManager: WifiManager
-    private var isRunning = false
+    private var timerIsRunning = false
     private var switchJob: Job? = null
-    private var permissionRequestedThisSession = false
-    private var mainSimName = ""
     private var mainSimSubId = -1
-    private var secondSimName = ""
     private var secondSimSubId = -1
     private var mainSimMCCMNC = ""
     private var secondSimMCCMNC = ""
@@ -136,7 +132,6 @@ class MainFragment : Fragment() {
         wifiManager =
             requireContext().getSystemService(WifiManager::class.java)
         subscriptionManager = requireContext().getSystemService(SubscriptionManager::class.java)
-        userManager = requireContext().getSystemService(UserManager::class.java)
         readUsableSimCards()
     }
 
@@ -337,8 +332,8 @@ class MainFragment : Fragment() {
 
     //only check if  permissions are present,if not present open up WelcomeDialog to ask the user again once in a session
     private fun checkPermissions() {
-        if ((!hasSinglePermission(ACCESS_FINE_LOCATION) || !hasSinglePermission(READ_PHONE_STATE)) && !permissionRequestedThisSession) {
-            permissionRequestedThisSession = true
+        if ((!hasSinglePermission(ACCESS_FINE_LOCATION) || !hasSinglePermission(READ_PHONE_STATE)) && viewmodel.permissionRequestedThisSession.value!=true) {
+            viewmodel.permissionRequestedThisSession.value= true
             startWelcomeDialog(force = true)
         }
     }
@@ -358,6 +353,8 @@ class MainFragment : Fragment() {
      * the selected sim with MNC and MCC to get the right values
      * fetch CellId to be displayed in the UI
      * fetch Cellular Frequency band, format it with helperfunktion and show it in UI
+     *
+     * don't use the "OnCellinfoChanged" callback, the callback doesn't work on managed COPE devices
      */
     @RequiresPermission(ACCESS_FINE_LOCATION)
     private fun readCellIdAndBandFromTelephonyManagerAndSetInUi() {
@@ -516,11 +513,9 @@ class MainFragment : Fragment() {
             val simInfos = subscriptionManager?.activeSubscriptionInfoList ?: return
             for (sim in simInfos) {
                 if (sim.subscriptionId == SubscriptionManager.getDefaultVoiceSubscriptionId()) {
-                    mainSimName = sim.displayName.toString()
                     mainSimSubId = sim.subscriptionId
                     mainSimMCCMNC = sim.mccString + sim.mncString
                 } else {
-                    secondSimName = sim.displayName.toString()
                     secondSimSubId = sim.subscriptionId
                     secondSimMCCMNC = sim.mccString + sim.mncString
                 }
@@ -551,7 +546,7 @@ class MainFragment : Fragment() {
         val toggleGroup = _binding.toggleButtonGroup
         val index = toggleGroup.indexOfChild(_binding.btnSecondSim)
         val secondSimButton = _binding.btnSecondSim
-        if (show == true) {
+        if (show) {
             toggleGroup.removeView(secondSimButton)
             secondSimButton.visibility = VISIBLE
             toggleGroup.addView(secondSimButton, index)
@@ -824,7 +819,7 @@ class MainFragment : Fragment() {
                     network: Network,
                     networkCapabilities: NetworkCapabilities
                 ) {
-                    //when caps changed, only continue if wifi is enabled, else call noNetwork and set values to unknown
+                    //when caps changed, if Wifi is not enabled set values to unknown, else call functions
                     if (!wifiManager.isWifiEnabled) {
                         Timber.d("Wifi wurde überprüft und ist Ausgeschaltet!")
                         noNetwork()
@@ -945,7 +940,7 @@ class MainFragment : Fragment() {
 
     /**Initializes and configures the Wi-Fi and cellular signal gauges,
      * including value ranges, colors, min/max limits, and dBm formatting.
-     * calls helper function createRange which returnes the Range Object
+     * calls helper function createRange which returns the Range Object
      */
     private fun initGauge() {
         val cellularGauge = _binding.cellularGauge
@@ -1012,7 +1007,7 @@ class MainFragment : Fragment() {
     /**
      * initialize NetworkTypeButtons
      * SetOnClicked listener to automatically call switchNetworkType when it clicked
-     * classic if conditions to also call switchNetworkType when app is started and one button is checked (please dont delete these xD)
+     * classic if conditions to also call switchNetworkType when app is started and one button is checked
      *
      */
     private fun initToggleButtons() {
@@ -1101,14 +1096,14 @@ class MainFragment : Fragment() {
 
     /**
      * Switches the app's monitoring mode between WiFi and Cellular.
-     *
+     * For each mode:
      * 1. Calls resetNetworkTypeCallbacks to delete old callbacks
      * 2. Resets cached variables
      * 3. Updates state variables
      * 4. Calls overrideTelephonyManagerWithSim to set telephony manager on the requested sim
      * 4. Fetches fresh data for the new mode
      * 5. Calls uiSwitchAnimation to trigger UI transition animation
-     * @param button The target network mode (Constants.WIFI or Constants.CELLULAR)
+     * @param button The target network mode (WIFI or CELLULAR)
      */
     private fun switchNetworkType(button: String) {
         when (button) {
@@ -1161,10 +1156,14 @@ class MainFragment : Fragment() {
         stopTimer()
     }
 
-    /** if no entry in sharedPreferences was found or force is True:
-     * Starts a Dialog fragment with a Welcome screen which explains why the app needs the permissions
+    /** @param force is used to force a popup of the welcome screen to ask user for permissions
+     * firstOpen is a Boolean in sharedPreferences to demeter if the user opened the app before
+     * if no entry in sharedPreferences was found or force is True:
+     * Shows a Dialog fragment with a Welcome screen which explains why the app needs the permissions
+     * Set firstOpen to false in sharedPreferences
      *  registers ResultListener to know if the user want to grant permissions or not,
-     *  if yes getPermissions is called
+     *      if yes, call fun getPermissions to start android permission request
+     *      if not, don't ask for android permissions
      */
     private fun startWelcomeDialog(force: Boolean = false) {
         var firstOpen: Boolean? = null
@@ -1173,7 +1172,7 @@ class MainFragment : Fragment() {
         if (firstOpen || force) {
             prefs.edit() { putBoolean("firstOpen", false) }
             Timber.d("firstOpen is True")
-            permissionRequestedThisSession = true
+            viewmodel.permissionRequestedThisSession.value = true
             val dialog = WelcomeDialogFragment()
             dialog.isCancelable = false
             dialog.show(getParentFragmentManager(), "welcomeDialog")
@@ -1195,8 +1194,8 @@ class MainFragment : Fragment() {
      */
     private fun startTimer() {
         Timber.d("Timer Wifi Started")
-        if (!isRunning) {
-            isRunning = true
+        if (!timerIsRunning) {
+            timerIsRunning = true
             handler.post(timerRunnable)
         }
     }
@@ -1204,7 +1203,7 @@ class MainFragment : Fragment() {
     private fun stopTimer() {
         Timber.d("Timer Wifi stopped")
 
-        isRunning = false
+        timerIsRunning = false
         handler.removeCallbacks(timerRunnable)
     }
 
@@ -1216,10 +1215,11 @@ class MainFragment : Fragment() {
         }
     }
 
-    //all observers for livedata are getting defined here
+    /**
+     * all observers for the live data are defined here
+     * make last checks for invalid data and set values in UI
+     */
     private fun defineObserver() {
-        //Define Observer
-//when refresh state has changed, update UI Accordingly
         viewmodel.refreshState.observe(viewLifecycleOwner) {
             updateSwipeRefreshUi()
         }
@@ -1246,7 +1246,6 @@ class MainFragment : Fragment() {
             _binding.textViewNetTypeValue.text = textFeld
         }
         viewmodel.cellId.observe(viewLifecycleOwner) { cellIdValue ->
-//            Timber.d("Der Cellular Network Type ist: " + cellularValue)
             val textFeld = getString(R.string.card_value4, cellIdValue.toString())
             _binding.textViewCellIdValue.text = textFeld
         }
@@ -1279,6 +1278,11 @@ class MainFragment : Fragment() {
         }
     }
 
+    /**
+     * all unregister functions are defined here
+     * if the object is not null, unregister it and set it to null
+     * if not do nothing
+     */
     private fun unregisterWifiScanReceiver() {
         if (wifiScanReceiver != null) {
             requireContext().unregisterReceiver(wifiScanReceiver)
@@ -1323,6 +1327,9 @@ class MainFragment : Fragment() {
         }
     }
 
+    /**
+     * reset and unregister all vars and functions if app is paused
+     */
     override fun onPause() {
         Timber.d("onPause is called")
         super.onPause()
@@ -1338,6 +1345,9 @@ class MainFragment : Fragment() {
         _binding.toggleButtonGroup.clearOnButtonCheckedListeners()
     }
 
+    /**
+     * reset and unregister all vars and functions if app is destroyed
+     */
     override fun onDestroyView() {
         Timber.d("onDestroy is called")
         super.onDestroyView()
