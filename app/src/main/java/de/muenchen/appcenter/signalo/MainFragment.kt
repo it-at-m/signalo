@@ -23,7 +23,6 @@ import android.net.wifi.WifiManager
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.os.UserManager
 import android.telephony.CellIdentityNr
 import android.telephony.CellInfo
 import android.telephony.CellInfoGsm
@@ -54,12 +53,13 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.setFragmentResultListener
 import androidx.transition.TransitionManager
 import com.ekn.gruzer.gaugelibrary.Range
-import com.google.android.material.snackbar.Snackbar
-import com.google.android.material.transition.MaterialSharedAxis
 import com.example.test.signalo.databinding.FragmentMainBinding
 import com.example.test.signalo.utils.Constants
+import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.transition.MaterialSharedAxis
 import kotlinx.coroutines.Job
 import timber.log.Timber
+
 /**
  * This class handles most of the logic of the mainpage, fetching Networkstats, changing UI stuff...
  */
@@ -144,7 +144,7 @@ class MainFragment : Fragment() {
 
     /**starts a manual wifi scan to receive newest wifi DBM values
      * registers a broadcast receiver to look for scans from Android system but only if SCAN_PENDING
-     * catches the resultlist and extract the dbm value for the Network with the current connected BSSID
+     * catches the result list and extract the dbm value for the Network with the current connected BSSID
      *
      */
     private fun manualWifiRefresh() {
@@ -332,8 +332,8 @@ class MainFragment : Fragment() {
 
     //only check if  permissions are present,if not present open up WelcomeDialog to ask the user again once in a session
     private fun checkPermissions() {
-        if ((!hasSinglePermission(ACCESS_FINE_LOCATION) || !hasSinglePermission(READ_PHONE_STATE)) && viewmodel.permissionRequestedThisSession.value!=true) {
-            viewmodel.permissionRequestedThisSession.value= true
+        if ((!hasSinglePermission(ACCESS_FINE_LOCATION) || !hasSinglePermission(READ_PHONE_STATE)) && viewmodel.permissionRequestedThisSession.value != true) {
+            viewmodel.permissionRequestedThisSession.value = true
             startWelcomeDialog(force = true)
         }
     }
@@ -709,17 +709,17 @@ class MainFragment : Fragment() {
     }
 
     /**
-     * fetches OperatorName from telephonymanager and Sets in UI
+     * fetches OperatorName from telephony manager and Sets in UI
      * if its null or empty call a fallback fun
      */
-    private fun fetchCellularProviderName() {
+    private fun fetchCellularProviderNameFallback() {
         val currentProviderName = telephonyManager.networkOperatorName
         Timber.d("NetworkOperatorname: " + currentProviderName)
         if (!currentProviderName.isNullOrBlank()) {
             viewmodel.setcurrentNetProvider(currentProviderName)
         } else {
-            Timber.d("Cellular Provider/Operator Name is null or Blank, using fallback fun")
-            fetchFallbackCellularProvidername()
+            Timber.d("Cellular Provider/Operator fallback Name is null or Blank, setting UI value to 'Unknown Provider'")
+            viewmodel.setcurrentNetProvider("Unknown Provider")
         }
     }
 
@@ -727,7 +727,7 @@ class MainFragment : Fragment() {
      * calls setProviderIcons to demeter the provider name based on the selected logo (which is based on the MNC and MCC code)
      * if no logo was selected use fallback value "unknown Provider"
      */
-    private fun fetchFallbackCellularProvidername() {
+    private fun fetchCellularProviderName() {
         var selectedIcon = 0
         if (!telephonyManager.networkOperator.isNullOrBlank()) {
             selectedIcon = setProviderIcons(telephonyManager.networkOperator.toInt()) ?: 0
@@ -766,7 +766,8 @@ class MainFragment : Fragment() {
             }
 
             else -> {
-                viewmodel.setcurrentNetProvider("Unknown Provider")
+                Timber.d("MCC/MNC could not be mapped to a known provider, calling fallback function...")
+                fetchCellularProviderNameFallback()
             }
         }
     }
@@ -774,7 +775,7 @@ class MainFragment : Fragment() {
 
     /**
      * a function to combine all cellular data gatherings except for the dbm value
-     * registeres a onCapChanged callback for functions who dont have an own callback, so they are getting refreshed when anything network related changes
+     * registers a onCapChanged callback for functions who don't have an own callback, so they are getting refreshed when anything network related changes
      */
     private fun fetchAllCellularData() {
         Timber.d("getAllCellularData is called")
@@ -787,7 +788,6 @@ class MainFragment : Fragment() {
                     networkCapabilities: NetworkCapabilities
                 ) {
                     super.onCapabilitiesChanged(network, networkCapabilities)
-                    fetchCellularProviderCode()
                     fetchCellularProviderName()
                     readCellIdAndBandFromTelephonyManagerAndSetInUi()
                 }
@@ -904,7 +904,7 @@ class MainFragment : Fragment() {
 
     /**
      * fetch current EncryptionType and display in UI
-     * @param wifiInfo the object received by wifimanager(networkCapabilities.transportInfo)
+     * @param wifiInfo the object received by wifi manager(networkCapabilities.transportInfo)
      */
     private fun fetchEncryptionType(wifiInfo: WifiInfo) {
         val encryptionType = when (wifiInfo.currentSecurityType) {
