@@ -13,6 +13,7 @@ device. The main purpose is to view the Signal Strength (dBm) for both Cellular 
 graph.
 
 ## Screenshots
+
 <p>
   <img src="images/Screenshot_Welcomepage.jpg" width="250" />
   <img src="images/Screenshot_Mainpage.jpg" width="250" />
@@ -20,6 +21,7 @@ graph.
 </p>
 
 ## Built With
+
 Native Android development with Kotlin and XML
 
 **Used Libraries**
@@ -27,19 +29,25 @@ Native Android development with Kotlin and XML
 * [better-gauge-android](https://github.com/Magnus987/better-gauge-android/tree/Signalo)
 * [Material Components](https://github.com/material-components)
 * [timber](https://github.com/JakeWharton/timber)
+
 ## Set up
 
 1. Clone the repository:
+
 ```bash
     git clone https://github.com/it-at-m/signalo.git
 ```
 
-2. Clone the required [gauge library](https://github.com/Magnus987/better-gauge-android/tree/Signalo) and copy the "gaugelibrary" folder into your root project structure.
+2. Clone the
+   required [gauge library](https://github.com/Magnus987/better-gauge-android/tree/Signalo) and copy
+   the "gaugelibrary" folder into your root project structure.
 
 3. If you like, change the App ID in `build.gradle.kts` to your own.
 
 4. Open the project in your preferred IDE, sync Gradle, and build.
+
 ## Documentation
+
 The main purpose is to view the Signal Strength (dBm) for both Cellular and Wifi in a gauge
 graph. But also some extra stats are displayed:
 
@@ -65,10 +73,9 @@ graph. But also some extra stats are displayed:
 * Dual-SIM Support
     * When the app detects 2 usable SIM cards, it switches the view to not only display a button for
       Cellular but for SIM1 and SIM2, so the user can choose which SIM to use and compare.
-* Single-SIM Detection
+* None-SIM Detection
     * When the app finds no usable SIM cards, it automatically switches the view to Wifi and
       disables the Cellular page.
-
 
 **Technical details**
 
@@ -88,21 +95,27 @@ graph. But also some extra stats are displayed:
 * **Cellular**
     * All cellular data is requested via the TelephonyManager registered on the selected SIM.
         * Internet Provider
-            * Name and logo of the internet provider from your connected cell tower. So if you have a
+            * Name and logo of the internet provider from your connected cell tower. So if you have
+              a
               SIM from Telekom but it connects you to an A1 cell tower, the app shows A1.
         * Network Type
-            * Name and logo of the used cellular technology. If it differs from your system's display,
-              it's probably because of marketing ;) Android shows that you are connected via 5G but in
-              reality it's 5G NSA (Non Standalone) which means your device uses 5G for data but still
+            * Name and logo of the used cellular technology. If it differs from your system's
+              display,
+              it's probably because of marketing ;) Android shows that you are connected via 5G but
+              in
+              reality it's 5G NSA (Non Standalone) which means your device uses 5G for data but
+              still
               relies on a 4G/LTE anchor for connection management – true standalone 5G (SA) operates
               entirely on 5G infrastructure.
         * Frequency Band
-            * Frequency bands are displayed with their standard 3GPP prefix: B for LTE bands and n for
+            * Frequency bands are displayed with their standard 3GPP prefix: B for LTE bands and n
+              for
               5G NR bands.
             * Access fine location permission is needed to display this value.
             * Read Phone state permission is needed to display this value.
         * Cell ID (ECI)
-            * The ECI (E-UTRAN Cell Identifier) uniquely identifies the cell you're connected to. It's
+            * The ECI (E-UTRAN Cell Identifier) uniquely identifies the cell you're connected to.
+              It's
               unique within your country and your provider.
             * Access fine location permission is needed to display this value.
             * Read Phone state permission is needed to display this value.
@@ -120,12 +133,14 @@ graph. But also some extra stats are displayed:
         * Linkspeed
             * The link speed of the connected Wifi is displayed in Megabits per second.
 
-
 ## Contributing
 
-Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
+Contributions are what make the open source community such an amazing place to learn, inspire, and
+create. Any contributions you make are **greatly appreciated**.
 
-If you have a suggestion that would make this better, please open an issue with the tag "enhancement", fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
+If you have a suggestion that would make this better, please open an issue with the tag "
+enhancement", fork the repo and create a pull request. You can also simply open an issue with the
+tag "enhancement".
 Don't forget to give the project a star! Thanks again!
 
 1. Open an issue with the tag "enhancement"
@@ -137,16 +152,16 @@ Don't forget to give the project a star! Thanks again!
 
 More about this in the [CODE_OF_CONDUCT](/CODE_OF_CONDUCT.md) file.
 
-
 ## License
 
 Distributed under the MIT License. See [LICENSE](LICENSE) file for more information.
-
 
 ## Contact
 
 it@M - opensource@muenchen.de
 
 <!-- project shields / links -->
+
 [made-with-love-shield]: https://img.shields.io/badge/made%20with%20%E2%9D%A4%20by-it%40M-yellow?style=for-the-badge
+
 [itm-opensource]: https://opensource.muenchen.de/
