@@ -644,18 +644,66 @@ class MainFragment : Fragment() {
     }
 
     /**
-     * fetch networkOperator from telephonymanager
-     * this is the mnc+mcc value delivered by the current connected celltower
-     * call setProviderIcons with this param
-     * if networkOperator is empty, call setProviderIcons with 0 to set a fallback ? icon
+     * calls setProviderIcons to demeter the provider name based on the selected logo (which is based on the MNC and MCC code)
+     * if no logo was selected call fallback function fetchCellularProviderNameFallback
      */
-    private fun fetchCellularProviderCode() {
+    private fun fetchCellularProviderName() {
+        var selectedIcon = 0
         if (!telephonyManager.networkOperator.isNullOrBlank()) {
-            val currentProviderCode = telephonyManager.networkOperator.toInt()
-            setProviderIcons(currentProviderCode)
+            selectedIcon = setProviderIcons(telephonyManager.networkOperator.toInt()) ?: 0
+        }
+        when (selectedIcon) {
+            R.drawable.deutsche_telekom_2022_svg -> {
+                viewmodel.setcurrentNetProvider(Constants.PROVIDER_TELEKOM)
+            }
+
+            R.drawable.vodafone_kabel_deutschland_logo_vector -> {
+                viewmodel.setcurrentNetProvider(Constants.PROVIDER_VODAFONE)
+            }
+
+            R.drawable.o2_svg -> {
+                viewmodel.setcurrentNetProvider(Constants.PROVIDER_O2)
+            }
+
+            R.drawable.__1_logo -> {
+                viewmodel.setcurrentNetProvider(Constants.PROVIDER_1UND1)
+            }
+
+            R.drawable.logo_of_a1 -> {
+                viewmodel.setcurrentNetProvider(Constants.PROVIDER_A1)
+            }
+
+            R.drawable.scmn_sw_38a30a24 -> {
+                viewmodel.setcurrentNetProvider(Constants.PROVIDER_SWISSCOM)
+            }
+
+            R.drawable.sunrise_2022_svg -> {
+                viewmodel.setcurrentNetProvider(Constants.PROVIDER_SUNRISE)
+            }
+
+            R.drawable.icones_logosalt_black -> {
+                viewmodel.setcurrentNetProvider(Constants.PROVIDER_SALT)
+            }
+
+            else -> {
+                Timber.d("MCC/MNC could not be mapped to a known provider, calling fallback function...")
+                fetchCellularProviderNameFallback()
+            }
+        }
+    }
+
+    /**
+     * fetches OperatorName from telephony manager and Sets in UI
+     * if it is Null or Blank, set "Unknown Provider" in UI
+     */
+    private fun fetchCellularProviderNameFallback() {
+        val currentProviderName = telephonyManager.networkOperatorName
+        Timber.d("NetworkOperatorname: " + currentProviderName)
+        if (!currentProviderName.isNullOrBlank()) {
+            viewmodel.setcurrentNetProvider(currentProviderName)
         } else {
-            Timber.d("Cellular Provider Code is null or Empty, using ? Icon")
-            setProviderIcons(0)
+            Timber.d("Cellular Provider/Operator fallback Name is null or Blank, setting UI value to 'Unknown Provider'")
+            viewmodel.setcurrentNetProvider("Unknown Provider")
         }
     }
 
@@ -707,71 +755,6 @@ class MainFragment : Fragment() {
         }
         return providerIcons[currentProviderCode]
     }
-
-    /**
-     * fetches OperatorName from telephony manager and Sets in UI
-     * if its null or empty call a fallback fun
-     */
-    private fun fetchCellularProviderNameFallback() {
-        val currentProviderName = telephonyManager.networkOperatorName
-        Timber.d("NetworkOperatorname: " + currentProviderName)
-        if (!currentProviderName.isNullOrBlank()) {
-            viewmodel.setcurrentNetProvider(currentProviderName)
-        } else {
-            Timber.d("Cellular Provider/Operator fallback Name is null or Blank, setting UI value to 'Unknown Provider'")
-            viewmodel.setcurrentNetProvider("Unknown Provider")
-        }
-    }
-
-    /**
-     * calls setProviderIcons to demeter the provider name based on the selected logo (which is based on the MNC and MCC code)
-     * if no logo was selected use fallback value "unknown Provider"
-     */
-    private fun fetchCellularProviderName() {
-        var selectedIcon = 0
-        if (!telephonyManager.networkOperator.isNullOrBlank()) {
-            selectedIcon = setProviderIcons(telephonyManager.networkOperator.toInt()) ?: 0
-        }
-        when (selectedIcon) {
-            R.drawable.deutsche_telekom_2022_svg -> {
-                viewmodel.setcurrentNetProvider(Constants.PROVIDER_TELEKOM)
-            }
-
-            R.drawable.vodafone_kabel_deutschland_logo_vector -> {
-                viewmodel.setcurrentNetProvider(Constants.PROVIDER_VODAFONE)
-            }
-
-            R.drawable.o2_svg -> {
-                viewmodel.setcurrentNetProvider(Constants.PROVIDER_O2)
-            }
-
-            R.drawable.__1_logo -> {
-                viewmodel.setcurrentNetProvider(Constants.PROVIDER_1UND1)
-            }
-
-            R.drawable.logo_of_a1 -> {
-                viewmodel.setcurrentNetProvider(Constants.PROVIDER_A1)
-            }
-
-            R.drawable.scmn_sw_38a30a24 -> {
-                viewmodel.setcurrentNetProvider(Constants.PROVIDER_SWISSCOM)
-            }
-
-            R.drawable.sunrise_2022_svg -> {
-                viewmodel.setcurrentNetProvider(Constants.PROVIDER_SUNRISE)
-            }
-
-            R.drawable.icones_logosalt_black -> {
-                viewmodel.setcurrentNetProvider(Constants.PROVIDER_SALT)
-            }
-
-            else -> {
-                Timber.d("MCC/MNC could not be mapped to a known provider, calling fallback function...")
-                fetchCellularProviderNameFallback()
-            }
-        }
-    }
-
 
     /**
      * a function to combine all cellular data gatherings except for the dbm value
