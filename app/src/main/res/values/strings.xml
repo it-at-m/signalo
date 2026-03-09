@@ -73,6 +73,7 @@
     <string name="app_icon_desc">App Icon</string>
     <string name="app_logo_content_desc">App_Logo</string>
     <string name="optional">Optional</string>
+    <string name="unknown_provider">Unknown Provider</string>
 
 
 </resources>

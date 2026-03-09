@@ -703,7 +703,7 @@ class MainFragment : Fragment() {
             viewmodel.setcurrentNetProvider(currentProviderName)
         } else {
             Timber.d("Cellular Provider/Operator fallback Name is null or Blank, setting UI value to 'Unknown Provider'")
-            viewmodel.setcurrentNetProvider("Unknown Provider")
+            viewmodel.setcurrentNetProvider(getString(R.string.unknown_provider))
         }
     }
 
