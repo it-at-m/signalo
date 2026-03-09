@@ -16,7 +16,7 @@
     <string name="card_value4">%s</string>
 
     <!--Cellular Descriptions-->
-    <string name="card_description1">Internet Provider</string>
+    <string name="card_description1">Netzbetreiber</string>
     <string name="card_description3">Frequenzband</string>
     <string name="card_description2">Funkstandard</string>
     <string name="card_description4">Cell ID (ECI)</string>
