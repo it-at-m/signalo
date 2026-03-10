@@ -23,7 +23,6 @@ import android.net.wifi.WifiManager
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.os.UserManager
 import android.telephony.CellIdentityNr
 import android.telephony.CellInfo
 import android.telephony.CellInfoGsm
@@ -54,12 +53,13 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.setFragmentResultListener
 import androidx.transition.TransitionManager
 import com.ekn.gruzer.gaugelibrary.Range
-import com.google.android.material.snackbar.Snackbar
-import com.google.android.material.transition.MaterialSharedAxis
 import com.example.test.signalo.databinding.FragmentMainBinding
 import com.example.test.signalo.utils.Constants
+import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.transition.MaterialSharedAxis
 import kotlinx.coroutines.Job
 import timber.log.Timber
+
 /**
  * This class handles most of the logic of the mainpage, fetching Networkstats, changing UI stuff...
  */
@@ -144,7 +144,7 @@ class MainFragment : Fragment() {
 
     /**starts a manual wifi scan to receive newest wifi DBM values
      * registers a broadcast receiver to look for scans from Android system but only if SCAN_PENDING
-     * catches the resultlist and extract the dbm value for the Network with the current connected BSSID
+     * catches the result list and extract the dbm value for the Network with the current connected BSSID
      *
      */
     private fun manualWifiRefresh() {
@@ -332,8 +332,8 @@ class MainFragment : Fragment() {
 
     //only check if  permissions are present,if not present open up WelcomeDialog to ask the user again once in a session
     private fun checkPermissions() {
-        if ((!hasSinglePermission(ACCESS_FINE_LOCATION) || !hasSinglePermission(READ_PHONE_STATE)) && viewmodel.permissionRequestedThisSession.value!=true) {
-            viewmodel.permissionRequestedThisSession.value= true
+        if ((!hasSinglePermission(ACCESS_FINE_LOCATION) || !hasSinglePermission(READ_PHONE_STATE)) && viewmodel.permissionRequestedThisSession.value != true) {
+            viewmodel.permissionRequestedThisSession.value = true
             startWelcomeDialog(force = true)
         }
     }
@@ -644,18 +644,66 @@ class MainFragment : Fragment() {
     }
 
     /**
-     * fetch networkOperator from telephonymanager
-     * this is the mnc+mcc value delivered by the current connected celltower
-     * call setProviderIcons with this param
-     * if networkOperator is empty, call setProviderIcons with 0 to set a fallback ? icon
+     * calls setProviderIcons to demeter the provider name based on the selected logo (which is based on the MNC and MCC code)
+     * if no logo was selected call fallback function fetchCellularProviderNameFallback
      */
-    private fun fetchCellularProviderCode() {
+    private fun fetchCellularProviderName() {
+        var selectedIcon = 0
         if (!telephonyManager.networkOperator.isNullOrBlank()) {
-            val currentProviderCode = telephonyManager.networkOperator.toInt()
-            setProviderIcons(currentProviderCode)
+            selectedIcon = setProviderIcons(telephonyManager.networkOperator.toInt()) ?: 0
+        }
+        when (selectedIcon) {
+            R.drawable.deutsche_telekom_2022_svg -> {
+                viewmodel.setcurrentNetProvider(Constants.PROVIDER_TELEKOM)
+            }
+
+            R.drawable.vodafone_kabel_deutschland_logo_vector -> {
+                viewmodel.setcurrentNetProvider(Constants.PROVIDER_VODAFONE)
+            }
+
+            R.drawable.o2_svg -> {
+                viewmodel.setcurrentNetProvider(Constants.PROVIDER_O2)
+            }
+
+            R.drawable.__1_logo -> {
+                viewmodel.setcurrentNetProvider(Constants.PROVIDER_1UND1)
+            }
+
+            R.drawable.logo_of_a1 -> {
+                viewmodel.setcurrentNetProvider(Constants.PROVIDER_A1)
+            }
+
+            R.drawable.scmn_sw_38a30a24 -> {
+                viewmodel.setcurrentNetProvider(Constants.PROVIDER_SWISSCOM)
+            }
+
+            R.drawable.sunrise_2022_svg -> {
+                viewmodel.setcurrentNetProvider(Constants.PROVIDER_SUNRISE)
+            }
+
+            R.drawable.icones_logosalt_black -> {
+                viewmodel.setcurrentNetProvider(Constants.PROVIDER_SALT)
+            }
+
+            else -> {
+                Timber.d("MCC/MNC could not be mapped to a known provider, calling fallback function...")
+                fetchCellularProviderNameFallback()
+            }
+        }
+    }
+
+    /**
+     * fetches OperatorName from telephony manager and Sets in UI
+     * if it is Null or Blank, set "Unknown Provider" in UI
+     */
+    private fun fetchCellularProviderNameFallback() {
+        val currentProviderName = telephonyManager.networkOperatorName
+        Timber.d("NetworkOperatorname: " + currentProviderName)
+        if (!currentProviderName.isNullOrBlank()) {
+            viewmodel.setcurrentNetProvider(currentProviderName)
         } else {
-            Timber.d("Cellular Provider Code is null or Empty, using ? Icon")
-            setProviderIcons(0)
+            Timber.d("Cellular Provider/Operator fallback Name is null or Blank, setting UI value to 'Unknown Provider'")
+            viewmodel.setcurrentNetProvider(getString(R.string.unknown_provider))
         }
     }
 
@@ -709,72 +757,8 @@ class MainFragment : Fragment() {
     }
 
     /**
-     * fetches OperatorName from telephonymanager and Sets in UI
-     * if its null or empty call a fallback fun
-     */
-    private fun fetchCellularProviderName() {
-        val currentProviderName = telephonyManager.networkOperatorName
-        Timber.d("NetworkOperatorname: " + currentProviderName)
-        if (!currentProviderName.isNullOrBlank()) {
-            viewmodel.setcurrentNetProvider(currentProviderName)
-        } else {
-            Timber.d("Cellular Provider/Operator Name is null or Blank, using fallback fun")
-            fetchFallbackCellularProvidername()
-        }
-    }
-
-    /**
-     * calls setProviderIcons to demeter the provider name based on the selected logo (which is based on the MNC and MCC code)
-     * if no logo was selected use fallback value "unknown Provider"
-     */
-    private fun fetchFallbackCellularProvidername() {
-        var selectedIcon = 0
-        if (!telephonyManager.networkOperator.isNullOrBlank()) {
-            selectedIcon = setProviderIcons(telephonyManager.networkOperator.toInt()) ?: 0
-        }
-        when (selectedIcon) {
-            R.drawable.deutsche_telekom_2022_svg -> {
-                viewmodel.setcurrentNetProvider(Constants.PROVIDER_TELEKOM)
-            }
-
-            R.drawable.vodafone_kabel_deutschland_logo_vector -> {
-                viewmodel.setcurrentNetProvider(Constants.PROVIDER_VODAFONE)
-            }
-
-            R.drawable.o2_svg -> {
-                viewmodel.setcurrentNetProvider(Constants.PROVIDER_O2)
-            }
-
-            R.drawable.__1_logo -> {
-                viewmodel.setcurrentNetProvider(Constants.PROVIDER_1UND1)
-            }
-
-            R.drawable.logo_of_a1 -> {
-                viewmodel.setcurrentNetProvider(Constants.PROVIDER_A1)
-            }
-
-            R.drawable.scmn_sw_38a30a24 -> {
-                viewmodel.setcurrentNetProvider(Constants.PROVIDER_SWISSCOM)
-            }
-
-            R.drawable.sunrise_2022_svg -> {
-                viewmodel.setcurrentNetProvider(Constants.PROVIDER_SUNRISE)
-            }
-
-            R.drawable.icones_logosalt_black -> {
-                viewmodel.setcurrentNetProvider(Constants.PROVIDER_SALT)
-            }
-
-            else -> {
-                viewmodel.setcurrentNetProvider("Unknown Provider")
-            }
-        }
-    }
-
-
-    /**
      * a function to combine all cellular data gatherings except for the dbm value
-     * registeres a onCapChanged callback for functions who dont have an own callback, so they are getting refreshed when anything network related changes
+     * registers a onCapChanged callback for functions who don't have an own callback, so they are getting refreshed when anything network related changes
      */
     private fun fetchAllCellularData() {
         Timber.d("getAllCellularData is called")
@@ -787,7 +771,6 @@ class MainFragment : Fragment() {
                     networkCapabilities: NetworkCapabilities
                 ) {
                     super.onCapabilitiesChanged(network, networkCapabilities)
-                    fetchCellularProviderCode()
                     fetchCellularProviderName()
                     readCellIdAndBandFromTelephonyManagerAndSetInUi()
                 }
@@ -904,7 +887,7 @@ class MainFragment : Fragment() {
 
     /**
      * fetch current EncryptionType and display in UI
-     * @param wifiInfo the object received by wifimanager(networkCapabilities.transportInfo)
+     * @param wifiInfo the object received by wifi manager(networkCapabilities.transportInfo)
      */
     private fun fetchEncryptionType(wifiInfo: WifiInfo) {
         val encryptionType = when (wifiInfo.currentSecurityType) {
