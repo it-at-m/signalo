@@ -1,0 +1,58 @@
+name: Android CI
+
+on:
+  pull_request:
+    branches: [ main ]
+  push:
+    branches: [ main ]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # fetch gauge library
+      - name: Clone Gauge Library
+        run: |
+          echo "Cloning external gauge library..."
+          git clone --depth 1 --branch Signalo https://github.com/Magnus987/better-gauge-android.git
+
+          echo "Copy gaugelibrary into project root..."
+          cp -r better-gauge-android/gaugelibrary ./gaugelibrary
+
+          echo "Cleanup..."
+          rm -rf better-gauge-android
+
+      # setup java
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      # setup gradle cache for rapid builds
+      - name: Cache Gradle
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: gradle-${{ runner.os }}-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+
+      # make gradle executable
+      - name: Grant execute permission
+        run: chmod +x gradlew
+
+      # build apk with debug settings
+      - name: Build Debug APK
+        run: ./gradlew assembleDebug
+
+      # run tests
+      - name: Run Unit Tests
+        run: ./gradlew test
