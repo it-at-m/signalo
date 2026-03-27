@@ -1,22 +1,16 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["config:recommended"],
-  "schedule": [
-  "after 10pm every weekday",
-  "before 5am every weekday",
-  "every weekend"
+
+  "extends": [
+    "github>it-at-m/.github//renovate-configs/renovate-config.json5"
   ],
+
+  "platformAutomerge": true,
+  "requiredStatusChecks": ["build"],
   "packageRules": [
     {
-      "matchDepNames": [
-        "com.android.application",
-        "com.android.library"
-      ],
-      "groupName": "Android Gradle Plugin"  // Group all Android Gradle Plugin updates together
-    },
-    {
-      "matchPackagePatterns": ["^org.jetbrains.kotlin"],
-      "groupName": "Kotlin Dependencies"    // Group all Kotlin-related updates (Kotlin stdlib, plugin, etc.)
+      "matchUpdateTypes": ["minor", "patch"],
+      "automerge": true
     }
   ]
 }
