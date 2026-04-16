@@ -1,16 +1,13 @@
 {
-  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-
-  "extends": [
-    "github>it-at-m/.github//renovate-configs/renovate-config.json5"
-  ],
-
-  "platformAutomerge": true,
-  "requiredStatusChecks": ["build"],
-  "packageRules": [
+  $schema: "https://docs.renovatebot.com/renovate-schema.json",
+  extends: ["config:base"],
+  baseBranches: ["dev"],
+  packageRules: [
     {
-      "matchUpdateTypes": ["minor", "patch"],
-      "automerge": true
-    }
-  ]
+      matchUpdateTypes: ["minor", "patch"],
+      automerge: true,
+      groupName: "all non-major dependencies",
+      groupSlug: "all-minor-patch",
+    },
+  ],
 }
