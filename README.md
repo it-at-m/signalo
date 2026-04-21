@@ -4,7 +4,9 @@
 
 [![Made with love by it@M][made-with-love-shield]][itm-opensource] [![License][license-shield]][license-url] ![Android][android-shield] [![Language][language-shield]][language-url] [![PRs][prs-shield]][prs-url] [![Stars][stars-shield]][stars-url] [![Issues][issues-shield]][issues-url]
 
-**Signalo** is a native Android app which enables users to monitor live network stats of their device. The main purpose is to view the Signal Strength (dBm) for both Cellular and Wifi in a gauge graph.
+**Signalo** is a native Android application that enables users to monitor
+live network stats of their device. The main purpose is to view the signal
+strength (dBm) for both cellular and Wi-Fi networks in a gauge graph.
 
 ## Screenshots
 
