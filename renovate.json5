@@ -1,16 +1,8 @@
 {
-  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-
-  "extends": [
-    "github>it-at-m/.github//renovate-configs/renovate-config.json5"
-  ],
-
-  "platformAutomerge": true,
-  "requiredStatusChecks": ["build"],
-  "packageRules": [
-    {
-      "matchUpdateTypes": ["minor", "patch"],
-      "automerge": true
-    }
-  ]
+  $schema: "https://docs.renovatebot.com/renovate-schema.json",
+  extends: ["config:recommended"],
+  baseBranches: ["dev"],
+  automerge: true,
+  automergeType: "pr",
+  platformAutomerge: true,
 }
