@@ -1,0 +1,6 @@
+reviews:
+  auto_review:
+    ignore_usernames:
+      - "renovate[bot]"
+    base_branches:
+      - "dev"

@@ -123,6 +123,7 @@ Distributed under the MIT License. See [LICENSE](LICENSE) file for more informat
 ## Contact
 
 it@M - opensource@muenchen.de
+AppCenter - apps@muenchen.de
 
 <!-- project shields / links -->
 
@@ -131,8 +132,8 @@ it@M - opensource@muenchen.de
 [license-shield]: https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge
 [license-url]: LICENSE
 [android-shield]: https://img.shields.io/badge/Android-3DDC84?style=for-the-badge&logo=android&logoColor=white
-[language-shield]: https://img.shields.io/badge/Flutter-02569B?logo=flutter&logoColor=white&style=for-the-badge
-[language-url]: https://flutter.dev/
+[language-shield]: https://img.shields.io/badge/Kotlin-7F52FF?logo=kotlin&logoColor=white&style=for-the-badge
+[language-url]: https://kotlinlang.org/
 [prs-shield]: https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=for-the-badge
 [prs-url]: https://github.com/it-at-m/signalo/pulls
 [stars-shield]: https://img.shields.io/github/stars/it-at-m/signalo.svg?style=for-the-badge

@@ -1,13 +1,8 @@
 {
   $schema: "https://docs.renovatebot.com/renovate-schema.json",
-  extends: ["config:base"],
+  extends: ["config:recommended"],
   baseBranches: ["dev"],
-  packageRules: [
-    {
-      matchUpdateTypes: ["minor", "patch"],
-      automerge: true,
-      groupName: "all non-major dependencies",
-      groupSlug: "all-minor-patch",
-    },
-  ],
+  automerge: true,
+  automergeType: "pr",
+  platformAutomerge: true,
 }
