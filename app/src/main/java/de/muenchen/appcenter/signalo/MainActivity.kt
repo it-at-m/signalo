@@ -8,6 +8,7 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.TextView
 import androidx.activity.addCallback
+import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
@@ -25,16 +26,18 @@ import timber.log.Timber
 
 
 class MainActivity : AppCompatActivity() {
-
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
     private var infoMenuItem: MenuItem? = null
     private var currentFragmentId = 0
-
     private val viewmodel: MainViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         Timber.d("App gestartet (on Create)")
         super.onCreate(savedInstanceState)
+
+        enableEdgeToEdge()
+
         this.binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(this.binding.root)
         initNavDrawer()

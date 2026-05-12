@@ -4,20 +4,21 @@ plugins {
 
 android {
     namespace = "com.example.test.signalo"
-    compileSdk = 36
+    compileSdk = 37
 
     defaultConfig {
         applicationId = "com.example.test.signalo"
-        minSdk = 35
-        targetSdk = 35
+        minSdk = 29
+        targetSdk = 37
         versionCode = 10
-        versionName = "0.3.3"
+        versionName = "0.4.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
+            isShrinkResources = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -25,8 +26,8 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     buildFeatures {
         viewBinding = true
@@ -35,12 +36,7 @@ android {
 }
 
 dependencies {
-    implementation(libs.timber)
-    implementation(libs.androidx.swiperefreshlayout)
     implementation(project(":gaugelibrary"))
-    implementation(libs.androidx.navigation.fragment.ktx.v285)
-    implementation(libs.androidx.navigation.ui.ktx.v285)
-    implementation(libs.material.v1130)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
@@ -48,6 +44,9 @@ dependencies {
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
     implementation(libs.androidx.work.runtime.ktx)
+    implementation(libs.androidx.swiperefreshlayout)
+    implementation(libs.timber)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

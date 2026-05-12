@@ -124,8 +124,8 @@ Distributed under the MIT License. See [LICENSE](LICENSE) file for more informat
 
 ## Contact
 
-it@M - opensource@muenchen.de
-AppCenter - apps@muenchen.de
+it@M - [opensource@muenchen.de](mailto:opensource@muenchen.de)
+AppCenter - [apps@muenchen.de](mailto:apps@muenchen.de)
 
 <!-- project shields / links -->
 

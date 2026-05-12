@@ -1034,45 +1034,46 @@ class MainFragment : Fragment() {
         val backwardTransition = MaterialSharedAxis(MaterialSharedAxis.X, false)
         forwardTransition.duration = Constants.SWITCH_ANIMATION_MS.toLong()
         backwardTransition.duration = Constants.SWITCH_ANIMATION_MS.toLong()
+
         when (button) {
             Constants.WIFI -> {
                 TransitionManager.beginDelayedTransition(
-                    _binding.layout1,
+                    _binding.mainContainer,
                     forwardTransition
                 )
                 Timber.d("Cellular gauge off")
                 Timber.d("Wifi gauge on")
 
-                _binding.cellularGauge.visibility = GONE
-                _binding.wifiGauge.visibility = VISIBLE
+                _binding.cellularGauge.visibility = View.GONE
+                _binding.wifiGauge.visibility = View.VISIBLE
 
-                _binding.cellularContainer.visibility = GONE
-                _binding.wifiContainer.visibility = VISIBLE
+                _binding.cellularContainer.visibility = View.GONE
+                _binding.wifiContainer.visibility = View.VISIBLE
             }
 
             Constants.CELLULAR -> {
                 TransitionManager.beginDelayedTransition(
-                    _binding.layout1,
+                    _binding.mainContainer,
                     backwardTransition
                 )
                 Timber.d("Wifi gauge off")
                 Timber.d("Cellular gauge on")
 
-                _binding.wifiGauge.visibility = GONE
-                _binding.cellularGauge.visibility = VISIBLE
-                _binding.wifiContainer.visibility = GONE
-                _binding.cellularContainer.visibility = VISIBLE
+                _binding.wifiGauge.visibility = View.GONE
+                _binding.cellularGauge.visibility = View.VISIBLE
+                _binding.wifiContainer.visibility = View.GONE
+                _binding.cellularContainer.visibility = View.VISIBLE
             }
 
             Constants.SECOND_SIM -> {
                 TransitionManager.beginDelayedTransition(
-                    _binding.layout1,
+                    _binding.mainContainer,
                     backwardTransition
                 )
-                _binding.wifiGauge.visibility = GONE
-                _binding.cellularGauge.visibility = VISIBLE
-                _binding.wifiContainer.visibility = GONE
-                _binding.cellularContainer.visibility = VISIBLE
+                _binding.wifiGauge.visibility = View.GONE
+                _binding.cellularGauge.visibility = View.VISIBLE
+                _binding.wifiContainer.visibility = View.GONE
+                _binding.cellularContainer.visibility = View.VISIBLE
             }
         }
     }
