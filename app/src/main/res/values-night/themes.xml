@@ -53,6 +53,6 @@
         <item name="android:textColor">@color/md_theme_primary</item>
         <item name="android:textStyle">bold</item>
         <item name="fontFamily">@font/aldrich</item>
-
     </style>
+
 </resources>
