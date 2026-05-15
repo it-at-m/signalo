@@ -1,10 +1,10 @@
-package com.example.test.signalo
+package de.muenchen.appcenter.signalo
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.test.signalo.utils.Constants
+import de.muenchen.appcenter.signalo.utils.Constants
 
 class MainViewModel(application: Application) : AndroidViewModel(application) {
 

@@ -3,21 +3,22 @@ plugins {
 }
 
 android {
-    namespace = "com.example.test.signalo"
+    namespace = "de.muenchen.appcenter.signalo"
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "com.example.test.signalo"
-        minSdk = 35
-        targetSdk = 35
+        applicationId = "de.muenchen.appcenter.signalo"
+        minSdk = 31
+        targetSdk = 36
         versionCode = 10
-        versionName = "0.3.3"
+        versionName = "1.0.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
+            isShrinkResources = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -25,8 +26,8 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     buildFeatures {
         viewBinding = true
