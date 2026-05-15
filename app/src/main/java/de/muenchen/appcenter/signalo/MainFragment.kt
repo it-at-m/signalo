@@ -194,7 +194,7 @@ class MainFragment : Fragment() {
      * 30000ms (30sek) because the Android systems only allows 4 manual scans in 2 minutes
      */
     private fun startRefreshCooldown() {
-        Timber.d("refreshCooldown has been called with state")
+        Timber.d("refreshCooldown has been called with state " + viewmodel.refreshState.value)
         if (!viewmodel.onCellular.value!!) {
             viewmodel.refreshState.value = Constants.REFRESH_ON_COOLDOWN
             //configure and start Animator
@@ -935,7 +935,7 @@ class MainFragment : Fragment() {
         //Wifi
         wifiGauge.addRange(createRange(-100.0, -81.0, Constants.GAUGE_RANGE1_COLOR.toColorInt()))
         wifiGauge.addRange(createRange(-80.0, -68.0, Constants.GAUGE_RANGE2_COLOR.toColorInt()))
-        wifiGauge.addRange(createRange(-67.0, 30.0, Constants.GAUGE_RANGE3_COLOR.toColorInt()))
+        wifiGauge.addRange(createRange(-67.0, -30.0, Constants.GAUGE_RANGE3_COLOR.toColorInt()))
         wifiGauge.addRange(range)
         wifiGauge.addRange(range2)
         wifiGauge.addRange(range3)
@@ -1268,7 +1268,7 @@ class MainFragment : Fragment() {
      */
     private fun unregisterWifiScanReceiver() {
         if (wifiScanReceiver != null) {
-            requireContext().unregisterReceiver(wifiScanReceiver)
+            context?.unregisterReceiver(wifiScanReceiver)
             Timber.d("wifiScanReceiver is unregistered")
             wifiScanReceiver = null
         }
@@ -1310,12 +1310,7 @@ class MainFragment : Fragment() {
         }
     }
 
-    /**
-     * reset and unregister all vars and functions if app is paused
-     */
-    override fun onPause() {
-        Timber.d("onPause is called")
-        super.onPause()
+    private fun cleanUpAll() {
         stopTimer()
         switchJob?.cancel()
         oldDbmWifi = 0.0
@@ -1329,20 +1324,20 @@ class MainFragment : Fragment() {
     }
 
     /**
+     * reset and unregister all vars and functions if app is paused
+     */
+    override fun onPause() {
+        Timber.d("onPause is called")
+        super.onPause()
+        cleanUpAll()
+    }
+
+    /**
      * reset and unregister all vars and functions if app is destroyed
      */
     override fun onDestroyView() {
         Timber.d("onDestroy is called")
         super.onDestroyView()
-        stopTimer()
-        unregisterWifiScanReceiver()
-        switchJob?.cancel()
-        oldDbmWifi = 0.0
-        oldDbmCellular = 0.0
-        unregisterCellular()
-        unregisterCellularType()
-        unregisterGeneralNetworkCallback()
-        unregisterNetworkCallbackWifi()
-        _binding.toggleButtonGroup.clearOnButtonCheckedListeners()
+        cleanUpAll()
     }
 }
