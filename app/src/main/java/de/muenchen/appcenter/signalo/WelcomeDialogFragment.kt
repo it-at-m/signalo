@@ -1,4 +1,4 @@
-package com.example.test.signalo
+package de.muenchen.appcenter.signalo
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,8 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.setFragmentResult
-import com.example.test.signalo.databinding.WelcomeDialogBinding
-import com.example.test.signalo.utils.Constants
+import de.muenchen.appcenter.signalo.databinding.WelcomeDialogBinding
+import de.muenchen.appcenter.signalo.utils.Constants
 
 class WelcomeDialogFragment : DialogFragment() {
     private lateinit var _binding: WelcomeDialogBinding

@@ -1,4 +1,4 @@
-package com.example.test.signalo
+package de.muenchen.appcenter.signalo
 
 import android.os.Bundle
 import android.view.LayoutInflater
