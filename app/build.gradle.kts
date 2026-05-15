@@ -4,12 +4,12 @@ plugins {
 
 android {
     namespace = "de.muenchen.appcenter.signalo"
-    compileSdk = 37
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "de.muenchen.appcenter.signalo"
         minSdk = 31
-        targetSdk = 37
+        targetSdk = 36
         versionCode = 10
         versionName = "1.0.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
