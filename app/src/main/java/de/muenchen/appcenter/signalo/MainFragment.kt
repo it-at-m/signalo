@@ -515,22 +515,6 @@ class MainFragment : Fragment() {
         }
     }
 
-    /**
-     * @param subscriptionID of the simcard the telephonymanager should use
-     * override the current Telephony manager to use the requested simcard for values
-     */
-//    private fun overrideTelephonyManagerWithSim(subscriptionID: MutableLiveData<Int>) {
-//        if (subscriptionID.value != -1) {
-//            Timber.d("TelephonyManager wird registiert auf SubID: $subscriptionID")
-//            telephonyManager = telephonyManager.createForSubscriptionId(subscriptionID)
-//        } else {
-//            Timber.d(
-//
-//                "TelephonyManager wird nicht umgeschrieben da SubID= $subscriptionID"
-//            )
-//        }
-//    }
-
     /** registers a Display info Listener
      * sets value real5G= Yes:  Standalone, no: Non Standalone
      * calls a fun to set icons acordingly to the networktype
