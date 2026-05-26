@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import de.muenchen.appcenter.signalo.utils.Constants
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
@@ -26,15 +27,23 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     val wifiDbmValue: LiveData<Double> get() = _wifiDbmValue
     val cellularDbmValue: LiveData<Double> get() = _cellularDbmValue
     private val cellularDbmRepository = CellularDbmRepository(application)
+    private var cellularDbmJob: Job? = null
 
-    fun startObservingSignalStrength() {
-        viewModelScope.launch {
+    /**
+     * Starts collecting cellular dBm values from repository.
+     * Cancels any existing observation before starting a new one.
+     * handles all the validation logic
+     * sets the validated values for the UI to be displayed
+     */
+    fun startObservingCellularDbm() {
+        cellularDbmJob?.cancel()
+        cellularDbmJob = viewModelScope.launch {
             cellularDbmRepository.observeSignalStrength().collect { dbmCellular ->
                 if (dbmCellular != null) {
                     if (dbmCellular != oldDbmCellular) {
                         Timber.d(
 
-                            "New Cellular DBM Value is: " + dbmCellular.toString()
+                            "New Cellular DBM Value is: %s", dbmCellular.toString()
                         )
                         setCellularDbmValue(dbmCellular)
                         oldDbmCellular = dbmCellular
@@ -48,6 +57,11 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                 }
             }
         }
+    }
+
+    fun stopObservingCellularDbm() {
+        cellularDbmJob?.cancel()
+        cellularDbmJob = null
     }
 
     fun setWifiDbmValue(value: Double) {

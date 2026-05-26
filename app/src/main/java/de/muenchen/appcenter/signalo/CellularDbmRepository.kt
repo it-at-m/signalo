@@ -14,6 +14,12 @@ class CellularDbmRepository(context: Context) {
         context.getSystemService(TelephonyManager::class.java)
     private val mainExecutor = context.mainExecutor
 
+    /**
+     * This class only handles the communication with android api to be the
+     * Single source of truth for cellular dbm values.
+     * Provides signal strength values as a Flow to be collected by the ViewModel.
+     * sends null when SignalStrength is empty
+     */
     fun observeSignalStrength(): Flow<Double?> = callbackFlow {
         val cellularCallBack: TelephonyCallback =
             object : TelephonyCallback(), TelephonyCallback.SignalStrengthsListener {
