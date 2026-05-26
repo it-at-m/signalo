@@ -4,7 +4,10 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import de.muenchen.appcenter.signalo.utils.Constants
+import kotlinx.coroutines.launch
+import timber.log.Timber
 
 class MainViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -13,6 +16,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     var onCellular: MutableLiveData<Boolean> = MutableLiveData(true)
     var activeCooldown: MutableLiveData<Boolean> = MutableLiveData(false)
     var connectedBSSID: MutableLiveData<String> = MutableLiveData("")
+    private var oldDbmCellular: Double = 0.0
     var animatorProgress: MutableLiveData<Int> = MutableLiveData(0)
     var permissionRequestedThisSession: MutableLiveData<Boolean> = MutableLiveData(false)
     private val _wifiDbmValue: MutableLiveData<Double> = MutableLiveData(Constants.GAUGE_WIFI_MIN)
@@ -21,14 +25,37 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     var simState: MutableLiveData<String> = MutableLiveData(Constants.SCAN_PENDING)
     val wifiDbmValue: LiveData<Double> get() = _wifiDbmValue
     val cellularDbmValue: LiveData<Double> get() = _cellularDbmValue
+    private val cellularDbmRepository = CellularDbmRepository(application)
 
+    fun startObservingSignalStrength() {
+        viewModelScope.launch {
+            cellularDbmRepository.observeSignalStrength().collect { dbmCellular ->
+                if (dbmCellular != null) {
+                    if (dbmCellular != oldDbmCellular) {
+                        Timber.d(
+
+                            "New Cellular DBM Value is: " + dbmCellular.toString()
+                        )
+                        setCellularDbmValue(dbmCellular)
+                        oldDbmCellular = dbmCellular
+                    }
+                } else {
+                    setCellularDbmValue(Constants.GAUGE_CELLULAR_MIN)
+                    Timber.d(
+                        "Cellular Dbm Value is null! setting value to %s",
+                        Constants.GAUGE_CELLULAR_MIN
+                    )
+                }
+            }
+        }
+    }
 
     fun setWifiDbmValue(value: Double) {
         _wifiDbmValue.postValue(value)
     }
 
     fun setCellularDbmValue(value: Double) {
-        _cellularDbmValue.postValue(value)
+        _cellularDbmValue.value = value
     }
 
     private val _cellularType: MutableLiveData<String> = MutableLiveData("[unknown]")

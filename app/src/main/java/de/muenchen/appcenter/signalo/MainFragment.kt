@@ -29,7 +29,6 @@ import android.telephony.CellInfoGsm
 import android.telephony.CellInfoLte
 import android.telephony.CellInfoNr
 import android.telephony.CellInfoWcdma
-import android.telephony.SignalStrength
 import android.telephony.SubscriptionManager
 import android.telephony.TelephonyCallback
 import android.telephony.TelephonyDisplayInfo
@@ -284,39 +283,7 @@ class MainFragment : Fragment() {
      * if no value gets delivered set all stats to unknown and call noNetwork
      */
     private fun readCellularDbmFromTelephonyManagerAndSetInUI() {
-        Timber.d("getCellulardbm is called")
-        //Cellurlar dbm daten abfragen und anzeigen
-        cellularCallBack =
-            object : TelephonyCallback(), TelephonyCallback.SignalStrengthsListener {
-                override fun onSignalStrengthsChanged(signalStrength: SignalStrength) {
-                    if (signalStrength.cellSignalStrengths.isNotEmpty()) {
-                        val dbmCellular = signalStrength.cellSignalStrengths[0].dbm.toDouble()
-                        if (dbmCellular != oldDbmCellular) {
-                            Timber.d(
-
-                                "New Cellular DBM Value is: " + dbmCellular.toString()
-                            )
-                            viewmodel.setCellularDbmValue(dbmCellular)
-                            oldDbmCellular = dbmCellular
-                        }
-                    } else {
-                        noNetwork()
-                        viewmodel.setCellId("[unknown]")
-                        viewmodel.setCurrentCellularBand("[unknown]")
-                        viewmodel.setcurrentNetProvider("[unknown]")
-                        Timber.d("noNetwork is Called by cellular")
-
-                    }
-                }
-            }
-
-        cellularCallBack?.let { callback ->
-            telephonyManager.registerTelephonyCallback(
-                getMainExecutor(requireContext()),
-                callback
-            )
-            Timber.d("CellularCallBack is registered")
-        }
+        viewmodel.startObservingSignalStrength()
     }
 
     //start android permission request
@@ -773,6 +740,15 @@ class MainFragment : Fragment() {
                     super.onCapabilitiesChanged(network, networkCapabilities)
                     fetchCellularProviderName()
                     readCellIdAndBandFromTelephonyManagerAndSetInUi()
+                }
+
+                override fun onLost(network: Network) {
+                    super.onLost(network)
+                    Timber.d("Cellular network lost, setting values to unknown")
+                    viewmodel.setCellId("[unknown]")
+                    viewmodel.setCurrentCellularBand("[unknown]")
+                    viewmodel.setcurrentNetProvider("[unknown]")
+                    viewmodel.setCellularType("[unknown]")
                 }
             }
         connectivityManager.registerDefaultNetworkCallback(generalNetworkCallback!!)
