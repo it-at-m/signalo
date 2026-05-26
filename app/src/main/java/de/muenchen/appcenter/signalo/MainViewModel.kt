@@ -12,6 +12,8 @@ import timber.log.Timber
 
 class MainViewModel(application: Application) : AndroidViewModel(application) {
 
+    var mainSimSubId: MutableLiveData<Int> = MutableLiveData(-1)
+    var secondSimSubId: MutableLiveData<Int> = MutableLiveData(-1)
     var refreshState: MutableLiveData<String> = MutableLiveData(Constants.REFRESH_IDLE)
     var onWifi: MutableLiveData<Boolean> = MutableLiveData(false)
     var onCellular: MutableLiveData<Boolean> = MutableLiveData(true)
@@ -29,16 +31,17 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     private val cellularDbmRepository = CellularDbmRepository(application)
     private var cellularDbmJob: Job? = null
 
+
     /**
      * Starts collecting cellular dBm values from repository.
      * Cancels any existing observation before starting a new one.
      * handles all the validation logic
      * sets the validated values for the UI to be displayed
      */
-    fun startObservingCellularDbm() {
+    fun startObservingCellularDbm(subscriptionId: Int?) {
         cellularDbmJob?.cancel()
         cellularDbmJob = viewModelScope.launch {
-            cellularDbmRepository.observeSignalStrength().collect { dbmCellular ->
+            cellularDbmRepository.observeSignalStrength(subscriptionId).collect { dbmCellular ->
                 if (dbmCellular != null) {
                     if (dbmCellular != oldDbmCellular) {
                         Timber.d(

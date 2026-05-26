@@ -471,10 +471,10 @@ class MainFragment : Fragment() {
             val simInfos = subscriptionManager?.activeSubscriptionInfoList ?: return
             for (sim in simInfos) {
                 if (sim.subscriptionId == SubscriptionManager.getDefaultVoiceSubscriptionId()) {
-                    mainSimSubId = sim.subscriptionId
+                    viewmodel.mainSimSubId.postValue(sim.subscriptionId)
                     mainSimMCCMNC = sim.mccString + sim.mncString
                 } else {
-                    secondSimSubId = sim.subscriptionId
+                    viewmodel.secondSimSubId.postValue(sim.subscriptionId)
                     secondSimMCCMNC = sim.mccString + sim.mncString
                 }
             }
@@ -519,17 +519,17 @@ class MainFragment : Fragment() {
      * @param subscriptionID of the simcard the telephonymanager should use
      * override the current Telephony manager to use the requested simcard for values
      */
-    private fun overrideTelephonyManagerWithSim(subscriptionID: Int) {
-        if (subscriptionID != -1) {
-            Timber.d("TelephonyManager wird registiert auf SubID: $subscriptionID")
-            telephonyManager = telephonyManager.createForSubscriptionId(subscriptionID)
-        } else {
-            Timber.d(
-
-                "TelephonyManager wird nicht umgeschrieben da SubID= $subscriptionID"
-            )
-        }
-    }
+//    private fun overrideTelephonyManagerWithSim(subscriptionID: MutableLiveData<Int>) {
+//        if (subscriptionID.value != -1) {
+//            Timber.d("TelephonyManager wird registiert auf SubID: $subscriptionID")
+//            telephonyManager = telephonyManager.createForSubscriptionId(subscriptionID)
+//        } else {
+//            Timber.d(
+//
+//                "TelephonyManager wird nicht umgeschrieben da SubID= $subscriptionID"
+//            )
+//        }
+//    }
 
     /** registers a Display info Listener
      * sets value real5G= Yes:  Standalone, no: Non Standalone
@@ -1074,8 +1074,7 @@ class MainFragment : Fragment() {
                 oldDbmWifi = 0.0
                 viewmodel.onWifi.value = false
                 viewmodel.onCellular.value = true
-                overrideTelephonyManagerWithSim(mainSimSubId)
-                viewmodel.startObservingCellularDbm()
+                viewmodel.startObservingCellularDbm(viewmodel.mainSimSubId.value)
                 fetchAllCellularData()
                 uiSwitchAnimation(button)
             }
@@ -1086,8 +1085,7 @@ class MainFragment : Fragment() {
                 oldDbmWifi = 0.0
                 viewmodel.onWifi.value = false
                 viewmodel.onCellular.value = true
-                overrideTelephonyManagerWithSim(secondSimSubId)
-                viewmodel.startObservingCellularDbm()
+                viewmodel.startObservingCellularDbm(viewmodel.secondSimSubId.value)
                 fetchAllCellularData()
                 uiSwitchAnimation(button)
             }

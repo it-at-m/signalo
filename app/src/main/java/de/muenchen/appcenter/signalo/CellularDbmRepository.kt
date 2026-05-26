@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.callbackFlow
 import timber.log.Timber
 
 class CellularDbmRepository(context: Context) {
-    private val telephonyManager =
+    private var telephonyManager =
         context.getSystemService(TelephonyManager::class.java)
     private val mainExecutor = context.mainExecutor
 
@@ -20,7 +20,12 @@ class CellularDbmRepository(context: Context) {
      * Provides signal strength values as a Flow to be collected by the ViewModel.
      * sends null when SignalStrength is empty
      */
-    fun observeSignalStrength(): Flow<Double?> = callbackFlow {
+    fun observeSignalStrength(subscriptionId: Int?): Flow<Double?> = callbackFlow {
+        val manager = if (subscriptionId != -1 && subscriptionId != null) {
+            telephonyManager.createForSubscriptionId(subscriptionId)
+        } else {
+            telephonyManager
+        }
         val cellularCallBack: TelephonyCallback =
             object : TelephonyCallback(), TelephonyCallback.SignalStrengthsListener {
                 override fun onSignalStrengthsChanged(signalStrength: SignalStrength) {
@@ -33,12 +38,12 @@ class CellularDbmRepository(context: Context) {
                     }
                 }
             }
-        telephonyManager.registerTelephonyCallback(
+        manager.registerTelephonyCallback(
             mainExecutor,
             cellularCallBack
         )
         awaitClose {
-            telephonyManager.unregisterTelephonyCallback(cellularCallBack)
+            manager.unregisterTelephonyCallback(cellularCallBack)
         }
     }
 }
