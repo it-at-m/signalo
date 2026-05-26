@@ -277,15 +277,6 @@ class MainFragment : Fragment() {
         }
     }
 
-    /**
-     * registeres a callback if Signalstregth has changed
-     * fetch the newest Cellular DBM values
-     * if no value gets delivered set all stats to unknown and call noNetwork
-     */
-    private fun readCellularDbmFromTelephonyManagerAndSetInUI() {
-        viewmodel.startObservingSignalStrength()
-    }
-
     //start android permission request
     private fun getPermissions() {
         Timber.d("request permissions is called")
@@ -1084,7 +1075,7 @@ class MainFragment : Fragment() {
                 viewmodel.onWifi.value = false
                 viewmodel.onCellular.value = true
                 overrideTelephonyManagerWithSim(mainSimSubId)
-                readCellularDbmFromTelephonyManagerAndSetInUI()
+                viewmodel.startObservingCellularDbm()
                 fetchAllCellularData()
                 uiSwitchAnimation(button)
             }
@@ -1096,7 +1087,7 @@ class MainFragment : Fragment() {
                 viewmodel.onWifi.value = false
                 viewmodel.onCellular.value = true
                 overrideTelephonyManagerWithSim(secondSimSubId)
-                readCellularDbmFromTelephonyManagerAndSetInUI()
+                viewmodel.startObservingCellularDbm()
                 fetchAllCellularData()
                 uiSwitchAnimation(button)
             }
@@ -1108,7 +1099,7 @@ class MainFragment : Fragment() {
      */
     private fun resetNetworkTypeCallbacks() {
         unregisterCellularType()
-        unregisterCellular()
+        viewmodel.stopObservingCellularDbm()
         unregisterGeneralNetworkCallback()
         unregisterNetworkCallbackWifi()
         unregisterWifiScanReceiver()
