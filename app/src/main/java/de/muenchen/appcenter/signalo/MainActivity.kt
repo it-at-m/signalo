@@ -1,6 +1,8 @@
 package de.muenchen.appcenter.signalo
 
+import android.content.Intent
 import android.os.Bundle
+import android.provider.Settings
 import android.text.Html
 import android.view.Menu
 import android.view.MenuItem
@@ -29,6 +31,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
     private var infoMenuItem: MenuItem? = null
+    private var locationMenuItem: MenuItem? = null
+
     private var currentFragmentId = 0
 
     private val viewmodel: MainViewModel by viewModels()
@@ -38,7 +42,7 @@ class MainActivity : AppCompatActivity() {
         this.binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(this.binding.root)
         initNavDrawer()
-        initRefreshInfo()
+        initButtons()
         handleBackPressed()
 
         viewmodel.refreshState.observe(this) {
@@ -52,6 +56,34 @@ class MainActivity : AppCompatActivity() {
         viewmodel.animatorProgress.observe(this) { progress ->
             this.binding.progressbar.progress = progress
         }
+        viewmodel.isLocationEnabled.observe(this) { enabled ->
+            if (enabled == false) {
+                locationMenuItem?.isVisible = true
+                if (viewmodel.locationDialogShownThisSession.value != true) {
+                    openLocationDialog()
+                    viewmodel.locationDialogShownThisSession.postValue(true)
+                }
+            }
+            if (enabled == true) {
+                locationMenuItem?.isVisible = false
+            }
+        }
+    }
+
+    private fun openLocationDialog() {
+        val formattedMessage =
+            Html.fromHtml(getString(R.string.location_services_missing), Html.FROM_HTML_MODE_LEGACY)
+        MaterialAlertDialogBuilder(this)
+            .setTitle("Standortdienste sind ausgeschaltet")
+            .setMessage(formattedMessage)
+            .setNeutralButton("OK") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .setPositiveButton("Einstellungen") { dialog, _ ->
+                startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS))
+                dialog.dismiss()
+            }
+            .show()
     }
 
     /**
@@ -150,7 +182,9 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
-        infoMenuItem = menu.findItem(R.id.infoButton)
+        locationMenuItem = menu.findItem(R.id.locationMissing)
+        locationMenuItem?.isVisible = viewmodel.isLocationEnabled.value == false
+
         if (viewmodel.refreshState.value == Constants.REFRESH_ON_COOLDOWN) {
             Timber.d("Info icon is not visible, because of running refresh")
             infoMenuItem?.isVisible = false
@@ -168,11 +202,16 @@ class MainActivity : AppCompatActivity() {
                 true
             }
 
+            R.id.locationMissing -> {
+                openLocationDialog()
+                true
+            }
+
             else -> super.onOptionsItemSelected(item)
         }
     }
 
-    private fun initRefreshInfo() {
+    private fun initButtons() {
         this.binding.refreshLock.setOnClickListener {
             showMaterialDialog(
                 getString(R.string.title_cooldown_info_button),

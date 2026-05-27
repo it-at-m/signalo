@@ -338,6 +338,7 @@ class MainFragment : Fragment() {
         Timber.d("getCellID is Called")
         if ((hasSinglePermission(ACCESS_FINE_LOCATION)) && hasSinglePermission(READ_PHONE_STATE)) {
             fetchDualSimInfos()
+            checkLocationSetting()
             var cellId: Long = -1
             var formattedBand: String = "[unknown]"
             //demeter which MCCMNC to match to
@@ -345,16 +346,14 @@ class MainFragment : Fragment() {
                 if (_binding.btnSecondSim.isChecked) secondSimMCCMNC else mainSimMCCMNC
             val cellInfo = telephonyManager.allCellInfo
             if (cellInfo.isNullOrEmpty()) {
-                if (viewmodel.isLocationEnabled.value == false) {
+                if (viewmodel.isLocationEnabled.value == true) {
                     viewmodel.setCurrentCellularBand("[unknown]")
                     viewmodel.setCellId("[unknown]")
                     Timber.d("getAllCellInfo is empty")
-                    return
                 } else {
                     viewmodel.setCurrentCellularBand("[Location required]")
                     viewmodel.setCellId("[Location required]")
                     Timber.d("getAllCellInfo is empty because location is missing")
-                    return
                 }
             }
             for (info in cellInfo) {

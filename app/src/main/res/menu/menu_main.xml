@@ -10,5 +10,14 @@
         app:iconTint="?attr/colorOnSurface"
 
         />
+    <item
+        android:id="@+id/locationMissing"
+        android:icon="@drawable/location_off_24px"
+        app:showAsAction="always"
+        android:title="Location Services Missing"
+        android:visible="false"
+        app:iconTint="?attr/colorOnSurface"
+
+        />
 
 </menu>

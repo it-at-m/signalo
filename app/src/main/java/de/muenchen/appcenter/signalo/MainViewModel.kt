@@ -22,6 +22,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     var connectedBSSID: MutableLiveData<String> = MutableLiveData("")
     private var oldDbmCellular: Double = 0.0
     var animatorProgress: MutableLiveData<Int> = MutableLiveData(0)
+    var locationDialogShownThisSession: MutableLiveData<Boolean> = MutableLiveData(false)
     var permissionRequestedThisSession: MutableLiveData<Boolean> = MutableLiveData(false)
     private val _wifiDbmValue: MutableLiveData<Double> = MutableLiveData(Constants.GAUGE_WIFI_MIN)
     private val _cellularDbmValue: MutableLiveData<Double> =
