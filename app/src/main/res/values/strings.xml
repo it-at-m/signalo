@@ -54,7 +54,6 @@
     <string name="impressum1_desc">it@M IBS144 AppCenter</string>
     <string name="impressum1_text"><b>Anschrift:</b> \nAgnes-Pockels-Bogen 33 \n80992 München</string>
     <string name="impressum2_text"><b>E-Mail:</b> \napps@muenchen.de</string>
-    <string name="impressum3_text"><b>WiLMA:</b> \nhttps://wilma.muenchen.de/workspaces/mobile-services-support</string>
     <string name="title_infodialog_refresh">Aktualisierung der Daten</string>
     <string name="description_infodialog_refresh"><![CDATA[Die Mobilfunk-Signalstärke (dbm-Wert) wird automatisch aktualisiert. Bei Wifi kann dies allerdings unregelmäßig sein. <br><br> Für eine manuelle Aktualisierung wische von oben nach unten. <b>Das ist nur alle 30 Sekunden möglich</b>.]]></string>
     <string name="message_cellid_missing_permission">(Berechtigung fehlt)</string>
