@@ -12,6 +12,7 @@ import timber.log.Timber
 
 class MainViewModel(application: Application) : AndroidViewModel(application) {
 
+    var isLocationEnabled: MutableLiveData<Boolean> = MutableLiveData(true)
     var mainSimSubId: MutableLiveData<Int> = MutableLiveData(-1)
     var secondSimSubId: MutableLiveData<Int> = MutableLiveData(-1)
     var refreshState: MutableLiveData<String> = MutableLiveData(Constants.REFRESH_IDLE)

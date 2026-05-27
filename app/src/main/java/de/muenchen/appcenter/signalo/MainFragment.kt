@@ -13,6 +13,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.content.pm.PackageManager
+import android.location.LocationManager
 import android.net.ConnectivityManager
 import android.net.Network
 import android.net.NetworkCapabilities
@@ -76,6 +77,7 @@ class MainFragment : Fragment() {
     private lateinit var telephonyManager: TelephonyManager
     private lateinit var connectivityManager: ConnectivityManager
     private lateinit var wifiManager: WifiManager
+    private lateinit var locationManager: LocationManager
     private var timerIsRunning = false
     private var switchJob: Job? = null
     private var mainSimSubId = -1
@@ -118,6 +120,7 @@ class MainFragment : Fragment() {
         checkPermissions()
         initRefreshGesture()
         initToggleButtons()
+        checkLocationSetting()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -131,13 +134,29 @@ class MainFragment : Fragment() {
         wifiManager =
             requireContext().getSystemService(WifiManager::class.java)
         subscriptionManager = requireContext().getSystemService(SubscriptionManager::class.java)
+        locationManager = requireContext().getSystemService(LocationManager::class.java)
         readUsableSimCards()
+    }
+
+    private fun checkLocationSetting() {
+        Timber.d("The Location Setting is %s", locationManager.isLocationEnabled)
+        viewmodel.isLocationEnabled.postValue(locationManager.isLocationEnabled)
     }
 
     private fun initRefreshGesture() {
         _binding.swiperefresh.setProgressViewOffset(true, 0, 150)
         _binding.swiperefresh.setOnRefreshListener {
-            manualWifiRefresh()
+            if (viewmodel.isLocationEnabled.value == true) {
+                manualWifiRefresh()
+            } else {
+                Toast.makeText(
+                    requireContext(),
+                    "Please enable location services",
+                    Toast.LENGTH_LONG
+                )
+                    .show()
+                _binding.swiperefresh.isRefreshing = false
+            }
         }
     }
 
@@ -326,10 +345,17 @@ class MainFragment : Fragment() {
                 if (_binding.btnSecondSim.isChecked) secondSimMCCMNC else mainSimMCCMNC
             val cellInfo = telephonyManager.allCellInfo
             if (cellInfo.isNullOrEmpty()) {
-                viewmodel.setCurrentCellularBand("[unknown]")
-                viewmodel.setCellId("[unknown]")
-                Timber.d("getAllCellInfo is empty")
-                return
+                if (viewmodel.isLocationEnabled.value == false) {
+                    viewmodel.setCurrentCellularBand("[unknown]")
+                    viewmodel.setCellId("[unknown]")
+                    Timber.d("getAllCellInfo is empty")
+                    return
+                } else {
+                    viewmodel.setCurrentCellularBand("[Location required]")
+                    viewmodel.setCellId("[Location required]")
+                    Timber.d("getAllCellInfo is empty because location is missing")
+                    return
+                }
             }
             for (info in cellInfo) {
                 if (info.isRegistered && getMccMnc(info) == targetMccMnc) {
@@ -713,6 +739,7 @@ class MainFragment : Fragment() {
                     networkCapabilities: NetworkCapabilities
                 ) {
                     super.onCapabilitiesChanged(network, networkCapabilities)
+                    checkLocationSetting()
                     fetchCellularProviderName()
                     readCellIdAndBandFromTelephonyManagerAndSetInUi()
                 }
@@ -753,6 +780,7 @@ class MainFragment : Fragment() {
                     network: Network,
                     networkCapabilities: NetworkCapabilities
                 ) {
+                    checkLocationSetting()
                     //when caps changed, if Wifi is not enabled set values to unknown, else call functions
                     if (!wifiManager.isWifiEnabled) {
                         Timber.d("Wifi wurde überprüft und ist Ausgeschaltet!")
@@ -784,10 +812,12 @@ class MainFragment : Fragment() {
      * else show
      */
     fun fetchSSID(wifiInfo: WifiInfo) {
-        if (hasSinglePermission(ACCESS_FINE_LOCATION)) {
+        if (hasSinglePermission(ACCESS_FINE_LOCATION) && viewmodel.isLocationEnabled.value == true) {
             Timber.d(wifiInfo.ssid)
             viewmodel.connectedBSSID.postValue(wifiInfo.bssid)
             viewmodel.setCurrentSSID(wifiInfo.ssid.replace("\"", ""))
+        } else if (viewmodel.isLocationEnabled.value == false) {
+            viewmodel.setCurrentSSID("[Location required]")
         } else {
             viewmodel.setCurrentSSID("(Berechtigung fehlt)")
         }
