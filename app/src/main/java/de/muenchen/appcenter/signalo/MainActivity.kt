@@ -56,6 +56,11 @@ class MainActivity : AppCompatActivity() {
         viewmodel.animatorProgress.observe(this) { progress ->
             this.binding.progressbar.progress = progress
         }
+        /**
+         * If location services are off, show LocationMissing Icon
+         * If the have not been asked this session, show user a dialog
+         * if Location services are on, don't show icon
+         */
         viewmodel.isLocationEnabled.observe(this) { enabled ->
             if (enabled == false) {
                 locationMenuItem?.isVisible = true
@@ -70,6 +75,10 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Shows a dialog informing the user that location services are disabled,
+     * with an option to navigate directly to the system location settings.
+     */
     private fun openLocationDialog() {
         val formattedMessage =
             Html.fromHtml(getString(R.string.location_services_missing), Html.FROM_HTML_MODE_LEGACY)

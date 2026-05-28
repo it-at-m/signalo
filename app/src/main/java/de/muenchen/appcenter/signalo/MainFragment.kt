@@ -80,8 +80,6 @@ class MainFragment : Fragment() {
     private lateinit var locationManager: LocationManager
     private var timerIsRunning = false
     private var switchJob: Job? = null
-    private var mainSimSubId = -1
-    private var secondSimSubId = -1
     private var mainSimMCCMNC = ""
     private var secondSimMCCMNC = ""
     private var oldDbmWifi: Double = 0.0
