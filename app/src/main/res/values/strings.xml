@@ -70,7 +70,7 @@
     <string name="open_source_label">Open Source</string>
 
     <string name="feedback_head">Feedback?</string>
-    <string name="feedback_text">Hast du Feedback oder Verbesserungsvorschläge? Meld dich gerne über GitHub:\nhttps://github.com/it-at-m/signalo/issues</string>
+    <string name="feedback_text">Hast du Feedback oder Verbesserungsvorschläge? Melde dich gerne über GitHub:\nhttps://github.com/it-at-m/signalo/issues</string>
 
     <string name="datenschutz_impressum_label"><![CDATA[Datenschutz & Impressum]]></string>
     <string name="app_icon_desc">App Icon</string>
