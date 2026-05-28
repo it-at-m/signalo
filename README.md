@@ -79,7 +79,7 @@ graph. But also some extra stats are displayed:
 - Dual-SIM Support
     - When the app detects 2 usable SIM cards, it switches the view to not only display a button for
       Cellular but for SIM1 and SIM2, so the user can choose which SIM to use and compare.
-- None-SIM Detection
+- No-SIM Detection
     - When the app finds no usable SIM cards, it automatically switches the view to Wifi and
       disables the Cellular page.
 
