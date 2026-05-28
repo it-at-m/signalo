@@ -353,6 +353,7 @@ class MainFragment : Fragment() {
                     viewmodel.setCellId("[Standort benötigt]")
                     Timber.d("getAllCellInfo is empty because location is missing")
                 }
+                return
             }
             for (info in cellInfo) {
                 if (info.isRegistered && getMccMnc(info) == targetMccMnc) {
