@@ -149,7 +149,7 @@ class MainFragment : Fragment() {
             } else {
                 Toast.makeText(
                     requireContext(),
-                    "Bitte Standort aktivieren",
+                    getString(R.string.refresh_message_missing_location),
                     Toast.LENGTH_LONG
                 )
                     .show()
