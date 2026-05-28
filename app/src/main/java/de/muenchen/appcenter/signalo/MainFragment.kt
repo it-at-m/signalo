@@ -149,7 +149,7 @@ class MainFragment : Fragment() {
             } else {
                 Toast.makeText(
                     requireContext(),
-                    "Please enable location services",
+                    "Bitte Standort aktivieren",
                     Toast.LENGTH_LONG
                 )
                     .show()
@@ -349,8 +349,8 @@ class MainFragment : Fragment() {
                     viewmodel.setCellId("[unknown]")
                     Timber.d("getAllCellInfo is empty")
                 } else {
-                    viewmodel.setCurrentCellularBand("[Location required]")
-                    viewmodel.setCellId("[Location required]")
+                    viewmodel.setCurrentCellularBand("[Standort benötigt]")
+                    viewmodel.setCellId("[Standort benötigt]")
                     Timber.d("getAllCellInfo is empty because location is missing")
                 }
             }
@@ -814,7 +814,7 @@ class MainFragment : Fragment() {
             viewmodel.connectedBSSID.postValue(wifiInfo.bssid)
             viewmodel.setCurrentSSID(wifiInfo.ssid.replace("\"", ""))
         } else if (viewmodel.isLocationEnabled.value == false) {
-            viewmodel.setCurrentSSID("[Location required]")
+            viewmodel.setCurrentSSID("[Standort benötigt]")
         } else {
             viewmodel.setCurrentSSID("(Berechtigung fehlt)")
         }

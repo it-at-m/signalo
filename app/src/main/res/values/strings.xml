@@ -78,5 +78,7 @@
     <string name="optional">Optional</string>
     <string name="unknown_provider">Unknown Provider</string>
     <string name="location_services_missing"><![CDATA[Einige Informationen wie Frequenzband, Cell ID und SSID benötigen aktivierte Standortdienste. Auch der manuelle WLAN-Scan ist ohne Standort nicht möglich. <br><br> <b>Bitte aktiviere die Standortdienste in den Geräteeinstellungen</b>.]]></string>
+    <string name="location_missing_dialog_title">Standortdienste sind ausgeschaltet</string>
+    <string name="location_missing_dialog_settings">Einstellungen</string>
 
 </resources>

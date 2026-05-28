@@ -83,12 +83,12 @@ class MainActivity : AppCompatActivity() {
         val formattedMessage =
             Html.fromHtml(getString(R.string.location_services_missing), Html.FROM_HTML_MODE_LEGACY)
         MaterialAlertDialogBuilder(this)
-            .setTitle("Standortdienste sind ausgeschaltet")
+            .setTitle(getString(R.string.location_missing_dialog_title))
             .setMessage(formattedMessage)
             .setNeutralButton("OK") { dialog, _ ->
                 dialog.dismiss()
             }
-            .setPositiveButton("Einstellungen") { dialog, _ ->
+            .setPositiveButton(getString(R.string.location_missing_dialog_settings)) { dialog, _ ->
                 startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS))
                 dialog.dismiss()
             }
