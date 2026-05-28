@@ -54,7 +54,6 @@
     <string name="impressum1_desc">it@M IBS144 AppCenter</string>
     <string name="impressum1_text"><b>Anschrift:</b> \nAgnes-Pockels-Bogen 33 \n80992 München</string>
     <string name="impressum2_text"><b>E-Mail:</b> \napps@muenchen.de</string>
-    <string name="impressum3_text"><b>WiLMA:</b> \nhttps://wilma.muenchen.de/workspaces/mobile-services-support</string>
     <string name="title_infodialog_refresh">Aktualisierung der Daten</string>
     <string name="description_infodialog_refresh"><![CDATA[Die Mobilfunk-Signalstärke (dbm-Wert) wird automatisch aktualisiert. Bei Wifi kann dies allerdings unregelmäßig sein. <br><br> Für eine manuelle Aktualisierung wische von oben nach unten. <b>Das ist nur alle 30 Sekunden möglich</b>.]]></string>
     <string name="message_cellid_missing_permission">(Berechtigung fehlt)</string>
@@ -69,11 +68,18 @@
     <string name="opensource_appache_title"><b>Apache License 2.0 Libraries</b></string>
     <string name="opensource_betterGauge_link">https://github.com/Magnus987/better-gauge-android/tree/Signalo</string>
     <string name="open_source_label">Open Source</string>
+
+    <string name="feedback_head">Feedback?</string>
+    <string name="feedback_text">Hast du Feedback oder Verbesserungsvorschläge? Meld dich gerne über GitHub:\nhttps://github.com/it-at-m/signalo/issues</string>
+
     <string name="datenschutz_impressum_label"><![CDATA[Datenschutz & Impressum]]></string>
     <string name="app_icon_desc">App Icon</string>
     <string name="app_logo_content_desc">App_Logo</string>
     <string name="optional">Optional</string>
     <string name="unknown_provider">Unknown Provider</string>
-
+    <string name="location_services_missing"><![CDATA[Einige Informationen wie Frequenzband, Cell ID und SSID benötigen aktivierte Standortdienste. Auch der manuelle WLAN-Scan ist ohne Standort nicht möglich. <br><br> <b>Bitte aktiviere die Standortdienste in den Geräteeinstellungen</b>.]]></string>
+    <string name="location_missing_dialog_title">Standortdienste sind ausgeschaltet</string>
+    <string name="location_missing_dialog_settings">Einstellungen</string>
+    <string name="refresh_message_missing_location">Bitte Standort aktivieren</string>
 
 </resources>

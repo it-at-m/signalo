@@ -117,21 +117,10 @@
                     android:text="@string/impressum2_text" />
 
 
-                <TextView
-                    style="@style/TextAppearance.Material3.BodyMedium"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="16dp"
-                    android:alpha="0.8"
-                    android:autoLink="web"
-                    android:textIsSelectable="true"
-                    android:text="@string/impressum3_text" />
-
             </LinearLayout>
 
         </androidx.cardview.widget.CardView>
+
 
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>
