@@ -29,7 +29,6 @@ import android.telephony.CellInfoGsm
 import android.telephony.CellInfoLte
 import android.telephony.CellInfoNr
 import android.telephony.CellInfoWcdma
-import android.telephony.SignalStrength
 import android.telephony.SubscriptionManager
 import android.telephony.TelephonyCallback
 import android.telephony.TelephonyDisplayInfo
@@ -278,47 +277,6 @@ class MainFragment : Fragment() {
         }
     }
 
-    /**
-     * registeres a callback if Signalstregth has changed
-     * fetch the newest Cellular DBM values
-     * if no value gets delivered set all stats to unknown and call noNetwork
-     */
-    private fun readCellularDbmFromTelephonyManagerAndSetInUI() {
-        Timber.d("getCellulardbm is called")
-        //Cellurlar dbm daten abfragen und anzeigen
-        cellularCallBack =
-            object : TelephonyCallback(), TelephonyCallback.SignalStrengthsListener {
-                override fun onSignalStrengthsChanged(signalStrength: SignalStrength) {
-                    if (signalStrength.cellSignalStrengths.isNotEmpty()) {
-                        val dbmCellular = signalStrength.cellSignalStrengths[0].dbm.toDouble()
-                        if (dbmCellular != oldDbmCellular) {
-                            Timber.d(
-
-                                "New Cellular DBM Value is: " + dbmCellular.toString()
-                            )
-                            viewmodel.setCellularDbmValue(dbmCellular)
-                            oldDbmCellular = dbmCellular
-                        }
-                    } else {
-                        noNetwork()
-                        viewmodel.setCellId("[unknown]")
-                        viewmodel.setCurrentCellularBand("[unknown]")
-                        viewmodel.setcurrentNetProvider("[unknown]")
-                        Timber.d("noNetwork is Called by cellular")
-
-                    }
-                }
-            }
-
-        cellularCallBack?.let { callback ->
-            telephonyManager.registerTelephonyCallback(
-                getMainExecutor(requireContext()),
-                callback
-            )
-            Timber.d("CellularCallBack is registered")
-        }
-    }
-
     //start android permission request
     private fun getPermissions() {
         Timber.d("request permissions is called")
@@ -513,10 +471,10 @@ class MainFragment : Fragment() {
             val simInfos = subscriptionManager?.activeSubscriptionInfoList ?: return
             for (sim in simInfos) {
                 if (sim.subscriptionId == SubscriptionManager.getDefaultVoiceSubscriptionId()) {
-                    mainSimSubId = sim.subscriptionId
+                    viewmodel.mainSimSubId.postValue(sim.subscriptionId)
                     mainSimMCCMNC = sim.mccString + sim.mncString
                 } else {
-                    secondSimSubId = sim.subscriptionId
+                    viewmodel.secondSimSubId.postValue(sim.subscriptionId)
                     secondSimMCCMNC = sim.mccString + sim.mncString
                 }
             }
@@ -554,22 +512,6 @@ class MainFragment : Fragment() {
             toggleGroup.removeView(secondSimButton)
             secondSimButton.visibility = GONE
             toggleGroup.addView(secondSimButton, index)
-        }
-    }
-
-    /**
-     * @param subscriptionID of the simcard the telephonymanager should use
-     * override the current Telephony manager to use the requested simcard for values
-     */
-    private fun overrideTelephonyManagerWithSim(subscriptionID: Int) {
-        if (subscriptionID != -1) {
-            Timber.d("TelephonyManager wird registiert auf SubID: $subscriptionID")
-            telephonyManager = telephonyManager.createForSubscriptionId(subscriptionID)
-        } else {
-            Timber.d(
-
-                "TelephonyManager wird nicht umgeschrieben da SubID= $subscriptionID"
-            )
         }
     }
 
@@ -773,6 +715,15 @@ class MainFragment : Fragment() {
                     super.onCapabilitiesChanged(network, networkCapabilities)
                     fetchCellularProviderName()
                     readCellIdAndBandFromTelephonyManagerAndSetInUi()
+                }
+
+                override fun onLost(network: Network) {
+                    super.onLost(network)
+                    Timber.d("Cellular network lost, setting values to unknown")
+                    viewmodel.setCellId("[unknown]")
+                    viewmodel.setCurrentCellularBand("[unknown]")
+                    viewmodel.setcurrentNetProvider("[unknown]")
+                    viewmodel.setCellularType("[unknown]")
                 }
             }
         connectivityManager.registerDefaultNetworkCallback(generalNetworkCallback!!)
@@ -1107,8 +1058,7 @@ class MainFragment : Fragment() {
                 oldDbmWifi = 0.0
                 viewmodel.onWifi.value = false
                 viewmodel.onCellular.value = true
-                overrideTelephonyManagerWithSim(mainSimSubId)
-                readCellularDbmFromTelephonyManagerAndSetInUI()
+                viewmodel.startObservingCellularDbm(viewmodel.mainSimSubId.value)
                 fetchAllCellularData()
                 uiSwitchAnimation(button)
             }
@@ -1119,8 +1069,7 @@ class MainFragment : Fragment() {
                 oldDbmWifi = 0.0
                 viewmodel.onWifi.value = false
                 viewmodel.onCellular.value = true
-                overrideTelephonyManagerWithSim(secondSimSubId)
-                readCellularDbmFromTelephonyManagerAndSetInUI()
+                viewmodel.startObservingCellularDbm(viewmodel.secondSimSubId.value)
                 fetchAllCellularData()
                 uiSwitchAnimation(button)
             }
@@ -1132,7 +1081,7 @@ class MainFragment : Fragment() {
      */
     private fun resetNetworkTypeCallbacks() {
         unregisterCellularType()
-        unregisterCellular()
+        viewmodel.stopObservingCellularDbm()
         unregisterGeneralNetworkCallback()
         unregisterNetworkCallbackWifi()
         unregisterWifiScanReceiver()
