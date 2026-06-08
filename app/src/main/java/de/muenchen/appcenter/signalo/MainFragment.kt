@@ -817,7 +817,7 @@ class MainFragment : Fragment() {
         } else if (viewmodel.isLocationEnabled.value == false) {
             viewmodel.setCurrentSSID(getString(R.string.location_missing_value))
         } else {
-            viewmodel.setCurrentSSID("(Berechtigung fehlt)")
+            viewmodel.setCurrentSSID(getString(R.string.permission_missing_value))
         }
     }
 

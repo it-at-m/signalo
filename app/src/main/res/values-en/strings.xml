@@ -93,5 +93,6 @@
     <string name="welcom_dialog_skip">Skip</string>
     <string name="welcome_dialog_start">Start</string>
     <string name="location_missing_value">[Location needed]</string>
+    <string name="permission_missing_value">[Permission missing]</string>
 
 </resources>
