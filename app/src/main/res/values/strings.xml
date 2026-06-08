@@ -88,6 +88,7 @@
     <string name="speedtest_dialog_positive_button">Browser öffnen</string>
     <string name="speedtest_dialog_negative_button">Abbrechen</string>
     <string name="Speedtest_open_erorr">Kein Browser zum Öffnen des Speedtests gefunden</string>
+    <string name="nav_drawer_speedtest_title">Externer Speedtest</string>
 
 
 </resources>
