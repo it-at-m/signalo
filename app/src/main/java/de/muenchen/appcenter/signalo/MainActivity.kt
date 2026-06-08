@@ -1,5 +1,6 @@
 package de.muenchen.appcenter.signalo
 
+import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.os.Bundle
 import android.provider.Settings
@@ -12,15 +13,18 @@ import android.widget.TextView
 import androidx.activity.addCallback
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.net.toUri
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.navigation.NavigationView
+import com.google.android.material.snackbar.Snackbar
 import de.muenchen.appcenter.signalo.databinding.ActivityMainBinding
 import de.muenchen.appcenter.signalo.utils.Constants
 import timber.log.Timber
@@ -144,10 +148,55 @@ class MainActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+        navView.setNavigationItemSelectedListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.externalSpeedtest -> {
+                    drawerLayout.closeDrawer(GravityCompat.START)
+                    showExternalSpeedtestDialog()
+                    false
+                }
+
+                else -> {
+                    NavigationUI.onNavDestinationSelected(menuItem, navController)
+                    drawerLayout.closeDrawer(GravityCompat.START)
+                    true
+                }
+            }
+        }
         navController.addOnDestinationChangedListener { _, destination, _ ->
             currentFragmentId = destination.id
             invalidateOptionsMenu()
 
+        }
+    }
+
+    private fun showExternalSpeedtestDialog() {
+        MaterialAlertDialogBuilder(this)
+            .setTitle(getString(R.string.speedtest_dialog_title))
+            .setMessage(getString(R.string.speedtest_dialog_message))
+            .setPositiveButton(getString(R.string.speedtest_dialog_positive_button)) { dialog, _ ->
+                openSpeedtestBrowser()
+                dialog.dismiss()
+            }
+            .setNegativeButton(getString(R.string.speedtest_dialog_negative_button)) { dialog, _ ->
+                dialog.dismiss()
+            }
+            .show()
+    }
+
+    private fun openSpeedtestBrowser() {
+        val urlIntent = Intent(
+            Intent.ACTION_VIEW,
+            (getString(R.string.speedtest_URL)).toUri()
+        )
+        try {
+            startActivity(urlIntent)
+        } catch (e: ActivityNotFoundException) {
+            Snackbar.make(
+                this.findViewById(android.R.id.content),
+                getString(R.string.Speedtest_open_erorr),
+                Snackbar.LENGTH_SHORT
+            ).show()
         }
     }
 
