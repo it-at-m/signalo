@@ -1,0 +1,97 @@
+<resources>
+    <string name="app_name">Signalo</string>
+
+    <string name="version">v%s</string>
+    <string name="buildNumber">(%1d)</string>
+    <string name="action_settings">Settings</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">Signalo</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <!-- Cellular Values-->
+    <string name="card_value1">%s</string>
+    <string name="card_value3">%s</string>
+    <string name="card_value2">%s</string>
+    <string name="card_value4">%s</string>
+
+    <!--Cellular Descriptions-->
+    <string name="card_description1">Carrier</string>
+    <string name="card_description3">Frequency Band</string>
+    <string name="card_description2">Network Type</string>
+    <string name="card_description4">Cell ID (ECI)</string>
+
+    <!--Wifi Values-->
+    <string name="wifi_value_SSID">%s</string>
+    <string name="wifi_value_freq">%s</string>
+    <string name="wifi_value_encryptionType">%s</string>
+    <string name="wifi_value_linkspeed">%s</string>
+
+    <!--Wifi Descriptions-->
+    <string name="wifi_desc_SSID">SSID</string>
+    <string name="wifi_desc_freq">Frequency Band</string>
+    <string name="wifi_desc_Channel">Encryption</string>
+    <string name="wifi_desc_linkspeed">Linkspeed</string>
+
+    <!--    Welcome Dialog -->
+    <string name="welcome_dialog_heading">Welcome to Signalo!</string>
+    <string name="erforderlich">Required</string>
+    <string name="Datenschutz_Hinweis">All data collected in this app is never stored, shared or sold. The data is used for display only.</string>
+
+    <string name="permission_name2">Precise Location </string>
+    <string name="permission_desc2">Required to display the Cell ID and frequency band. The permission is only used to access network info. Your actual location is not tracked.</string>
+
+    <string name="permission_name1">Manage Phone State</string>
+    <string name="permission_desc1">Required to enable SIM card detection (dual-SIM). Calls are not accessed.</string>
+
+    <string name="info_btn_desc">Refresh Info Button</string>
+
+    <string name="datenschutz1_desc"><b>Data Security / Place of Processing</b></string>
+    <string name="datenschutz1_text">The Signalo app is developed in-house by the App Center (Team: IBS144) at it@M. Data is processed and stored exclusively locally on your device. \nData is never shared, sold or collected. \nIf you have questions about data processing, feel free to contact us. :)</string>
+    <string name="datenschutz2_desc">Contact Information</string>
+    <string name="datenschutz2_text">If you have questions about data processing, feel free to contact the group mailbox apps@muenchen.de. :)</string>
+    <string name="impressum1_head"><b>Legal Notice:</b></string>
+    <string name="impressum1_desc">it@M IBS144 AppCenter</string>
+    <string name="impressum1_text"><b>Address:</b> \nAgnes-Pockels-Bogen 33 \n80992 München</string>
+    <string name="impressum2_text"><b>Email:</b> \napps@muenchen.de</string>
+    <string name="title_infodialog_refresh">Data Refresh</string>
+    <string name="description_infodialog_refresh"><![CDATA[The cellular signal strength (dBm value) is updated automatically. For WiFi this can be irregular. <br><br> For a manual refresh, swipe down from the top. <b>This is only possible every 30 seconds</b>.]]></string>
+    <string name="message_cellid_missing_permission">(Permission missing)</string>
+    <string name="message_network_disconnected">Selected Network is not Connected - OFFLINE</string>
+    <string name="title_cooldown_info_button">Cooldown active</string>
+    <string name="description_cooldown_info_button"><![CDATA[The WiFi signal strength was just refreshed.<br><br> To save system resources, another refresh is only possible in <b>30 seconds</b>. The lock icon disappears automatically once refreshing is available again.]]></string>
+    <string name="sim_slot1_displayname">SIM1</string>
+    <string name="sim_slot2_displayname">SIM2</string>
+    <string name="opensource_Signalo_title"><b>Signalo Source Code</b></string>
+    <string name="opensource_signalo_text1">You can review Signalo\'s source code \non GitHub anytime:</string>
+    <string name="opensource_signalo_link">https://github.com/it-at-m/signalo</string>
+    <string name="opensource_appache_title"><b>Apache License 2.0 Libraries</b></string>
+    <string name="opensource_betterGauge_link">https://github.com/Magnus987/better-gauge-android/tree/Signalo</string>
+    <string name="open_source_label">Open Source</string>
+
+    <string name="feedback_head">Feedback?</string>
+    <string name="feedback_text">Got feedback or suggestions? Reach out via GitHub:\nhttps://github.com/it-at-m/signalo/issues</string>
+
+    <string name="datenschutz_impressum_label"><![CDATA[Privacy & Legal Notice]]></string>
+    <string name="app_icon_desc">App Icon</string>
+    <string name="app_logo_content_desc">App_Logo</string>
+    <string name="optional">Optional</string>
+    <string name="unknown_provider">Unknown Provider</string>
+    <string name="location_services_missing"><![CDATA[Some info like frequency band, Cell ID and SSID requires enabled location services. The manual WiFi scan also needs location. <br><br> <b>Please enable location services in your device settings</b>.]]></string>
+    <string name="location_missing_dialog_title">Location services are off</string>
+    <string name="location_missing_dialog_settings">Settings</string>
+    <string name="refresh_message_missing_location">Please enable location</string>
+
+    <string name="speedtest_URL">https://speed.cloudflare.com/</string>
+    <string name="speedtest_dialog_title">Open external speed test?</string>
+    <string name="speedtest_dialog_message">You\'ll be redirected to an external speed test provider (Cloudflare). You leave Signalo and Cloudflare\'s privacy policy applies.</string>
+    <string name="speedtest_dialog_positive_button">Open browser</string>
+    <string name="speedtest_dialog_negative_button">Cancel</string>
+    <string name="Speedtest_open_erorr">No browser found to open the speed test</string>
+    <string name="nav_drawer_speedtest_title">External Speed Test</string>
+    <string name="nav_drawer_datenschutz_title"><![CDATA[Privacy & Legal Notice]]></string>
+    <string name="welcom_dialog_skip">Skip</string>
+    <string name="welcome_dialog_start">Start</string>
+    <string name="location_missing_value">[Location needed]</string>
+
+</resources>

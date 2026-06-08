@@ -89,6 +89,10 @@
     <string name="speedtest_dialog_negative_button">Abbrechen</string>
     <string name="Speedtest_open_erorr">Kein Browser zum Öffnen des Speedtests gefunden</string>
     <string name="nav_drawer_speedtest_title">Externer Speedtest</string>
+    <string name="nav_drawer_datenschutz_title"><![CDATA[Datenschutz & Impressum]]></string>
+    <string name="welcom_dialog_skip">Überspringen</string>
+    <string name="welcome_dialog_start">Starten</string>
+    <string name="location_missing_value">[Standort benötigt]</string>
 
 
 </resources>

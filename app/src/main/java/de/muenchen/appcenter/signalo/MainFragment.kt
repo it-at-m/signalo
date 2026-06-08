@@ -349,8 +349,8 @@ class MainFragment : Fragment() {
                     viewmodel.setCellId("[unknown]")
                     Timber.d("getAllCellInfo is empty")
                 } else {
-                    viewmodel.setCurrentCellularBand("[Standort benötigt]")
-                    viewmodel.setCellId("[Standort benötigt]")
+                    viewmodel.setCurrentCellularBand(getString(R.string.location_missing_value))
+                    viewmodel.setCellId(getString(R.string.location_missing_value))
                     Timber.d("getAllCellInfo is empty because location is missing")
                 }
                 return
@@ -815,7 +815,7 @@ class MainFragment : Fragment() {
             viewmodel.connectedBSSID.postValue(wifiInfo.bssid)
             viewmodel.setCurrentSSID(wifiInfo.ssid.replace("\"", ""))
         } else if (viewmodel.isLocationEnabled.value == false) {
-            viewmodel.setCurrentSSID("[Standort benötigt]")
+            viewmodel.setCurrentSSID(getString(R.string.location_missing_value))
         } else {
             viewmodel.setCurrentSSID("(Berechtigung fehlt)")
         }
