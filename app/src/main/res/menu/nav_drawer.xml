@@ -11,7 +11,7 @@
         android:title="Open Source" />
     <item
         android:id="@+id/DatenschutzPage"
-        android:title="Datenschutz &amp; Impressum" />
+        android:title="@string/nav_drawer_datenschutz_title" />
     </group>
     <item
         android:id="@+id/externalSpeedtest"
