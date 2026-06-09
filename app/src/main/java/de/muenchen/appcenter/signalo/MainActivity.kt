@@ -1,6 +1,9 @@
-package com.example.test.signalo
+package de.muenchen.appcenter.signalo
 
+import android.content.ActivityNotFoundException
+import android.content.Intent
 import android.os.Bundle
+import android.provider.Settings
 import android.text.Html
 import android.view.Menu
 import android.view.MenuItem
@@ -10,17 +13,20 @@ import android.widget.TextView
 import androidx.activity.addCallback
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.net.toUri
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.navigation.NavigationView
-import com.example.test.signalo.databinding.ActivityMainBinding
-import com.example.test.signalo.utils.Constants
+import com.google.android.material.snackbar.Snackbar
+import de.muenchen.appcenter.signalo.databinding.ActivityMainBinding
+import de.muenchen.appcenter.signalo.utils.Constants
 import timber.log.Timber
 
 
@@ -29,6 +35,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
     private var infoMenuItem: MenuItem? = null
+    private var locationMenuItem: MenuItem? = null
+
     private var currentFragmentId = 0
 
     private val viewmodel: MainViewModel by viewModels()
@@ -38,7 +46,7 @@ class MainActivity : AppCompatActivity() {
         this.binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(this.binding.root)
         initNavDrawer()
-        initRefreshInfo()
+        initButtons()
         handleBackPressed()
 
         viewmodel.refreshState.observe(this) {
@@ -52,6 +60,43 @@ class MainActivity : AppCompatActivity() {
         viewmodel.animatorProgress.observe(this) { progress ->
             this.binding.progressbar.progress = progress
         }
+        /**
+         * If location services are off, show LocationMissing Icon
+         * If the have not been asked this session, show user a dialog
+         * if Location services are on, don't show icon
+         */
+        viewmodel.isLocationEnabled.observe(this) { enabled ->
+            if (enabled == false) {
+                locationMenuItem?.isVisible = true
+                if (viewmodel.locationDialogShownThisSession.value != true) {
+                    openLocationDialog()
+                    viewmodel.locationDialogShownThisSession.postValue(true)
+                }
+            }
+            if (enabled == true) {
+                locationMenuItem?.isVisible = false
+            }
+        }
+    }
+
+    /**
+     * Shows a dialog informing the user that location services are disabled,
+     * with an option to navigate directly to the system location settings.
+     */
+    private fun openLocationDialog() {
+        val formattedMessage =
+            Html.fromHtml(getString(R.string.location_services_missing), Html.FROM_HTML_MODE_LEGACY)
+        MaterialAlertDialogBuilder(this)
+            .setTitle(getString(R.string.location_missing_dialog_title))
+            .setMessage(formattedMessage)
+            .setNeutralButton("OK") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .setPositiveButton(getString(R.string.location_missing_dialog_settings)) { dialog, _ ->
+                startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS))
+                dialog.dismiss()
+            }
+            .show()
     }
 
     /**
@@ -103,10 +148,55 @@ class MainActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+        navView.setNavigationItemSelectedListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.externalSpeedtest -> {
+                    drawerLayout.closeDrawer(GravityCompat.START)
+                    showExternalSpeedtestDialog()
+                    false
+                }
+
+                else -> {
+                    NavigationUI.onNavDestinationSelected(menuItem, navController)
+                    drawerLayout.closeDrawer(GravityCompat.START)
+                    true
+                }
+            }
+        }
         navController.addOnDestinationChangedListener { _, destination, _ ->
             currentFragmentId = destination.id
             invalidateOptionsMenu()
 
+        }
+    }
+
+    private fun showExternalSpeedtestDialog() {
+        MaterialAlertDialogBuilder(this)
+            .setTitle(getString(R.string.speedtest_dialog_title))
+            .setMessage(getString(R.string.speedtest_dialog_message))
+            .setPositiveButton(getString(R.string.speedtest_dialog_positive_button)) { dialog, _ ->
+                openSpeedtestBrowser()
+                dialog.dismiss()
+            }
+            .setNegativeButton(getString(R.string.speedtest_dialog_negative_button)) { dialog, _ ->
+                dialog.dismiss()
+            }
+            .show()
+    }
+
+    private fun openSpeedtestBrowser() {
+        val urlIntent = Intent(
+            Intent.ACTION_VIEW,
+            (getString(R.string.speedtest_URL)).toUri()
+        )
+        try {
+            startActivity(urlIntent)
+        } catch (e: ActivityNotFoundException) {
+            Snackbar.make(
+                this.findViewById(android.R.id.content),
+                getString(R.string.Speedtest_open_erorr),
+                Snackbar.LENGTH_SHORT
+            ).show()
         }
     }
 
@@ -150,7 +240,9 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
-        infoMenuItem = menu.findItem(R.id.infoButton)
+        locationMenuItem = menu.findItem(R.id.locationMissing)
+        locationMenuItem?.isVisible = viewmodel.isLocationEnabled.value == false
+
         if (viewmodel.refreshState.value == Constants.REFRESH_ON_COOLDOWN) {
             Timber.d("Info icon is not visible, because of running refresh")
             infoMenuItem?.isVisible = false
@@ -168,11 +260,16 @@ class MainActivity : AppCompatActivity() {
                 true
             }
 
+            R.id.locationMissing -> {
+                openLocationDialog()
+                true
+            }
+
             else -> super.onOptionsItemSelected(item)
         }
     }
 
-    private fun initRefreshInfo() {
+    private fun initButtons() {
         this.binding.refreshLock.setOnClickListener {
             showMaterialDialog(
                 getString(R.string.title_cooldown_info_button),

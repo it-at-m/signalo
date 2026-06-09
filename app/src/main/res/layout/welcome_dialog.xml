@@ -199,14 +199,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:text="Überspringen" />
+                android:text="@string/welcom_dialog_skip" />
 
             <Button
                 android:id="@+id/btnStart"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:text="Starten" />
+                android:text="@string/welcome_dialog_start" />
 
         </LinearLayout>
 

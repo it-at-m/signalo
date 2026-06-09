@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:showIn="navigation_view">
+    <group android:id="@+id/group_pages">
     <item
         android:id="@+id/FirstFragment"
         android:title="@string/first_fragment_label" />
@@ -11,5 +11,11 @@
         android:title="Open Source" />
     <item
         android:id="@+id/DatenschutzPage"
-        android:title="Datenschutz &amp; Impressum" />
+        android:title="@string/nav_drawer_datenschutz_title" />
+    </group>
+    <item
+        android:id="@+id/externalSpeedtest"
+        android:title="@string/nav_drawer_speedtest_title"
+        android:icon="@drawable/open_in_new_24px"
+        android:checkableBehavior="none"/>
 </menu>
