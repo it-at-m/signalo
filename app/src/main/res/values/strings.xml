@@ -82,4 +82,13 @@
     <string name="location_missing_dialog_settings">Einstellungen</string>
     <string name="refresh_message_missing_location">Bitte Standort aktivieren</string>
 
+    <string name="speedtest_URL">https://speed.cloudflare.com/</string>
+    <string name="speedtest_dialog_title">Externen Speedtest öffnen?</string>
+    <string name="speedtest_dialog_message">Du wirst zu einem externen Speedtest-Anbieter (Cloudflare) weitergeleitet. Dabei verlässt du Signalo und es gelten die Datenschutzbestimmungen von Cloudflare.</string>
+    <string name="speedtest_dialog_positive_button">Browser öffnen</string>
+    <string name="speedtest_dialog_negative_button">Abbrechen</string>
+    <string name="Speedtest_open_erorr">Kein Browser zum Öffnen des Speedtests gefunden</string>
+    <string name="nav_drawer_speedtest_title">Externer Speedtest</string>
+
+
 </resources>
