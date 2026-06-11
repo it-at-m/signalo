@@ -3,19 +3,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
     <group android:id="@+id/group_pages">
-    <item
-        android:id="@+id/FirstFragment"
-        android:title="@string/first_fragment_label" />
-    <item
-        android:id="@+id/OpenSourceBib"
-        android:title="Open Source" />
-    <item
-        android:id="@+id/DatenschutzPage"
-        android:title="@string/nav_drawer_datenschutz_title" />
+        <item
+            android:id="@+id/FirstFragment"
+            android:title="@string/first_fragment_label" />
+
+        <item
+            android:id="@+id/SnapshotList"
+            android:title="@string/snapshots_fragment_lable" />
+        <item
+            android:id="@+id/OpenSourceBib"
+            android:title="Open Source" />
+        <item
+            android:id="@+id/DatenschutzPage"
+            android:title="@string/nav_drawer_datenschutz_title" />
     </group>
     <item
         android:id="@+id/externalSpeedtest"
         android:title="@string/nav_drawer_speedtest_title"
         android:icon="@drawable/open_in_new_24px"
-        android:checkableBehavior="none"/>
+        android:checkableBehavior="none" />
 </menu>

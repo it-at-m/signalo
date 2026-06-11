@@ -12,6 +12,16 @@
         tools:layout="@layout/fragment_main">
 
     </fragment>
+
+    <fragment
+        android:id="@+id/SnapshotList"
+        android:name="de.muenchen.appcenter.signalo.SnapshotList"
+        android:label="@string/snapshots_fragment_lable"
+        tools:layout="@layout/fragment_snapshot_list">
+
+    </fragment>
+
+
     <fragment
         android:id="@+id/OpenSourceBib"
         android:name="de.muenchen.appcenter.signalo.OpenSourceBib"

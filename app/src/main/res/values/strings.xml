@@ -94,6 +94,9 @@
     <string name="welcome_dialog_start">Starten</string>
     <string name="location_missing_value">[Standort benötigt]</string>
     <string name="permission_missing_value">[Berechtigung fehlt]</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="snapshots_fragment_lable">Snapshots</string>
 
 
 </resources>
