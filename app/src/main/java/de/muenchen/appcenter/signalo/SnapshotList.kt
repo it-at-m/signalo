@@ -35,15 +35,22 @@ class SnapshotList : Fragment() {
             adapter = snapshotAdapter
         }
 
-
         val fakeSnapshots = listOf(
-            SnapshotData(title = "Zuhause WLAN", createdDate = "11.06.2026", type = Constants.WIFI),
+            SnapshotData(
+                title = "Zuhause WLAN",
+                createdDate = "11.06.2026",
+                networkType = Constants.WIFI
+            ),
             SnapshotData(
                 title = "Büro Mobilfunk",
                 createdDate = "10.06.2026",
-                type = Constants.CELLULAR
+                networkType = Constants.CELLULAR
             ),
-            SnapshotData(title = "Keller Test", createdDate = "09.06.2026", type = Constants.WIFI),
+            SnapshotData(
+                title = "Keller Test",
+                createdDate = "09.06.2026",
+                networkType = Constants.WIFI
+            ),
         )
         snapshotAdapter.submitList(fakeSnapshots)
     }

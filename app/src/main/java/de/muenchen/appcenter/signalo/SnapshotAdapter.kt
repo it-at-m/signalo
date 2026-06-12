@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import de.muenchen.appcenter.signalo.databinding.ItemSnapshotBinding
+import de.muenchen.appcenter.signalo.utils.Constants
 
 class SnapshotAdapter(
     private val onClick: (SnapshotData) -> Unit
@@ -18,6 +19,21 @@ class SnapshotAdapter(
         fun bind(snapshot: SnapshotData) {
             binding.textTitle.text = snapshot.title
             binding.textSubtitle.text = snapshot.createdDate
+            binding.networkTypeIcon.setImageResource(
+                when (snapshot.networkType) {
+                    Constants.WIFI -> {
+                        R.drawable.wifi_24px
+                    }
+
+                    Constants.CELLULAR -> {
+                        R.drawable.cell_tower_24px
+                    }
+
+                    else -> {
+                        R.drawable.help_center_24px
+                    }
+                }
+            )
             binding.root.setOnClickListener { onClick(snapshot) }
         }
     }
@@ -25,6 +41,7 @@ class SnapshotAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SnapshotViewHolder {
         val binding = ItemSnapshotBinding.inflate(
             LayoutInflater.from(parent.context), parent, false
+
         )
         return SnapshotViewHolder(binding)
     }

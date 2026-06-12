@@ -5,46 +5,61 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
-    style="?attr/materialCardViewElevatedStyle">
-
+    style="?attr/materialCardViewOutlinedStyle"
+    app:strokeColor="?attr/colorOutline"
+    app:strokeWidth="1dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:padding="16dp">
 
         <ImageView
-            android:layout_width="36dp"
-            android:layout_height="39dp"
-            android:layout_marginEnd="26dp"
+            android:id="@+id/networkTypeIcon"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:contentDescription="NetworkTypeLogo"
             android:src="@drawable/help_center_24px"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/textTitle"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
 
         <TextView
             android:id="@+id/textTitle"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="66dp"
-            android:layout_marginTop="32dp"
-            android:textAppearance="?attr/textAppearanceTitleMedium"
-            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="16dp"
+            android:textAppearance="?attr/textAppearanceTitleLarge"
+            app:layout_constraintStart_toEndOf="@+id/networkTypeIcon"
+            app:layout_constraintEnd_toStartOf="@+id/openIcon"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/textSubtitle"
+            app:layout_constraintVertical_chainStyle="packed"
             tools:text="Snapshot Name" />
 
         <TextView
             android:id="@+id/textSubtitle"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:textAppearance="?attr/textAppearanceBodySmall"
-            app:layout_constraintStart_toStartOf="@+id/textTitle"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="2dp"
+            android:textAppearance="?attr/textAppearanceBodyMedium"
+            app:layout_constraintStart_toEndOf="@+id/networkTypeIcon"
+            app:layout_constraintEnd_toStartOf="@+id/openIcon"
             app:layout_constraintTop_toBottomOf="@+id/textTitle"
+            app:layout_constraintBottom_toBottomOf="parent"
             tools:text="11.06.2026 14:30" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <ImageView
+            android:id="@+id/openIcon"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_marginStart="16dp"
+            android:src="@drawable/arrow_circle_right_24px"
+            app:tint="?attr/colorPrimary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
 
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>
