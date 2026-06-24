@@ -118,6 +118,7 @@ class MainFragment : Fragment() {
         checkPermissions()
         initRefreshGesture()
         initToggleButtons()
+        initSnapshotButton()
         checkLocationSetting()
     }
 
@@ -964,6 +965,12 @@ class MainFragment : Fragment() {
         range.to = to
         range.color = color
         return range
+    }
+
+    private fun initSnapshotButton() {
+        _binding.fabSnapshot.setOnClickListener {
+            viewmodel.addSnapshot("Test")
+        }
     }
 
     /**

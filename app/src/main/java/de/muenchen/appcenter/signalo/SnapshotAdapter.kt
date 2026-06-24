@@ -4,34 +4,24 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import de.muenchen.appcenter.signalo.databinding.ItemSnapshotBinding
-import de.muenchen.appcenter.signalo.utils.Constants
 
 class SnapshotAdapter(
-    private val onClick: (SnapshotData) -> Unit
+    private val onClick: (Snapshot) -> Unit
 ) : RecyclerView.Adapter<SnapshotAdapter.SnapshotViewHolder>() {
 
-    private var items: List<SnapshotData> = emptyList()
+    private var items: List<Snapshot> = emptyList()
 
     inner class SnapshotViewHolder(
         private val binding: ItemSnapshotBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(snapshot: SnapshotData) {
-            binding.textTitle.text = snapshot.title
-            binding.textSubtitle.text = snapshot.createdDate
+        fun bind(snapshot: Snapshot) {
+            binding.textTitle.text = snapshot.name
+            binding.textSubtitle.text = snapshot.creationDate.toString()
             binding.networkTypeIcon.setImageResource(
-                when (snapshot.networkType) {
-                    Constants.WIFI -> {
-                        R.drawable.wifi_24px
-                    }
-
-                    Constants.CELLULAR -> {
-                        R.drawable.cell_tower_24px
-                    }
-
-                    else -> {
-                        R.drawable.help_center_24px
-                    }
+                when (snapshot.details) {
+                    is SnapshotDetails.Wifi -> R.drawable.wifi_24px
+                    is SnapshotDetails.Cellular -> R.drawable.cell_tower_24px
                 }
             )
             binding.root.setOnClickListener { onClick(snapshot) }
@@ -52,7 +42,7 @@ class SnapshotAdapter(
 
     override fun getItemCount(): Int = items.size
 
-    fun submitList(newItems: List<SnapshotData>) {
+    fun submitList(newItems: List<Snapshot>) {
         items = newItems
         notifyDataSetChanged()
     }

@@ -15,7 +15,7 @@
 
     <fragment
         android:id="@+id/SnapshotList"
-        android:name="de.muenchen.appcenter.signalo.SnapshotList"
+        android:name="de.muenchen.appcenter.signalo.SnapshotListFragment"
         android:label="@string/snapshots_fragment_lable"
         tools:layout="@layout/fragment_snapshot_list">
 

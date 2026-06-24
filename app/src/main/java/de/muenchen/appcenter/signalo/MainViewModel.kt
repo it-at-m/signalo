@@ -32,6 +32,41 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     val cellularDbmValue: LiveData<Double> get() = _cellularDbmValue
     private val cellularDbmRepository = CellularDbmRepository(application)
     private var cellularDbmJob: Job? = null
+    private val snapshotRepository = SnapshotRepository(
+        getApplication<Application>().snapshotDataStore
+    )
+
+    fun addSnapshot(name: String) {
+        viewModelScope.launch {
+            val snapshot = Snapshot(
+                name = name,
+                id = 1,
+                creationDate = System.currentTimeMillis(),
+                details = when (onWifi.value) {
+                    true -> {
+                        SnapshotDetails.Wifi(
+                            wifiDbmValue.value!!,
+                            currentSSID.value!!,
+                            currentFrequency.value!!,
+                            currentLinkspeed.value!!,
+                            currentEncryptionType.value!!
+                        )
+                    }
+
+                    else -> {
+                        SnapshotDetails.Cellular(
+                            cellularDbmValue.value!!,
+                            cellId.value!!,
+                            currentNetprovider.value!!,
+                            cellularType.value!!,
+                            currentCellularBand.value!!
+                        )
+                    }
+                }
+            )
+            snapshotRepository.add(snapshot)
+        }
+    }
 
 
     /**

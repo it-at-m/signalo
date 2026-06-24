@@ -5,14 +5,29 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import androidx.lifecycle.viewmodel.initializer
+import androidx.lifecycle.viewmodel.viewModelFactory
 import androidx.recyclerview.widget.LinearLayoutManager
 import de.muenchen.appcenter.signalo.databinding.FragmentSnapshotListBinding
-import de.muenchen.appcenter.signalo.utils.Constants
+import kotlinx.coroutines.launch
 import timber.log.Timber
 
-class SnapshotList : Fragment() {
+class SnapshotListFragment : Fragment() {
     private lateinit var snapshotAdapter: SnapshotAdapter
     private lateinit var _binding: FragmentSnapshotListBinding
+
+    //own factory is needed because repository is in the constructor which is non-standard
+    private val factory = viewModelFactory {
+        initializer {
+            val store = requireContext().applicationContext.snapshotDataStore
+            SnapshotViewModel(SnapshotRepository(store))
+        }
+    }
+    private val snapshotViewModel: SnapshotViewModel by viewModels { factory }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -27,31 +42,21 @@ class SnapshotList : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         snapshotAdapter = SnapshotAdapter { snapshot ->
-            Timber.d("Snapshot geklickt: ${snapshot.title}")
+            Timber.d("Snapshot geklickt: ${snapshot.name}")
         }
         _binding.recyclerView.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = snapshotAdapter
         }
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                snapshotViewModel.snapshots.collect { list: List<Snapshot> ->
+                    snapshotAdapter.submitList(list)
+                }
+            }
+        }
 
-        val fakeSnapshots = listOf(
-            SnapshotData(
-                title = "Zuhause WLAN",
-                createdDate = "11.06.2026",
-                networkType = Constants.WIFI
-            ),
-            SnapshotData(
-                title = "Büro Mobilfunk",
-                createdDate = "10.06.2026",
-                networkType = Constants.CELLULAR
-            ),
-            SnapshotData(
-                title = "Keller Test",
-                createdDate = "09.06.2026",
-                networkType = Constants.WIFI
-            ),
-        )
-        snapshotAdapter.submitList(fakeSnapshots)
     }
 }
