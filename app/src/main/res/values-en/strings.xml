@@ -94,5 +94,11 @@
     <string name="welcome_dialog_start">Start</string>
     <string name="location_missing_value">[Location needed]</string>
     <string name="permission_missing_value">[Permission missing]</string>
+    <string name="snapshots_fragment_lable">Snapshots</string>
+    <string name="Input_Text_hint">Name of the Snapshot</string>
+    <string name="Input_text_Placeholder">Office on the 3rd floor</string>
+    <string name="SnapshotDialogTitle">Name the snapshot</string>
+    <string name="Snapshot_Dialog_Message">Give the snapshot a name so you can find it later.</string>
+    <string name="save">save</string>
 
 </resources>

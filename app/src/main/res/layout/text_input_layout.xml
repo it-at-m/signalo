@@ -1,0 +1,17 @@
+<com.google.android.material.textfield.TextInputLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:hint="@string/Input_Text_hint"
+    app:placeholderText="@string/Input_text_Placeholder"
+    android:paddingHorizontal="24dp"
+    android:paddingTop="8dp">
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/editSnapshotName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:maxLines="1" />
+
+</com.google.android.material.textfield.TextInputLayout>

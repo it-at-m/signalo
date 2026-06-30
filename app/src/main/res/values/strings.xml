@@ -95,8 +95,13 @@
     <string name="location_missing_value">[Standort benötigt]</string>
     <string name="permission_missing_value">[Berechtigung fehlt]</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
     <string name="snapshots_fragment_lable">Snapshots</string>
+    <string name="Input_Text_hint">Name des Snapshots</string>
+    <string name="Input_text_Placeholder">Büro im 3. Stock</string>
+    <string name="SnapshotDialogTitle">Snapshot benennen</string>
+    <string name="Snapshot_Dialog_Message">Gib dem Snapshot einen Namen, damit du ihn später wiederfindest.</string>
+    <string name="save">Sichern</string>
 
 
 </resources>

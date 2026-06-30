@@ -53,9 +53,11 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.setFragmentResultListener
 import androidx.transition.TransitionManager
 import com.ekn.gruzer.gaugelibrary.Range
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.transition.MaterialSharedAxis
 import de.muenchen.appcenter.signalo.databinding.FragmentMainBinding
+import de.muenchen.appcenter.signalo.databinding.TextInputLayoutBinding
 import de.muenchen.appcenter.signalo.utils.Constants
 import kotlinx.coroutines.Job
 import timber.log.Timber
@@ -968,8 +970,19 @@ class MainFragment : Fragment() {
     }
 
     private fun initSnapshotButton() {
+        val dialogBinding = TextInputLayoutBinding.inflate(layoutInflater)
         _binding.fabSnapshot.setOnClickListener {
-            viewmodel.addSnapshot("Test")
+            MaterialAlertDialogBuilder(requireContext())
+                .setTitle(R.string.SnapshotDialogTitle)
+                .setMessage(getString(R.string.Snapshot_Dialog_Message))
+                .setView(dialogBinding.root)
+                .setPositiveButton(getString(R.string.save)) { _, _ ->
+                    val name = dialogBinding.editSnapshotName.text?.toString()
+                        ?.takeIf { it.isNotBlank() } ?: "empty"
+                    viewmodel.addSnapshot(name)
+                }
+                .setNegativeButton(R.string.speedtest_dialog_negative_button, null)
+                .show()
         }
     }
 
