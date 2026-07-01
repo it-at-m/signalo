@@ -970,18 +970,23 @@ class MainFragment : Fragment() {
     }
 
     private fun initSnapshotButton() {
-        val dialogBinding = TextInputLayoutBinding.inflate(layoutInflater)
         _binding.fabSnapshot.setOnClickListener {
+            val dialogBinding = TextInputLayoutBinding.inflate(layoutInflater)
+            dialogBinding.root.removeView(dialogBinding.root)
             MaterialAlertDialogBuilder(requireContext())
                 .setTitle(R.string.SnapshotDialogTitle)
                 .setMessage(getString(R.string.Snapshot_Dialog_Message))
                 .setView(dialogBinding.root)
-                .setPositiveButton(getString(R.string.save)) { _, _ ->
+                .setCancelable(false)
+                .setPositiveButton(getString(R.string.save)) { dialog, _ ->
                     val name = dialogBinding.editSnapshotName.text?.toString()
                         ?.takeIf { it.isNotBlank() } ?: "empty"
                     viewmodel.addSnapshot(name)
+                    dialog.dismiss()
                 }
-                .setNegativeButton(R.string.speedtest_dialog_negative_button, null)
+                .setNegativeButton(R.string.speedtest_dialog_negative_button) { dialog, _ ->
+                    dialog.dismiss()
+                }
                 .show()
         }
     }

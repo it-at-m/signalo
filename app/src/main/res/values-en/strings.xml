@@ -100,5 +100,6 @@
     <string name="SnapshotDialogTitle">Name the snapshot</string>
     <string name="Snapshot_Dialog_Message">Give the snapshot a name so you can find it later.</string>
     <string name="save">save</string>
+    <string name="hint">Hint:</string>
 
 </resources>
