@@ -980,7 +980,7 @@ class MainFragment : Fragment() {
                 .setCancelable(false)
                 .setPositiveButton(getString(R.string.save)) { dialog, _ ->
                     val name = dialogBinding.editSnapshotName.text?.toString()
-                        ?.takeIf { it.isNotBlank() } ?: "empty"
+                        ?.takeIf { it.isNotBlank() } ?: Constants.EMPTY
                     viewmodel.addSnapshot(name)
                     dialog.dismiss()
                 }

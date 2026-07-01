@@ -40,7 +40,6 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         viewModelScope.launch {
             val snapshot = Snapshot(
                 name = name,
-                id = 1,
                 creationDate = System.currentTimeMillis(),
                 details = when (onWifi.value) {
                     true -> {

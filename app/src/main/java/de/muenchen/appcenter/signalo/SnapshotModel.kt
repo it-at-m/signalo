@@ -6,7 +6,6 @@ import kotlinx.serialization.Serializable
 data class Snapshot(
     val name: String,
     val creationDate: Long,
-    val id: Int,
     val details: SnapshotDetails
 )
 
@@ -34,5 +33,5 @@ sealed class SnapshotDetails {
 @Serializable
 data class SnapshotContainer(
     val snapshots: List<Snapshot> = emptyList(),
-    val counter: Int = 1
+    val counter: Int = 0
 )

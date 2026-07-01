@@ -36,5 +36,6 @@ class Constants {
         const val PROVIDER_SWISSCOM = "Swisscom"
         const val PROVIDER_SUNRISE = "Sunrise"
         const val PROVIDER_SALT = "Salt"
+        const val EMPTY = "leer"
     }
 }
