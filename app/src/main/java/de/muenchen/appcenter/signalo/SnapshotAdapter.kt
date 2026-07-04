@@ -2,15 +2,16 @@ package de.muenchen.appcenter.signalo
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import de.muenchen.appcenter.signalo.databinding.ItemSnapshotBinding
 import java.text.DateFormat
 
 class SnapshotAdapter(
     private val onClick: (Snapshot) -> Unit
-) : RecyclerView.Adapter<SnapshotAdapter.SnapshotViewHolder>() {
+) : ListAdapter<Snapshot, SnapshotAdapter.SnapshotViewHolder>(SnapshotDiffCallback()) {
 
-    private var items: List<Snapshot> = emptyList()
     val dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.SHORT)
 
     inner class SnapshotViewHolder(
@@ -34,18 +35,21 @@ class SnapshotAdapter(
         val binding = ItemSnapshotBinding.inflate(
             LayoutInflater.from(parent.context), parent, false
 
-        ) fomatting
-                return SnapshotViewHolder(binding)
+        )
+        return SnapshotViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: SnapshotViewHolder, position: Int) {
-        holder.bind(items[position])
+        holder.bind(getItem(position))
     }
 
-    override fun getItemCount(): Int = items.size
+    class SnapshotDiffCallback : DiffUtil.ItemCallback<Snapshot>() {
+        override fun areItemsTheSame(oldItem: Snapshot, newItem: Snapshot): Boolean {
+            return oldItem.creationDate == newItem.creationDate
+        }
 
-    fun submitList(newItems: List<Snapshot>) {
-        items = newItems
-        notifyDataSetChanged()
+        override fun areContentsTheSame(oldItem: Snapshot, newItem: Snapshot): Boolean {
+            return oldItem == newItem
+        }
     }
 }
