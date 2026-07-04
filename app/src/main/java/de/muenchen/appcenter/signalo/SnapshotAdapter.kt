@@ -4,12 +4,14 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import de.muenchen.appcenter.signalo.databinding.ItemSnapshotBinding
+import java.text.DateFormat
 
 class SnapshotAdapter(
     private val onClick: (Snapshot) -> Unit
 ) : RecyclerView.Adapter<SnapshotAdapter.SnapshotViewHolder>() {
 
     private var items: List<Snapshot> = emptyList()
+    val dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.SHORT)
 
     inner class SnapshotViewHolder(
         private val binding: ItemSnapshotBinding
@@ -17,7 +19,7 @@ class SnapshotAdapter(
 
         fun bind(snapshot: Snapshot) {
             binding.textTitle.text = snapshot.name
-            binding.textSubtitle.text = snapshot.creationDate.toString()
+            binding.textSubtitle.text = dateFormat.format(snapshot.creationDate)
             binding.networkTypeIcon.setImageResource(
                 when (snapshot.details) {
                     is SnapshotDetails.Wifi -> R.drawable.wifi_24px
@@ -32,8 +34,8 @@ class SnapshotAdapter(
         val binding = ItemSnapshotBinding.inflate(
             LayoutInflater.from(parent.context), parent, false
 
-        )
-        return SnapshotViewHolder(binding)
+        ) fomatting
+                return SnapshotViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: SnapshotViewHolder, position: Int) {
