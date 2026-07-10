@@ -11,6 +11,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import de.muenchen.appcenter.signalo.databinding.FragmentSnapshotListBinding
 import kotlinx.coroutines.launch
@@ -45,6 +46,7 @@ class SnapshotListFragment : Fragment() {
 
         snapshotAdapter = SnapshotAdapter { snapshot ->
             Timber.d("Snapshot geklickt: ${snapshot.name}")
+            findNavController().navigate()
         }
         _binding.recyclerView.apply {
             layoutManager = LinearLayoutManager(requireContext())

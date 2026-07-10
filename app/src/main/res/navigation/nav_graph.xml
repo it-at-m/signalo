@@ -20,8 +20,6 @@
         tools:layout="@layout/fragment_snapshot_list">
 
     </fragment>
-
-
     <fragment
         android:id="@+id/OpenSourceBib"
         android:name="de.muenchen.appcenter.signalo.OpenSourceBib"
@@ -33,5 +31,20 @@
         android:id="@+id/DatenschutzPage"
         android:name="de.muenchen.appcenter.signalo.DatenschutzPage"
         android:label="@string/datenschutz_impressum_label"
-        tools:layout="@layout/fragment_datenschutz_page"></fragment>
+        tools:layout="@layout/fragment_datenschutz_page">
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/SnapshotDisplay"
+        android:name="de.muenchen.appcenter.signalo.SnapshotDisplayFragment"
+        android:label="Snapshot Anzeige"
+        tools:layout="@layout/fragment_snapshot_display">
+        <argument
+            android:name="creationDate"
+            app:argType="long" />
+        <action
+            android:id="@+id/action_snapshotList_to_snapshotDisplay"
+            app:destination="@id/SnapshotDisplay" />
+    </fragment>
 </navigation>
