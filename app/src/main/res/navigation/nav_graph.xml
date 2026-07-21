@@ -13,13 +13,7 @@
 
     </fragment>
 
-    <fragment
-        android:id="@+id/SnapshotList"
-        android:name="de.muenchen.appcenter.signalo.SnapshotListFragment"
-        android:label="@string/snapshots_fragment_lable"
-        tools:layout="@layout/fragment_snapshot_list">
 
-    </fragment>
     <fragment
         android:id="@+id/OpenSourceBib"
         android:name="de.muenchen.appcenter.signalo.OpenSourceBib"
@@ -36,6 +30,16 @@
     </fragment>
 
     <fragment
+        android:id="@+id/SnapshotList"
+        android:name="de.muenchen.appcenter.signalo.SnapshotListFragment"
+        android:label="@string/snapshots_fragment_lable"
+        tools:layout="@layout/fragment_snapshot_list">
+        <action
+            android:id="@+id/action_snapshotList_to_snapshotDisplay"
+            app:destination="@id/SnapshotDisplay" />
+    </fragment>
+
+    <fragment
         android:id="@+id/SnapshotDisplay"
         android:name="de.muenchen.appcenter.signalo.SnapshotDisplayFragment"
         android:label="Snapshot Anzeige"
@@ -43,8 +47,6 @@
         <argument
             android:name="creationDate"
             app:argType="long" />
-        <action
-            android:id="@+id/action_snapshotList_to_snapshotDisplay"
-            app:destination="@id/SnapshotDisplay" />
+
     </fragment>
 </navigation>

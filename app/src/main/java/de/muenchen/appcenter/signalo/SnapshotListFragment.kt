@@ -46,7 +46,11 @@ class SnapshotListFragment : Fragment() {
 
         snapshotAdapter = SnapshotAdapter { snapshot ->
             Timber.d("Snapshot geklickt: ${snapshot.name}")
-            findNavController().navigate()
+            findNavController().navigate(
+                SnapshotListFragmentDirections.actionSnapshotListToSnapshotDisplay(
+                    snapshot.creationDate
+                )
+            )
         }
         _binding.recyclerView.apply {
             layoutManager = LinearLayoutManager(requireContext())
