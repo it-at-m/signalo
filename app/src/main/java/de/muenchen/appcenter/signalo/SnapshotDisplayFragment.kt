@@ -13,7 +13,7 @@ import de.muenchen.appcenter.signalo.databinding.FragmentSnapshotDisplayBinding
 
 class SnapshotDisplayFragment : Fragment() {
     private lateinit var _binding: FragmentSnapshotDisplayBinding
-    val selectedSnapshotID = navArgs<SnapshotDisplayFragmentArgs>().value.creationDate
+    private val args: SnapshotDisplayFragmentArgs by navArgs()
     private val snapshotViewModel: SnapshotViewModel by viewModels { factory }
     private val factory = viewModelFactory {
         initializer {
@@ -33,9 +33,12 @@ class SnapshotDisplayFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val selectedSnapshotID = args.creationDate
         snapshotViewModel.getSnapshot(selectedSnapshotID)
         snapshotViewModel.currentSnapshot.observe(viewLifecycleOwner) {
             DisplayValues()
+            val smartBinding = _binding.included
+
         }
     }
 
