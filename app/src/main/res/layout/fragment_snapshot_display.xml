@@ -5,5 +5,7 @@
     android:layout_height="match_parent"
     tools:context=".SnapshotDisplayFragment">
 
-    <include layout="@layout/fragment_main" />
+    <include
+        layout="@layout/fragment_main"
+        android:id="@+id/included" />
 </FrameLayout>
