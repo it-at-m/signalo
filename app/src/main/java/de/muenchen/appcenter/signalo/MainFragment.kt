@@ -598,17 +598,47 @@ class MainFragment : Fragment() {
      */
     private fun setCellularTypeIcons(cellularType: String) {
         when (cellularType) {
-            Constants.NETWORKTYPE_5G_PLUS -> _binding.imageViewNetType.setImageResource(R.drawable._g_24px)
-            Constants.NETWORKTYPE_5G_NSA -> _binding.imageViewNetType.setImageResource(R.drawable._g_24px)
-            Constants.NETWORKTYPE_5G_SA -> _binding.imageViewNetType.setImageResource(R.drawable._g_24px)
-            Constants.NETWORKTYPE_4G_PLUS -> _binding.imageViewNetType.setImageResource(R.drawable._g_plus_mobiledata_24px)
-            Constants.NETWORKTYPE_LTE -> _binding.imageViewNetType.setImageResource(R.drawable.lte_mobiledata_24px)
-            Constants.NETWORKTYPE_3G_PLUS -> _binding.imageViewNetType.setImageResource(R.drawable._g_mobiledata_24px)
-            Constants.NETWORKTYPE_3G -> _binding.imageViewNetType.setImageResource(R.drawable._g_mobiledata_24px)
-            Constants.NETWORKTYPE_EDGE -> _binding.imageViewNetType.setImageResource(R.drawable.e_mobiledata_24px)
-            Constants.NETWORKTYPE_2G -> _binding.imageViewNetType.setImageResource(R.drawable.e_mobiledata_24px)
-            Constants.NETWORKTYPE_UNKNOWN -> _binding.imageViewNetType.setImageResource(R.drawable.help_center_24px)
-            else -> _binding.imageViewNetType.setImageResource(R.drawable.help_center_24px)
+            Constants.NETWORKTYPE_5G_PLUS -> _binding.cellularContainer.imageViewNetType.setImageResource(
+                R.drawable._g_24px
+            )
+
+            Constants.NETWORKTYPE_5G_NSA -> _binding.cellularContainer.imageViewNetType.setImageResource(
+                R.drawable._g_24px
+            )
+
+            Constants.NETWORKTYPE_5G_SA -> _binding.cellularContainer.imageViewNetType.setImageResource(
+                R.drawable._g_24px
+            )
+
+            Constants.NETWORKTYPE_4G_PLUS -> _binding.cellularContainer.imageViewNetType.setImageResource(
+                R.drawable._g_plus_mobiledata_24px
+            )
+
+            Constants.NETWORKTYPE_LTE -> _binding.cellularContainer.imageViewNetType.setImageResource(
+                R.drawable.lte_mobiledata_24px
+            )
+
+            Constants.NETWORKTYPE_3G_PLUS -> _binding.cellularContainer.imageViewNetType.setImageResource(
+                R.drawable._g_mobiledata_24px
+            )
+
+            Constants.NETWORKTYPE_3G -> _binding.cellularContainer.imageViewNetType.setImageResource(
+                R.drawable._g_mobiledata_24px
+            )
+
+            Constants.NETWORKTYPE_EDGE -> _binding.cellularContainer.imageViewNetType.setImageResource(
+                R.drawable.e_mobiledata_24px
+            )
+
+            Constants.NETWORKTYPE_2G -> _binding.cellularContainer.imageViewNetType.setImageResource(
+                R.drawable.e_mobiledata_24px
+            )
+
+            Constants.NETWORKTYPE_UNKNOWN -> _binding.cellularContainer.imageViewNetType.setImageResource(
+                R.drawable.help_center_24px
+            )
+
+            else -> _binding.cellularContainer.imageViewNetType.setImageResource(R.drawable.help_center_24px)
         }
     }
 
@@ -718,7 +748,7 @@ class MainFragment : Fragment() {
 
             )
         requireActivity().runOnUiThread {
-            _binding.imageViewCellularProvider.setImageResource(
+            _binding.cellularContainer.imageViewCellularProvider.setImageResource(
                 providerIcons[currentProviderCode] ?: R.drawable.help_center_24px
             )
         }
@@ -1050,8 +1080,8 @@ class MainFragment : Fragment() {
                 _binding.cellularGauge.visibility = GONE
                 _binding.wifiGauge.visibility = VISIBLE
 
-                _binding.cellularContainer.visibility = GONE
-                _binding.wifiContainer.visibility = VISIBLE
+                _binding.cellularContainer.root.visibility = GONE
+                _binding.wifiContainer.root.visibility = VISIBLE
             }
 
             Constants.CELLULAR -> {
@@ -1064,8 +1094,8 @@ class MainFragment : Fragment() {
 
                 _binding.wifiGauge.visibility = GONE
                 _binding.cellularGauge.visibility = VISIBLE
-                _binding.wifiContainer.visibility = GONE
-                _binding.cellularContainer.visibility = VISIBLE
+                _binding.wifiContainer.root.visibility = GONE
+                _binding.cellularContainer.root.visibility = VISIBLE
             }
 
             Constants.SECOND_SIM -> {
@@ -1075,8 +1105,8 @@ class MainFragment : Fragment() {
                 )
                 _binding.wifiGauge.visibility = GONE
                 _binding.cellularGauge.visibility = VISIBLE
-                _binding.wifiContainer.visibility = GONE
-                _binding.cellularContainer.visibility = VISIBLE
+                _binding.wifiContainer.root.visibility = GONE
+                _binding.cellularContainer.root.visibility = VISIBLE
             }
         }
     }
@@ -1223,26 +1253,26 @@ class MainFragment : Fragment() {
         }
         viewmodel.currentCellularBand.observe(viewLifecycleOwner) { band ->
             val textFeld = getString(R.string.card_value3, band)
-            _binding.textViewCellularIpValue.text = textFeld
+            _binding.cellularContainer.textViewCellularIpValue.text = textFeld
         }
         viewmodel.cellularType.observe(viewLifecycleOwner) { cellularValue ->
             Timber.d("Der Cellular Network Type ist: " + cellularValue)
             val textFeld = getString(R.string.card_value2, cellularValue.toString())
-            _binding.textViewNetTypeValue.text = textFeld
+            _binding.cellularContainer.textViewNetTypeValue.text = textFeld
         }
         viewmodel.cellId.observe(viewLifecycleOwner) { cellIdValue ->
             val textFeld = getString(R.string.card_value4, cellIdValue.toString())
-            _binding.textViewCellIdValue.text = textFeld
+            _binding.cellularContainer.textViewCellIdValue.text = textFeld
         }
         viewmodel.currentNetprovider.observe(viewLifecycleOwner) { netProviderValue ->
             Timber.d("Der aktuelle Provider des Netzwerks ist: " + netProviderValue)
             val textFeld = getString(R.string.card_value1, netProviderValue)
-            _binding.textViewCellularProviderValue.text = textFeld
+            _binding.cellularContainer.textViewCellularProviderValue.text = textFeld
         }
         viewmodel.currentSSID.observe(viewLifecycleOwner) { currentSSIDValue ->
             Timber.d("Das akutell verbundene Wlan hat SSID: " + currentSSIDValue)
             val textFeld = getString(R.string.wifi_value_SSID, currentSSIDValue)
-            _binding.textViewSSIDValue.text = textFeld
+            _binding.wifiContainer.textViewSSIDValue.text = textFeld
         }
         viewmodel.currentFrequency.observe(viewLifecycleOwner) { currentFrequencyValue ->
             Timber.d(
@@ -1250,16 +1280,16 @@ class MainFragment : Fragment() {
                 "Das akutell verbundene Wlan hat Frequenz: " + currentFrequencyValue
             )
             val textFeld = getString(R.string.wifi_value_SSID, currentFrequencyValue)
-            _binding.textViewFreqValue.text = textFeld
+            _binding.wifiContainer.textViewFreqValue.text = textFeld
         }
         viewmodel.currentLinkspeed.observe(viewLifecycleOwner) { currentLinkspeedValue ->
             val textFeld = getString(R.string.wifi_value_linkspeed, currentLinkspeedValue)
-            _binding.textViewLinkspeedValue.text = textFeld
+            _binding.wifiContainer.textViewLinkspeedValue.text = textFeld
         }
         viewmodel.currentEncryptionType.observe(viewLifecycleOwner) { currentEncryptionTypeValue ->
             val textFeld =
                 getString(R.string.wifi_value_encryptionType, currentEncryptionTypeValue)
-            _binding.textViewEncryptionTypeValue.text = textFeld
+            _binding.wifiContainer.textViewEncryptionTypeValue.text = textFeld
         }
     }
 
