@@ -1,0 +1,135 @@
+<androidx.constraintlayout.widget.ConstraintLayout android:id="@+id/cellularContainer"
+    android:layout_width="291dp"
+    android:layout_height="272dp"
+    android:layout_marginTop="8dp"
+    android:visibility="visible"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintHorizontal_bias="0.5"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/toggleButtonGroup"
+    tools:visibility="visible"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <ImageView
+        android:id="@+id/imageViewCellularProvider"
+        android:layout_width="36dp"
+        android:layout_height="39dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/help_center_24px"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textViewCellularProviderValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="@string/card_value1"
+        android:textSize="20sp"
+        app:layout_constraintStart_toEndOf="@+id/imageViewCellularProvider"
+        app:layout_constraintTop_toTopOf="@+id/imageViewCellularProvider" />
+
+    <TextView
+        android:id="@+id/textViewCellularProviderDesc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="@string/card_description1"
+        android:textSize="12sp"
+        app:layout_constraintStart_toEndOf="@+id/imageViewCellularProvider"
+        app:layout_constraintTop_toBottomOf="@+id/textViewCellularProviderValue" />
+
+    <ImageView
+        android:id="@+id/imageViewNetType"
+        android:layout_width="36dp"
+        android:layout_height="39dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:src="@drawable/lte_mobiledata_24px"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageViewCellularProvider" />
+
+    <TextView
+        android:id="@+id/textViewNetTypeValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="@string/card_value2"
+        android:textSize="20sp"
+        app:layout_constraintStart_toEndOf="@+id/imageViewNetType"
+        app:layout_constraintTop_toTopOf="@+id/imageViewNetType" />
+
+    <TextView
+        android:id="@+id/textViewNetTypeDesc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="@string/card_description2"
+        android:textSize="12sp"
+        app:layout_constraintStart_toEndOf="@+id/imageViewNetType"
+        app:layout_constraintTop_toBottomOf="@+id/textViewNetTypeValue" />
+
+    <ImageView
+        android:id="@+id/imageViewIp"
+        android:layout_width="36dp"
+        android:layout_height="39dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:src="@drawable/waves_24px"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageViewNetType" />
+
+    <TextView
+        android:id="@+id/textViewCellularIpValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="@string/card_value3"
+        android:textSize="20sp"
+        app:layout_constraintStart_toEndOf="@+id/imageViewIp"
+        app:layout_constraintTop_toTopOf="@+id/imageViewIp" />
+
+    <TextView
+        android:id="@+id/textViewCellularIpDesc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="@string/card_description3"
+        android:textSize="12sp"
+        app:layout_constraintStart_toEndOf="@+id/imageViewIp"
+        app:layout_constraintTop_toBottomOf="@+id/textViewCellularIpValue" />
+
+    <ImageView
+        android:id="@+id/imageViewCellId"
+        android:layout_width="36dp"
+        android:layout_height="39dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:src="@drawable/cell_tower_24px"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageViewIp" />
+
+    <TextView
+        android:id="@+id/textViewCellIdValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="@string/card_value4"
+        android:textSize="20sp"
+        app:layout_constraintStart_toEndOf="@+id/imageViewCellId"
+        app:layout_constraintTop_toTopOf="@+id/imageViewCellId" />
+
+    <TextView
+        android:id="@+id/textViewCellIdDesc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="@string/card_description4"
+        android:textSize="12sp"
+        app:layout_constraintStart_toEndOf="@+id/imageViewCellId"
+        app:layout_constraintTop_toBottomOf="@+id/textViewCellIdValue" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
