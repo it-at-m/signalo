@@ -36,13 +36,12 @@ class SnapshotDisplayFragment : Fragment() {
         val selectedSnapshotID = args.creationDate
         snapshotViewModel.getSnapshot(selectedSnapshotID)
         snapshotViewModel.currentSnapshot.observe(viewLifecycleOwner) {
-            DisplayValues()
-            val smartBinding = _binding.included
+            displayValues()
 
         }
     }
 
-    private fun DisplayValues() {
+    private fun displayValues() {
 
 
     }

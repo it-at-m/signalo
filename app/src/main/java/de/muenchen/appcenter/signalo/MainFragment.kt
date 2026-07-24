@@ -59,6 +59,8 @@ import com.google.android.material.transition.MaterialSharedAxis
 import de.muenchen.appcenter.signalo.databinding.FragmentMainBinding
 import de.muenchen.appcenter.signalo.databinding.TextInputLayoutBinding
 import de.muenchen.appcenter.signalo.utils.Constants
+import de.muenchen.appcenter.signalo.utils.Formatters.formatCellBand
+import de.muenchen.appcenter.signalo.utils.NetworkIcons.getCellularTypeIcon
 import kotlinx.coroutines.Job
 import timber.log.Timber
 
@@ -451,14 +453,6 @@ class MainFragment : Fragment() {
     }
 
     /**
-     * helper function for Cellular band to format it accordingly to 3GPP standard
-     */
-    private fun formatCellBand(cellBand: IntArray, praefix: String): String {
-        val formattedCellBand = cellBand.joinToString(", ", transform = { praefix.plus(it) })
-        return formattedCellBand
-    }
-
-    /**
      * fetch and demeter how many simcards are usable
      * if 2 Simcards are usable, call functions for dualsim
      * if none are useable deactivate cellular button and change to wifi
@@ -581,7 +575,9 @@ class MainFragment : Fragment() {
                         else -> {}
                     }
                     viewmodel.setCellularType(cellularType)
-                    setCellularTypeIcons(cellularType)
+                    _binding.cellularContainer.imageViewNetType.setImageResource(
+                        getCellularTypeIcon(cellularType)
+                    )
                 }
             }
         cellularTypeCallBack?.let { callback ->
@@ -593,54 +589,6 @@ class MainFragment : Fragment() {
         }
     }
 
-    /**sets the icons in the UI accordingly to the cellular type
-     * @param cellularType the value containing the current cellularType as a String,
-     */
-    private fun setCellularTypeIcons(cellularType: String) {
-        when (cellularType) {
-            Constants.NETWORKTYPE_5G_PLUS -> _binding.cellularContainer.imageViewNetType.setImageResource(
-                R.drawable._g_24px
-            )
-
-            Constants.NETWORKTYPE_5G_NSA -> _binding.cellularContainer.imageViewNetType.setImageResource(
-                R.drawable._g_24px
-            )
-
-            Constants.NETWORKTYPE_5G_SA -> _binding.cellularContainer.imageViewNetType.setImageResource(
-                R.drawable._g_24px
-            )
-
-            Constants.NETWORKTYPE_4G_PLUS -> _binding.cellularContainer.imageViewNetType.setImageResource(
-                R.drawable._g_plus_mobiledata_24px
-            )
-
-            Constants.NETWORKTYPE_LTE -> _binding.cellularContainer.imageViewNetType.setImageResource(
-                R.drawable.lte_mobiledata_24px
-            )
-
-            Constants.NETWORKTYPE_3G_PLUS -> _binding.cellularContainer.imageViewNetType.setImageResource(
-                R.drawable._g_mobiledata_24px
-            )
-
-            Constants.NETWORKTYPE_3G -> _binding.cellularContainer.imageViewNetType.setImageResource(
-                R.drawable._g_mobiledata_24px
-            )
-
-            Constants.NETWORKTYPE_EDGE -> _binding.cellularContainer.imageViewNetType.setImageResource(
-                R.drawable.e_mobiledata_24px
-            )
-
-            Constants.NETWORKTYPE_2G -> _binding.cellularContainer.imageViewNetType.setImageResource(
-                R.drawable.e_mobiledata_24px
-            )
-
-            Constants.NETWORKTYPE_UNKNOWN -> _binding.cellularContainer.imageViewNetType.setImageResource(
-                R.drawable.help_center_24px
-            )
-
-            else -> _binding.cellularContainer.imageViewNetType.setImageResource(R.drawable.help_center_24px)
-        }
-    }
 
     /**
      * calls setProviderIcons to demeter the provider name based on the selected logo (which is based on the MNC and MCC code)
