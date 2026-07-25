@@ -3,6 +3,8 @@ package de.muenchen.appcenter.signalo
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -59,6 +61,8 @@ class SnapshotDisplayFragment : Fragment() {
     }
 
     fun displayCellularValues(details: SnapshotDetails.Cellular) {
+        _binding.cellularContainer.root.visibility = VISIBLE
+        _binding.wifiContainer.root.visibility = GONE
         _binding.imageViewSnapshotType.setImageResource(R.drawable.cell_tower_24px)
         //setting NetworkType values
         _binding.cellularContainer.imageViewNetType.setImageResource(getCellularTypeIcon(details.networkType))
@@ -76,5 +80,12 @@ class SnapshotDisplayFragment : Fragment() {
 
     fun displayWifiValues(details: SnapshotDetails.Wifi) {
         _binding.imageViewSnapshotType.setImageResource(R.drawable.wifi_24px)
+        _binding.cellularContainer.root.visibility = GONE
+        _binding.wifiContainer.root.visibility = VISIBLE
+        //setting Wifi values
+        _binding.wifiContainer.textViewFreqValue.text = details.frequency
+        _binding.wifiContainer.textViewEncryptionTypeValue.text = details.encryption
+        _binding.wifiContainer.textViewSSIDValue.text = details.ssid
+        _binding.wifiContainer.textViewLinkspeedValue.text = details.linkspeed
     }
 }
