@@ -856,17 +856,10 @@ class MainFragment : Fragment() {
     private fun initGauge() {
         val cellularGauge = _binding.cellularGauge
         val wifiGauge = _binding.wifiGauge
-
-        val range = Range()
-        val range2 = Range()
-        val range3 = Range()
         //Wifi
         wifiGauge.addRange(createRange(-100.0, -81.0, Constants.GAUGE_RANGE1_COLOR.toColorInt()))
         wifiGauge.addRange(createRange(-80.0, -68.0, Constants.GAUGE_RANGE2_COLOR.toColorInt()))
         wifiGauge.addRange(createRange(-67.0, -30.0, Constants.GAUGE_RANGE3_COLOR.toColorInt()))
-        wifiGauge.addRange(range)
-        wifiGauge.addRange(range2)
-        wifiGauge.addRange(range3)
         wifiGauge.minValue = Constants.GAUGE_WIFI_MIN
         wifiGauge.maxValue = Constants.GAUGE_WIFI_MAX
         wifiGauge.setValueColorAttr(android.R.attr.textColorPrimary)
@@ -888,9 +881,6 @@ class MainFragment : Fragment() {
                 Constants.GAUGE_RANGE3_COLOR.toColorInt()
             )
         )
-        cellularGauge.addRange(range)
-        cellularGauge.addRange(range2)
-        cellularGauge.addRange(range3)
         cellularGauge.minValue = Constants.GAUGE_CELLULAR_MIN
         cellularGauge.maxValue = Constants.GAUGE_CELLULAR_MAX
         cellularGauge.setValueColorAttr(android.R.attr.textColorPrimary)
