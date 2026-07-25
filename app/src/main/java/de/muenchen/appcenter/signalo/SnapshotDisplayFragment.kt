@@ -10,6 +10,9 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import androidx.navigation.fragment.navArgs
 import de.muenchen.appcenter.signalo.databinding.FragmentSnapshotDisplayBinding
+import de.muenchen.appcenter.signalo.utils.Formatters
+import de.muenchen.appcenter.signalo.utils.NetworkIcons
+import de.muenchen.appcenter.signalo.utils.NetworkIcons.getCellularTypeIcon
 
 class SnapshotDisplayFragment : Fragment() {
     private lateinit var _binding: FragmentSnapshotDisplayBinding
@@ -26,7 +29,6 @@ class SnapshotDisplayFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        // Inflate the layout for this fragment
         _binding = FragmentSnapshotDisplayBinding.inflate(inflater, container, false)
         return _binding.root
     }
@@ -35,14 +37,44 @@ class SnapshotDisplayFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val selectedSnapshotID = args.creationDate
         snapshotViewModel.getSnapshot(selectedSnapshotID)
-        snapshotViewModel.currentSnapshot.observe(viewLifecycleOwner) {
-            displayValues()
-
+        snapshotViewModel.currentSnapshot.observe(viewLifecycleOwner) { currentSnapshot ->
+            displaySnapshot(currentSnapshot)
         }
     }
 
-    private fun displayValues() {
+    private fun displaySnapshot(currentSnapshot: Snapshot) {
+        displayGeneralValues(currentSnapshot)
+        when (val details = currentSnapshot.details) {
+            is SnapshotDetails.Cellular -> displayCellularValues(details)
+            is SnapshotDetails.Wifi -> displayWifiValues(details)
+        }
 
+    }
 
+    fun displayGeneralValues(currentSnapshot: Snapshot) {
+        _binding.textViewSnapshotName.text = currentSnapshot.name
+        _binding.textViewSnapshotDate.text =
+            Formatters.formatTimestamp(currentSnapshot.creationDate)
+
+    }
+
+    fun displayCellularValues(details: SnapshotDetails.Cellular) {
+        _binding.imageViewSnapshotType.setImageResource(R.drawable.cell_tower_24px)
+        //setting NetworkType values
+        _binding.cellularContainer.imageViewNetType.setImageResource(getCellularTypeIcon(details.networkType))
+        _binding.cellularContainer.textViewNetTypeValue.text = details.networkType
+        //setting Provider values
+        _binding.cellularContainer.imageViewCellularProvider.setImageResource(
+            NetworkIcons.providerNameToDrawable[details.provider] ?: R.drawable.help_center_24px
+        )
+        _binding.cellularContainer.textViewCellularProviderValue.text = details.provider
+        //setting Frequency values
+        _binding.cellularContainer.textViewCellularFrequencyValue.text = details.frequencyBand
+        //setting Cell ID
+        _binding.cellularContainer.textViewCellIdValue.text = details.cellId
+    }
+
+    fun displayWifiValues(details: SnapshotDetails.Wifi) {
+        _binding.imageViewSnapshotType.setImageResource(R.drawable.wifi_24px)
     }
 }
