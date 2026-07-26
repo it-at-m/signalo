@@ -103,6 +103,7 @@
     <string name="Snapshot_Dialog_Message">Gib dem Snapshot einen Namen, damit du ihn später wiederfindest.</string>
     <string name="save">Sichern</string>
     <string name="hint">Hinweis:</string>
+    <string name="Snapshot_on_save">Snapshot wurde gespeichert</string>
 
 
 </resources>

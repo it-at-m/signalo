@@ -919,6 +919,12 @@ class MainFragment : Fragment() {
                         ?.takeIf { it.isNotBlank() } ?: Constants.EMPTY
                     viewmodel.addSnapshot(name)
                     dialog.dismiss()
+                    Toast.makeText(
+                        requireContext(),
+                        getString(R.string.Snapshot_on_save),
+                        Toast.LENGTH_LONG
+                    )
+                        .show()
                 }
                 .setNegativeButton(R.string.speedtest_dialog_negative_button) { dialog, _ ->
                     dialog.dismiss()
