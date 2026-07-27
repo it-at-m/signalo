@@ -12,7 +12,9 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import androidx.navigation.fragment.navArgs
 import de.muenchen.appcenter.signalo.databinding.FragmentSnapshotDisplayBinding
+import de.muenchen.appcenter.signalo.utils.Constants
 import de.muenchen.appcenter.signalo.utils.Formatters
+import de.muenchen.appcenter.signalo.utils.GaugeConfig
 import de.muenchen.appcenter.signalo.utils.NetworkIcons
 import de.muenchen.appcenter.signalo.utils.NetworkIcons.getCellularTypeIcon
 
@@ -61,6 +63,15 @@ class SnapshotDisplayFragment : Fragment() {
     }
 
     fun displayCellularValues(details: SnapshotDetails.Cellular) {
+        val cellularGauge = _binding.cellularGauge
+        GaugeConfig.createGauge(
+            cellularGauge,
+            Constants.GAUGE_CELLULAR_MIN,
+            Constants.GAUGE_CELLULAR_LIMIT1,
+            Constants.GAUGE_CELLULAR_LIMIT2,
+            Constants.GAUGE_CELLULAR_MAX
+        )
+        cellularGauge.value = details.dbm
         _binding.cellularContainer.root.visibility = VISIBLE
         _binding.wifiContainer.root.visibility = GONE
         _binding.imageViewSnapshotType.setImageResource(R.drawable.cell_tower_24px)
@@ -79,6 +90,12 @@ class SnapshotDisplayFragment : Fragment() {
     }
 
     fun displayWifiValues(details: SnapshotDetails.Wifi) {
+        val wifiGauge = _binding.wifiGauge
+        GaugeConfig.createGauge(
+            wifiGauge, Constants.GAUGE_WIFI_MIN, Constants.GAUGE_WIFI_LIMIT1,
+            Constants.GAUGE_WIFI_LIMIT2, Constants.GAUGE_WIFI_MAX
+        )
+        wifiGauge.value = details.dbm
         _binding.imageViewSnapshotType.setImageResource(R.drawable.wifi_24px)
         _binding.cellularContainer.root.visibility = GONE
         _binding.wifiContainer.root.visibility = VISIBLE
