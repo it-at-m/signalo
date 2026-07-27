@@ -856,9 +856,18 @@ class MainFragment : Fragment() {
         val cellularGauge = _binding.cellularGauge
         val wifiGauge = _binding.wifiGauge
         //Wifi
-        GaugeConfig.createGauge(wifiGauge, -100.0, -81.0, -68.0, -30.0)
+        GaugeConfig.createGauge(
+            wifiGauge, Constants.GAUGE_WIFI_MIN, Constants.GAUGE_WIFI_LIMIT1,
+            Constants.GAUGE_WIFI_LIMIT2, Constants.GAUGE_WIFI_MAX
+        )
         //Cellular
-        GaugeConfig.createGauge(cellularGauge, Constants.GAUGE_CELLULAR_MIN, -100.0, -80.0, -50.0)
+        GaugeConfig.createGauge(
+            cellularGauge,
+            Constants.GAUGE_CELLULAR_MIN,
+            Constants.GAUGE_CELLULAR_LIMIT1,
+            Constants.GAUGE_CELLULAR_LIMIT2,
+            Constants.GAUGE_CELLULAR_MAX
+        )
     }
 
     private fun initSnapshotButton() {
