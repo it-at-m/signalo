@@ -47,12 +47,10 @@ import androidx.annotation.RequiresPermission
 import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.getMainExecutor
 import androidx.core.content.edit
-import androidx.core.graphics.toColorInt
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.setFragmentResultListener
 import androidx.transition.TransitionManager
-import com.ekn.gruzer.gaugelibrary.Range
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.transition.MaterialSharedAxis
@@ -60,6 +58,7 @@ import de.muenchen.appcenter.signalo.databinding.FragmentMainBinding
 import de.muenchen.appcenter.signalo.databinding.TextInputLayoutBinding
 import de.muenchen.appcenter.signalo.utils.Constants
 import de.muenchen.appcenter.signalo.utils.Formatters.formatCellBand
+import de.muenchen.appcenter.signalo.utils.GaugeConfig
 import de.muenchen.appcenter.signalo.utils.NetworkIcons
 import de.muenchen.appcenter.signalo.utils.NetworkIcons.getCellularTypeIcon
 import de.muenchen.appcenter.signalo.utils.NetworkIcons.providerIcons
@@ -857,52 +856,9 @@ class MainFragment : Fragment() {
         val cellularGauge = _binding.cellularGauge
         val wifiGauge = _binding.wifiGauge
         //Wifi
-        wifiGauge.addRange(createRange(-100.0, -81.0, Constants.GAUGE_RANGE1_COLOR.toColorInt()))
-        wifiGauge.addRange(createRange(-80.0, -68.0, Constants.GAUGE_RANGE2_COLOR.toColorInt()))
-        wifiGauge.addRange(createRange(-67.0, -30.0, Constants.GAUGE_RANGE3_COLOR.toColorInt()))
-        wifiGauge.minValue = Constants.GAUGE_WIFI_MIN
-        wifiGauge.maxValue = Constants.GAUGE_WIFI_MAX
-        wifiGauge.setValueColorAttr(android.R.attr.textColorPrimary)
-        wifiGauge.setFormatter { value ->
-            "${value.toInt()} dBm"
-        }
+        GaugeConfig.createGauge(wifiGauge, -100.0, -81.0, -68.0, -30.0)
         //Cellular
-        cellularGauge.addRange(
-            createRange(
-                Constants.GAUGE_CELLULAR_MIN,
-                -100.0, Constants.GAUGE_RANGE1_COLOR.toColorInt()
-            )
-        )
-        cellularGauge.addRange(createRange(-99.0, -80.0, Constants.GAUGE_RANGE2_COLOR.toColorInt()))
-        cellularGauge.addRange(
-            createRange(
-                -79.0,
-                Constants.GAUGE_CELLULAR_MAX,
-                Constants.GAUGE_RANGE3_COLOR.toColorInt()
-            )
-        )
-        cellularGauge.minValue = Constants.GAUGE_CELLULAR_MIN
-        cellularGauge.maxValue = Constants.GAUGE_CELLULAR_MAX
-        cellularGauge.setValueColorAttr(android.R.attr.textColorPrimary)
-        cellularGauge.setFormatter { value ->
-            "${value.toInt()} dBm"
-        }
-    }
-
-    /**
-     * helper fun for initGauge,
-     * Creates the Object with the following parameters
-     * @param from starting point of the Range
-     * @param to ending point of the Range
-     * @param color the color in hex which the Range should have
-     * Returns the range object
-     */
-    private fun createRange(from: Double, to: Double, color: Int): Range {
-        val range = Range()
-        range.from = from
-        range.to = to
-        range.color = color
-        return range
+        GaugeConfig.createGauge(cellularGauge, Constants.GAUGE_CELLULAR_MIN, -100.0, -80.0, -50.0)
     }
 
     private fun initSnapshotButton() {
