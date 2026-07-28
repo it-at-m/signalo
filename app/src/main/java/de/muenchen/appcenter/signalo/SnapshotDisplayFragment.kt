@@ -63,6 +63,10 @@ class SnapshotDisplayFragment : Fragment() {
     }
 
     fun displayCellularValues(details: SnapshotDetails.Cellular) {
+        _binding.cellularContainer.root.visibility = VISIBLE
+        _binding.wifiContainer.root.visibility = GONE
+        _binding.cellularGauge.visibility = VISIBLE
+        _binding.wifiGauge.visibility = GONE
         val cellularGauge = _binding.cellularGauge
         GaugeConfig.createGauge(
             cellularGauge,
@@ -72,8 +76,6 @@ class SnapshotDisplayFragment : Fragment() {
             Constants.GAUGE_CELLULAR_MAX
         )
         cellularGauge.value = details.dbm
-        _binding.cellularContainer.root.visibility = VISIBLE
-        _binding.wifiContainer.root.visibility = GONE
         _binding.imageViewSnapshotType.setImageResource(R.drawable.cell_tower_24px)
         //setting NetworkType values
         _binding.cellularContainer.imageViewNetType.setImageResource(getCellularTypeIcon(details.networkType))
@@ -90,6 +92,10 @@ class SnapshotDisplayFragment : Fragment() {
     }
 
     fun displayWifiValues(details: SnapshotDetails.Wifi) {
+        _binding.cellularGauge.visibility = GONE
+        _binding.wifiGauge.visibility = VISIBLE
+        _binding.cellularContainer.root.visibility = GONE
+        _binding.wifiContainer.root.visibility = VISIBLE
         val wifiGauge = _binding.wifiGauge
         GaugeConfig.createGauge(
             wifiGauge, Constants.GAUGE_WIFI_MIN, Constants.GAUGE_WIFI_LIMIT1,
@@ -97,8 +103,6 @@ class SnapshotDisplayFragment : Fragment() {
         )
         wifiGauge.value = details.dbm
         _binding.imageViewSnapshotType.setImageResource(R.drawable.wifi_24px)
-        _binding.cellularContainer.root.visibility = GONE
-        _binding.wifiContainer.root.visibility = VISIBLE
         //setting Wifi values
         _binding.wifiContainer.textViewFreqValue.text = details.frequency
         _binding.wifiContainer.textViewEncryptionTypeValue.text = details.encryption
