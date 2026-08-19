@@ -34,8 +34,6 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
-    private var infoMenuItem: MenuItem? = null
-    private var locationMenuItem: MenuItem? = null
 
     private var currentFragmentId = 0
 
@@ -62,22 +60,21 @@ class MainActivity : AppCompatActivity() {
         }
         /**
          * If location services are off, show LocationMissing Icon
-         * If the have not been asked this session, show user a dialog
+         * If the user have not been asked this session, show user a dialog
          * if Location services are on, don't show icon
          */
         viewmodel.isLocationEnabled.observe(this) { enabled ->
-            if (enabled == false) {
-                locationMenuItem?.isVisible = true
-                if (viewmodel.locationDialogShownThisSession.value != true) {
-                    openLocationDialog()
-                    viewmodel.locationDialogShownThisSession.postValue(true)
-                }
-            }
-            if (enabled == true) {
-                locationMenuItem?.isVisible = false
+            invalidateOptionsMenu()
+            if (enabled == false && viewmodel.locationDialogShownThisSession.value != true) {
+                openLocationDialog()
+                viewmodel.locationDialogShownThisSession.postValue(true)
             }
         }
     }
+
+    private fun isLockVisible() =
+        viewmodel.refreshState.value == Constants.REFRESH_ON_COOLDOWN
+                && viewmodel.onCellular.value != true
 
     /**
      * Shows a dialog informing the user that location services are disabled,
@@ -104,32 +101,10 @@ class MainActivity : AppCompatActivity() {
      * onCellular whole refreshUI gets hidden because only the wifi page needs refreshing
      */
     private fun updateRefreshCooldownUi() {
-        Timber.d(
-
-            "updateCooldownUi has been called with refreshState: " + viewmodel.refreshState.value
-        )
-        when (viewmodel.refreshState.value) {
-            Constants.REFRESH_IDLE -> {
-                this.binding.refreshLock.visibility = GONE
-                this.binding.progressbar.visibility = GONE
-                infoMenuItem?.isVisible = currentFragmentId == R.id.FirstFragment
-                invalidateOptionsMenu()
-            }
-
-            Constants.REFRESH_ON_COOLDOWN -> {
-                if (viewmodel.onCellular.value != true) {
-                    this.binding.refreshLock.visibility = VISIBLE
-                    this.binding.progressbar.visibility = VISIBLE
-                    infoMenuItem?.isVisible = false
-                } else {
-                    Timber.d("Cooldown aktiv aber onCellular is true")
-                    this.binding.refreshLock.visibility = GONE
-                    this.binding.progressbar.visibility = GONE
-                    infoMenuItem?.isVisible = currentFragmentId == R.id.FirstFragment
-                    invalidateOptionsMenu()
-                }
-            }
-        }
+        val visibility = if (isLockVisible()) VISIBLE else GONE
+        binding.refreshLock.visibility = visibility
+        binding.progressbar.visibility = visibility
+        invalidateOptionsMenu()
     }
 
     private fun initNavDrawer() {
@@ -144,23 +119,20 @@ class MainActivity : AppCompatActivity() {
         headerView.findViewById<TextView>(R.id.version_view).text = versionText
         val drawerLayout: DrawerLayout = this.binding.drawerLayout
         appBarConfiguration = AppBarConfiguration(
-            setOf(R.id.FirstFragment, R.id.OpenSourceBib, R.id.DatenschutzPage), drawerLayout
+            setOf(R.id.FirstFragment, R.id.OpenSourceBib, R.id.DatenschutzPage, R.id.SnapshotList),
+            drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
         navView.setNavigationItemSelectedListener { menuItem ->
-            when (menuItem.itemId) {
-                R.id.externalSpeedtest -> {
-                    drawerLayout.closeDrawer(GravityCompat.START)
-                    showExternalSpeedtestDialog()
-                    false
-                }
-
-                else -> {
-                    NavigationUI.onNavDestinationSelected(menuItem, navController)
-                    drawerLayout.closeDrawer(GravityCompat.START)
-                    true
-                }
+            if (menuItem.itemId == R.id.externalSpeedtest) {
+                drawerLayout.closeDrawer(GravityCompat.START)
+                showExternalSpeedtestDialog()
+                false
+            } else {
+                NavigationUI.onNavDestinationSelected(menuItem, navController)
+                drawerLayout.closeDrawer(GravityCompat.START)
+                true
             }
         }
         navController.addOnDestinationChangedListener { _, destination, _ ->
@@ -222,10 +194,11 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
-        if (currentFragmentId != R.id.FirstFragment) {
-            infoMenuItem?.isVisible = false
-        }
+    override fun onPrepareOptionsMenu(menu: Menu): Boolean {
+        menu.findItem(R.id.infoButton).isVisible =
+            currentFragmentId == R.id.FirstFragment && !isLockVisible()
+        menu.findItem(R.id.locationMissing).isVisible =
+            viewmodel.isLocationEnabled.value == false
         return super.onPrepareOptionsMenu(menu)
     }
 
@@ -240,13 +213,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
-        locationMenuItem = menu.findItem(R.id.locationMissing)
-        locationMenuItem?.isVisible = viewmodel.isLocationEnabled.value == false
-
-        if (viewmodel.refreshState.value == Constants.REFRESH_ON_COOLDOWN) {
-            Timber.d("Info icon is not visible, because of running refresh")
-            infoMenuItem?.isVisible = false
-        }
         return true
     }
 
