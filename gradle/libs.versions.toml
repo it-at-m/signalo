@@ -1,4 +1,5 @@
 [versions]
+tink = "1.23.0"
 agp = "9.2.1"
 kotlin = "2.3.21"
 coreKtx = "1.18.0"
@@ -18,6 +19,7 @@ kotlinxSerialization = "1.7.1"
 kotlinxImmutable = "0.3.8"
 
 [libraries]
+tink-android = { group = "com.google.crypto.tink", name = "tink-android", version.ref = "tink" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-navigation-fragment-ktx-v285 = { module = "androidx.navigation:navigation-fragment-ktx", version.ref = "navigation" }
 androidx-navigation-ui-ktx-v285 = { module = "androidx.navigation:navigation-ui-ktx", version.ref = "navigation" }
