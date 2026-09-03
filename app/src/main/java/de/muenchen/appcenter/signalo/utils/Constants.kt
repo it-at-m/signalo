@@ -44,7 +44,7 @@ class Constants {
 
         // ENCRYPTION CONSTANTS - DO NOT CHANGE AFTER RELEASE!
         // Changing any value makes all existing data permanently unreadable
-        const val MASTER_KEY_URI = "android-keystore://signalo_snapshot_master_key"
+        const val MASTER_KEY_ALIAS = "signalo_snapshot_master_key"
         const val KEYSET_NAME = "signalo_snapshot_keyset"
         const val KEYSET_PREFS_FILE = "signalo_snapshot_keyset_prefs"
         const val ASSOCIATED_DATA = "signalo-snapshot-v1"
