@@ -36,7 +36,7 @@
     <!--    Welcome Dialog -->
     <string name="welcome_dialog_heading">Willkommen bei Signalo!</string>
     <string name="erforderlich">Erforderlich</string>
-    <string name="Datenschutz_Hinweis">Alle in dieser App erfassten Daten werden niemals gespeichert, weitergegeben oder verkauft. Die Daten werden ausschließlich zur Anzeige verwendet.</string>
+    <string name="Datenschutz_Hinweis">Alle in dieser App erfassten Daten werden niemals weitergegeben oder verkauft. Die Daten werden ausschließlich auf deinem Gerät angezeigt und gespeichert.</string>
 
     <string name="permission_name2">Genauer Standort </string>
     <string name="permission_desc2">Ist erforderlich um die CellID sowie das Frequenzband anzuzeigen. Die Berechtigung dient nur dem Zugriff auf Netzwerk-Informationen, dein echter Standort wird nicht erfasst.</string>

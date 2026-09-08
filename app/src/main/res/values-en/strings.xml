@@ -36,7 +36,7 @@
     <!--    Welcome Dialog -->
     <string name="welcome_dialog_heading">Welcome to Signalo!</string>
     <string name="erforderlich">Required</string>
-    <string name="Datenschutz_Hinweis">All data collected in this app is never stored, shared or sold. The data is used for display only.</string>
+    <string name="Datenschutz_Hinweis">All data collected in this app is never shared or sold. The data is only displayed and stored locally on your device.</string>
 
     <string name="permission_name2">Precise Location </string>
     <string name="permission_desc2">Required to display the Cell ID and frequency band. The permission is only used to access network info. Your actual location is not tracked.</string>
