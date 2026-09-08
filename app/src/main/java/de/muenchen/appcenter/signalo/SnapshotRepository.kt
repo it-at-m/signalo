@@ -17,7 +17,6 @@ class SnapshotRepository(private val dataStore: DataStore<SnapshotContainer>) {
         dataStore.data.map { it.snapshots }
 
     suspend fun add(snapshot: Snapshot) {
-
         dataStore.updateData { current ->
             val nextCounter = current.counter + 1
             var finalName = snapshot.name
