@@ -19,5 +19,14 @@
         app:iconTint="?attr/colorOnSurface"
 
         />
+    <item
+        android:id="@+id/encryptionInfo"
+        android:icon="@drawable/encrypted_24px"
+        app:showAsAction="always"
+        android:title="See encryption infos"
+        android:visible="false"
+        app:iconTint="?attr/colorOnSurface"
+
+        />
 
 </menu>
