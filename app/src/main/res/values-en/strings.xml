@@ -102,5 +102,10 @@
     <string name="save">save</string>
     <string name="hint">Hint:</string>
     <string name="Snapshot_on_save">Snapshot saved</string>
-
+    <string name="encryption_info_message"><![CDATA[Snapshots are <b>always</b><br> stored encrypted on your device. The key never leaves your device.<br><br> <b>Security level on this device:</b><br><br>]]></string>
+    <string name="encryption_info_strongbox"><![CDATA[<b>StrongBox:</b><br>A dedicated security chip protects the key. (Extremely secure)]]></string>
+    <string name="encryption_info_trusted_env"><![CDATA[<b>Trusted Execution Environment:</b><br>An isolated area of the processor protects the key.]]></string>
+    <string name="encryption_info_software"><![CDATA[<b>Software:</b><br>The key is managed by the operating system.]]></string>
+    <string name="encryption_info_unknown_level"><![CDATA[<b>Unknown:</b><br>Please create a snapshot first to see the security level.]]></string>
+    <string name="encryption">Encryption</string>
 </resources>

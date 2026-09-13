@@ -104,6 +104,12 @@
     <string name="save">Sichern</string>
     <string name="hint">Hinweis:</string>
     <string name="Snapshot_on_save">Snapshot wurde gespeichert</string>
+    <string name="encryption_info_message"><![CDATA[Snapshots werden <b>immer</b><br> verschlüsselt auf dem Gerät gespeichert. Der Schlüssel verlässt dein Gerät nie.<br><br> <b>Sicherheitsniveau auf diesem Gerät:</b><br><br>]]></string>
+    <string name="encryption_info_strongbox"><![CDATA[<b>StrongBox:</b><br>Ein separater Sicherheitschip schützt den Schlüssel. (Extrem Sicher)]]></string>
+    <string name="encryption_info_trusted_env"><![CDATA[<b>Trusted Execution Environment:</b><br>Ein abgeschotteter Bereich des Prozessors schützt den Schlüssel.]]></string>
+    <string name="encryption_info_software"><![CDATA[<b>Software:</b><br>Der Schlüssel wird vom Betriebssystem verwaltet.]]></string>
+    <string name="encryption_info_unknown_level"><![CDATA[<b>Unbekannt:</b><br>Bitte erstellen sie erst einen Snapshot um das Sicherheitsniveau zu sehen.]]></string>
+    <string name="encryption">Verschlüsselung</string>
 
 
 </resources>

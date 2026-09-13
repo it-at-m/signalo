@@ -4,6 +4,8 @@ import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.os.Bundle
 import android.provider.Settings
+import android.security.keystore.KeyInfo
+import android.security.keystore.KeyProperties
 import android.text.Html
 import android.view.Menu
 import android.view.MenuItem
@@ -28,6 +30,9 @@ import com.google.android.material.snackbar.Snackbar
 import de.muenchen.appcenter.signalo.databinding.ActivityMainBinding
 import de.muenchen.appcenter.signalo.utils.Constants
 import timber.log.Timber
+import java.security.KeyStore
+import javax.crypto.SecretKey
+import javax.crypto.SecretKeyFactory
 
 
 class MainActivity : AppCompatActivity() {
@@ -46,7 +51,6 @@ class MainActivity : AppCompatActivity() {
         initNavDrawer()
         initButtons()
         handleBackPressed()
-
         viewmodel.refreshState.observe(this) {
             updateRefreshCooldownUi()
         }
@@ -93,6 +97,39 @@ class MainActivity : AppCompatActivity() {
                 startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS))
                 dialog.dismiss()
             }
+            .show()
+    }
+
+    private fun getMasterKeySecLevel(): Int {
+        val keyStore = KeyStore.getInstance("AndroidKeyStore").apply { load(null) }
+        val key = keyStore.getKey(Constants.MASTER_KEY_ALIAS, null) ?: return 9
+        val factory = SecretKeyFactory.getInstance(key.algorithm, "AndroidKeyStore")
+        val keyInfo = factory.getKeySpec(key as SecretKey, KeyInfo::class.java) as KeyInfo
+        Timber.d("Current Master Key Security Level: " + keyInfo.securityLevel)
+        return keyInfo.securityLevel
+    }
+
+    private fun openEncryptionDialog() {
+        val levelText = when (getMasterKeySecLevel()) {
+            KeyProperties.SECURITY_LEVEL_STRONGBOX ->
+                getString(R.string.encryption_info_strongbox)
+
+            KeyProperties.SECURITY_LEVEL_TRUSTED_ENVIRONMENT ->
+                getString(R.string.encryption_info_trusted_env)
+
+            KeyProperties.SECURITY_LEVEL_SOFTWARE ->
+                getString(R.string.encryption_info_software)
+
+            else ->
+                getString(R.string.encryption_info_unknown_level)
+        }
+        val message =
+            getString(R.string.encryption_info_message) + levelText
+
+        MaterialAlertDialogBuilder(this)
+            .setTitle(getString(R.string.encryption))
+            .setMessage(Html.fromHtml(message, Html.FROM_HTML_MODE_LEGACY))
+            .setPositiveButton("OK") { dialog, _ -> dialog.dismiss() }
             .show()
     }
 
@@ -199,6 +236,7 @@ class MainActivity : AppCompatActivity() {
             currentFragmentId == R.id.FirstFragment && !isLockVisible()
         menu.findItem(R.id.locationMissing).isVisible =
             viewmodel.isLocationEnabled.value == false
+        menu.findItem(R.id.encryptionInfo).isVisible = currentFragmentId == R.id.SnapshotList
         return super.onPrepareOptionsMenu(menu)
     }
 
@@ -228,6 +266,11 @@ class MainActivity : AppCompatActivity() {
 
             R.id.locationMissing -> {
                 openLocationDialog()
+                true
+            }
+
+            R.id.encryptionInfo -> {
+                openEncryptionDialog()
                 true
             }
 
