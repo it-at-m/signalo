@@ -9,7 +9,8 @@ import de.muenchen.appcenter.signalo.databinding.ItemSnapshotBinding
 import de.muenchen.appcenter.signalo.utils.Formatters
 
 class SnapshotAdapter(
-    private val onClick: (Snapshot) -> Unit
+    private val onClick: (Snapshot) -> Unit,
+    private val onDeleteClick: (Snapshot) -> Unit
 ) : ListAdapter<Snapshot, SnapshotAdapter.SnapshotViewHolder>(SnapshotDiffCallback()) {
 
 
@@ -26,6 +27,7 @@ class SnapshotAdapter(
                     is SnapshotDetails.Cellular -> R.drawable.cell_tower_24px
                 }
             )
+            binding.deleteSnapshot.setOnClickListener { onDeleteClick(snapshot) }
             binding.root.setOnClickListener { onClick(snapshot) }
         }
     }

@@ -111,4 +111,5 @@
     <string name="delete">Delete</string>
     <string name="rename">Rename</string>
     <string name="snapshot_list_delete_snapshot">Delete this snapshot</string>
+    <string name="snapshot_deleted_toast">" was deleted"</string>
 </resources>
