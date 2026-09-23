@@ -99,7 +99,7 @@
     <string name="Input_text_Placeholder">Office on the 3rd floor</string>
     <string name="SnapshotDialogTitle">Name the snapshot</string>
     <string name="Snapshot_Dialog_Message">Give the snapshot a name so you can find it later.</string>
-    <string name="save">save</string>
+    <string name="save">Save</string>
     <string name="hint">Hint:</string>
     <string name="Snapshot_on_save">Snapshot saved</string>
     <string name="encryption_info_message"><![CDATA[Snapshots are <b>always</b><br> stored encrypted on your device. The key never leaves your device.<br><br> <b>Security level on this device:</b><br><br>]]></string>
@@ -108,4 +108,7 @@
     <string name="encryption_info_software"><![CDATA[<b>Software:</b><br>The key is managed by the operating system.]]></string>
     <string name="encryption_info_unknown_level"><![CDATA[<b>Unknown:</b><br>Please create a snapshot first to see the security level.]]></string>
     <string name="encryption">Encryption</string>
+    <string name="delete">Delete</string>
+    <string name="rename">Rename</string>
+    <string name="snapshot_list_delete_snapshot">Delete this snapshot</string>
 </resources>

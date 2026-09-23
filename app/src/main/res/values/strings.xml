@@ -3,11 +3,11 @@
 
     <string name="version">v%s</string>
     <string name="buildNumber">(%1d)</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_settings">Einstellungen</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">Signalo</string>
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
+    <string name="next">Weiter</string>
+    <string name="previous">Zurück</string>
 
     <!-- Cellular Values-->
     <string name="card_value1">%s</string>
@@ -57,7 +57,7 @@
     <string name="title_infodialog_refresh">Aktualisierung der Daten</string>
     <string name="description_infodialog_refresh"><![CDATA[Die Mobilfunk-Signalstärke (dbm-Wert) wird automatisch aktualisiert. Bei Wifi kann dies allerdings unregelmäßig sein. <br><br> Für eine manuelle Aktualisierung wische von oben nach unten. <b>Das ist nur alle 30 Sekunden möglich</b>.]]></string>
     <string name="message_cellid_missing_permission">(Berechtigung fehlt)</string>
-    <string name="message_network_disconnected">Selected Network is not Connected - OFFLINE</string>
+    <string name="message_network_disconnected">Ausgewähltes Netzwerk ist nicht verbunden - OFFLINE</string>
     <string name="title_cooldown_info_button">Cooldown aktiv</string>
     <string name="description_cooldown_info_button"><![CDATA[Die WLAN-Signalstärke wurde soeben aktualisiert.<br><br> Um die Systemressourcen zu schonen, ist eine erneute Aktualisierung erst in <b>30 Sekunden</b> möglich. Das Schloss-Symbol verschwindet automatisch, sobald wieder aktualisieren werden kann.]]></string>
     <string name="sim_slot1_displayname">SIM1</string>
@@ -76,7 +76,7 @@
     <string name="app_icon_desc">App Icon</string>
     <string name="app_logo_content_desc">App_Logo</string>
     <string name="optional">Optional</string>
-    <string name="unknown_provider">Unknown Provider</string>
+    <string name="unknown_provider">Unbekannter Anbieter</string>
     <string name="location_services_missing"><![CDATA[Einige Informationen wie Frequenzband, Cell ID und SSID benötigen aktivierte Standortdienste. Auch der manuelle WLAN-Scan ist ohne Standort nicht möglich. <br><br> <b>Bitte aktiviere die Standortdienste in den Geräteeinstellungen</b>.]]></string>
     <string name="location_missing_dialog_title">Standortdienste sind ausgeschaltet</string>
     <string name="location_missing_dialog_settings">Einstellungen</string>
@@ -94,8 +94,6 @@
     <string name="welcome_dialog_start">Starten</string>
     <string name="location_missing_value">[Standort benötigt]</string>
     <string name="permission_missing_value">[Berechtigung fehlt]</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
     <string name="snapshots_fragment_lable">Snapshots</string>
     <string name="Input_Text_hint">Name des Snapshots</string>
     <string name="Input_text_Placeholder">Büro im 3. Stock</string>
@@ -108,8 +106,9 @@
     <string name="encryption_info_strongbox"><![CDATA[<b>StrongBox:</b><br>Ein separater Sicherheitschip schützt den Schlüssel. (Extrem Sicher)]]></string>
     <string name="encryption_info_trusted_env"><![CDATA[<b>Trusted Execution Environment:</b><br>Ein abgeschotteter Bereich des Prozessors schützt den Schlüssel.]]></string>
     <string name="encryption_info_software"><![CDATA[<b>Software:</b><br>Der Schlüssel wird vom Betriebssystem verwaltet.]]></string>
-    <string name="encryption_info_unknown_level"><![CDATA[<b>Unbekannt:</b><br>Bitte erstellen sie erst einen Snapshot um das Sicherheitsniveau zu sehen.]]></string>
+    <string name="encryption_info_unknown_level"><![CDATA[<b>Unbekannt:</b><br>Bitte erstelle erst einen Snapshot, um das Sicherheitsniveau zu sehen.]]></string>
     <string name="encryption">Verschlüsselung</string>
-
-
+    <string name="delete">Löschen</string>
+    <string name="rename">Umbenennen</string>
+    <string name="snapshot_list_delete_snapshot">Diesen Snapshot löschen</string>
 </resources>
