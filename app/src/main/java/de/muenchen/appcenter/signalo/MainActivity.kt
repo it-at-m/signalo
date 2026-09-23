@@ -236,7 +236,9 @@ class MainActivity : AppCompatActivity() {
             currentFragmentId == R.id.FirstFragment && !isLockVisible()
         menu.findItem(R.id.locationMissing).isVisible =
             viewmodel.isLocationEnabled.value == false
-        menu.findItem(R.id.encryptionInfo).isVisible = currentFragmentId == R.id.SnapshotList
+        menu.findItem(R.id.encryptionInfo).isVisible =
+            currentFragmentId == R.id.SnapshotDisplay || currentFragmentId == R.id.SnapshotList
+
         return super.onPrepareOptionsMenu(menu)
     }
 
