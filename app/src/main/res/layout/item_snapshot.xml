@@ -28,12 +28,12 @@
             android:id="@+id/textTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="10dp"
             android:textAppearance="?attr/textAppearanceTitleLarge"
-            app:layout_constraintStart_toEndOf="@+id/networkTypeIcon"
-            app:layout_constraintEnd_toStartOf="@+id/openIcon"
-            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toTopOf="@+id/textSubtitle"
+            app:layout_constraintEnd_toStartOf="@+id/delete_snapshot"
+            app:layout_constraintStart_toEndOf="@+id/networkTypeIcon"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_chainStyle="packed"
             tools:text="Snapshot Name" />
 
@@ -41,26 +41,36 @@
             android:id="@+id/textSubtitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="10dp"
             android:layout_marginTop="2dp"
             android:textAppearance="?attr/textAppearanceBodyMedium"
             android:textColor="?attr/colorOnSurfaceVariant"
-            app:layout_constraintStart_toEndOf="@+id/networkTypeIcon"
-            app:layout_constraintEnd_toStartOf="@+id/openIcon"
-            app:layout_constraintTop_toBottomOf="@+id/textTitle"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/delete_snapshot"
+            app:layout_constraintStart_toEndOf="@+id/networkTypeIcon"
+            app:layout_constraintTop_toBottomOf="@+id/textTitle"
             tools:text="11.06.2026 14:30" />
 
-        <ImageView
-            android:id="@+id/openIcon"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
-            android:layout_marginStart="16dp"
-            android:src="@drawable/arrow_circle_right_24px"
-            app:tint="?attr/colorPrimary"
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/delete_snapshot"
+            style="?attr/materialIconButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/snapshot_list_delete_snapshot"
+            app:icon="@drawable/delete_24px"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent" />
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/edit_snapshot_name"
+            style="?attr/materialIconButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:icon="@drawable/edit_line_24px"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/delete_snapshot"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>
