@@ -112,4 +112,6 @@
     <string name="rename">Umbenennen</string>
     <string name="snapshot_list_delete_snapshot">Diesen Snapshot löschen</string>
     <string name="snapshot_deleted_toast">" wurde Gelöscht"</string>
+    <string name="snapshot_item_delete_dialog_message">Der Snapshot \'%1$s\' wird unwiderruflich von diesem Gerät gelöscht.</string>
+    <string name="snapshot_item_delete_dialog_title">Snapshot wirklich löschen?</string>
 </resources>

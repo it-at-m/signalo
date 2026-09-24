@@ -14,6 +14,7 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import de.muenchen.appcenter.signalo.databinding.FragmentSnapshotListBinding
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -52,13 +53,31 @@ class SnapshotListFragment : Fragment() {
                 )
             },
             onDeleteClick = { snapshot ->
-                Timber.d("onDelete was called, now calling viewmodel with snapshot" + snapshot.name)
-                snapshotViewModel.deleteSnapshot(snapshot.creationDate)
-                Toast.makeText(
-                    requireContext(),
-                    snapshot.name + getString(R.string.snapshot_deleted_toast),
-                    Toast.LENGTH_SHORT
-                ).show()
+                Timber.d(
+                    "onDelete was called, now calling viewmodel with snapshot%s",
+                    snapshot.name
+                )
+                MaterialAlertDialogBuilder(requireContext())
+                    .setTitle(getString(R.string.snapshot_item_delete_dialog_title))
+                    .setMessage(
+                        getString(
+                            R.string.snapshot_item_delete_dialog_message,
+                            snapshot.name
+                        )
+                    )
+                    .setPositiveButton(R.string.delete) { dialog, _ ->
+                        snapshotViewModel.deleteSnapshot(snapshot.creationDate)
+                        Toast.makeText(
+                            requireContext(),
+                            snapshot.name + getString(R.string.snapshot_deleted_toast),
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        dialog.dismiss()
+                    }
+                    .setNegativeButton(R.string.speedtest_dialog_negative_button) { dialog, _ ->
+                        dialog.dismiss()
+                    }
+                    .show()
             }
         )
         _binding.recyclerView.apply {
