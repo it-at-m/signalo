@@ -12,7 +12,7 @@ materialVersion = "1.14.0"
 navigation = "2.10.2"
 swiperefreshlayout = "1.2.0"
 timber = "5.0.1"
-workRuntimeKtx = "2.11.2"
+workRuntimeKtx = "2.12.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
