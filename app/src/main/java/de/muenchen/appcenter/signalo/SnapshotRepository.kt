@@ -1,5 +1,6 @@
 package de.muenchen.appcenter.signalo
 
+import android.annotation.SuppressLint
 import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.dataStore
@@ -32,6 +33,7 @@ class SnapshotRepository(private val snapshotDatastore: DataStore<SnapshotContai
         }
     }
 
+    @SuppressLint("BinaryOperationInTimber")
     suspend fun delete(snapshot: Snapshot) {
         snapshotDatastore.updateData { current ->
             current.copy(
@@ -39,5 +41,19 @@ class SnapshotRepository(private val snapshotDatastore: DataStore<SnapshotContai
             )
         }
         Timber.d("repo has deleted snapshot: " + snapshot.name)
+    }
+
+    suspend fun rename(snapshot: Snapshot, newName: String) {
+        snapshotDatastore.updateData { current ->
+            val newList = mutableListOf<Snapshot>()
+            for (i in current.snapshots) {
+                if (i.creationDate == snapshot.creationDate) {
+                    newList.add(i.copy(name = newName))
+                } else {
+                    newList.add(i)
+                }
+            }
+            current.copy(snapshots = newList)
+        }
     }
 }

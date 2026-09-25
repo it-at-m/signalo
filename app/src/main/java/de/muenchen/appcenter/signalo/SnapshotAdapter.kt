@@ -10,7 +10,9 @@ import de.muenchen.appcenter.signalo.utils.Formatters
 
 class SnapshotAdapter(
     private val onClick: (Snapshot) -> Unit,
-    private val onDeleteClick: (Snapshot) -> Unit
+    private val onDeleteClick: (Snapshot) -> Unit,
+    private val onRenameClick: (Snapshot) -> Unit
+
 ) : ListAdapter<Snapshot, SnapshotAdapter.SnapshotViewHolder>(SnapshotDiffCallback()) {
 
 
@@ -29,6 +31,7 @@ class SnapshotAdapter(
             )
             binding.deleteSnapshot.setOnClickListener { onDeleteClick(snapshot) }
             binding.root.setOnClickListener { onClick(snapshot) }
+            binding.editSnapshotName.setOnClickListener { onRenameClick(snapshot) }
         }
     }
 

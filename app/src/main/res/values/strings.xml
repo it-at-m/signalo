@@ -114,4 +114,7 @@
     <string name="snapshot_deleted_toast">" wurde Gelöscht"</string>
     <string name="snapshot_item_delete_dialog_message">Der Snapshot \'%1$s\' wird unwiderruflich von diesem Gerät gelöscht.</string>
     <string name="snapshot_item_delete_dialog_title">Snapshot wirklich löschen?</string>
+    <string name="snapshot_rename_dialog_message">Bitte geben sie den gewünschten neuen Namen ein</string>
+    <string name="snapshot_rename_dialog_title">Snapshot Umbenennen</string>
+    <string name="snapshot_rename_toast">Snapshot wurde erfolgreich Umbennant.</string>
 </resources>

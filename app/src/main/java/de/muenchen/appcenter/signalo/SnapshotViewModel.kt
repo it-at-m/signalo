@@ -34,5 +34,15 @@ class SnapshotViewModel(private val repository: SnapshotRepository) : ViewModel(
         }
     }
 
+    fun renameSnapshot(id: Long, newName: String) {
+        viewModelScope.launch {
+            val allSnapshots = repository.snapshots.first()
+            val snapshotToRename = allSnapshots.find { it.creationDate == id }
+            if (snapshotToRename != null) {
+                repository.rename(snapshotToRename, newName)
+            }
+        }
+    }
+
 }
 

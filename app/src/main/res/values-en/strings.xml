@@ -114,4 +114,7 @@
     <string name="snapshot_deleted_toast">" was deleted"</string>
     <string name="snapshot_item_delete_dialog_message">The snapshot \'%1$s\' will be permanently deleted from this device.</string>
     <string name="snapshot_item_delete_dialog_title">Delete snapshot?</string>
+    <string name="snapshot_rename_dialog_message">Please enter the new name</string>
+    <string name="snapshot_rename_dialog_title">Rename Snapshot</string>
+    <string name="snapshot_rename_toast">Snapshot renamed successfully.</string>
 </resources>
