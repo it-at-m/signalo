@@ -3,6 +3,8 @@ package de.muenchen.appcenter.signalo
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -106,10 +108,10 @@ class SnapshotListFragment : Fragment() {
 
                 val saveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE)
                 saveButton.isEnabled = !dialogBinding.editSnapshotName.text.isNullOrBlank()
-            dialogBinding.editSnapshotName.doAfterTextChanged {
-                saveButton.isEnabled = !dialogBinding.editSnapshotName.text.isNullOrBlank()
+                dialogBinding.editSnapshotName.doAfterTextChanged {
+                    saveButton.isEnabled = !dialogBinding.editSnapshotName.text.isNullOrBlank()
 
-            }
+                }
             }
 
         )
@@ -121,6 +123,12 @@ class SnapshotListFragment : Fragment() {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 snapshotViewModel.snapshots.collect { list: List<Snapshot> ->
                     snapshotAdapter.submitList(list)
+                    _binding.textViewEmptySnapshots.visibility = if (list.isNullOrEmpty()) {
+                        VISIBLE
+                    } else {
+                        GONE
+
+                    }
                 }
             }
         }

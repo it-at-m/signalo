@@ -117,4 +117,6 @@
     <string name="snapshot_rename_dialog_message">Please enter the new name</string>
     <string name="snapshot_rename_dialog_title">Rename Snapshot</string>
     <string name="snapshot_rename_toast">Snapshot renamed successfully.</string>
+    <string name="snapshots_empty_hint">No snapshots yet.\nCreate your first snapshot on the main page and it will show up here.</string>
+
 </resources>
