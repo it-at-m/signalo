@@ -8,6 +8,7 @@ import kotlinx.serialization.json.Json
 import timber.log.Timber
 import java.io.InputStream
 import java.io.OutputStream
+import java.security.GeneralSecurityException
 
 object SnapshotSerializer : Serializer<SnapshotContainer> {
     override suspend fun readFrom(input: InputStream): SnapshotContainer {
@@ -23,13 +24,14 @@ object SnapshotSerializer : Serializer<SnapshotContainer> {
                 deserializer = SnapshotContainer.serializer(),
                 string = plaintext.decodeToString()
             )
+        } catch (e: GeneralSecurityException) {
+            Timber.e(e, "Snapshot Read Failed: Decryption failed")
+            defaultValue
         } catch (e: SerializationException) {
-            e.printStackTrace()
-            Timber.d("Snapshot Read Failed: SerializationException Erorr: " + e.printStackTrace())
+            Timber.e(e, "Snapshot Read Failed: SerializationException")
             defaultValue
         } catch (e: IOException) {
-            e.printStackTrace()
-            Timber.d("Snapshot Read Failed: IOException Erorr: " + e.printStackTrace())
+            Timber.e(e, "Snapshot Read Failed: IOException")
             defaultValue
         }
     }
