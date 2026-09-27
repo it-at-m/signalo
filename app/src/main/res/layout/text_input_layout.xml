@@ -2,6 +2,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:counterEnabled="true"
+    app:counterMaxLength="30"
     android:hint="@string/Input_Text_hint"
     app:placeholderText="@string/Input_text_Placeholder"
     android:paddingHorizontal="24dp"
@@ -9,6 +11,7 @@
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/editSnapshotName"
+        android:maxLength="30"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="text"
