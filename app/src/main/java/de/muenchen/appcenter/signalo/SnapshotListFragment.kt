@@ -93,14 +93,18 @@ class SnapshotListFragment : Fragment() {
                     .setMessage(getString(R.string.snapshot_rename_dialog_message))
                     .setPositiveButton(getString(R.string.save)) { dialog, _ ->
                         val newName = dialogBinding.editSnapshotName.text?.toString()
-                        snapshotViewModel.renameSnapshot(snapshot.creationDate, newName!!)
-                        dialog.dismiss()
-                        Toast.makeText(
-                            requireContext(),
-                            getString(R.string.snapshot_rename_toast),
-                            Toast.LENGTH_LONG
-                        )
-                            .show()
+                        if (newName != snapshot.name) {
+                            snapshotViewModel.renameSnapshot(snapshot.creationDate, newName!!)
+                            dialog.dismiss()
+                            Toast.makeText(
+                                requireContext(),
+                                getString(R.string.snapshot_rename_toast),
+                                Toast.LENGTH_LONG
+                            )
+                                .show()
+                        } else {
+                            dialog.dismiss()
+                        }
                     }
                     .setNegativeButton(R.string.speedtest_dialog_negative_button) { dialog, _ ->
                         dialog.dismiss()
