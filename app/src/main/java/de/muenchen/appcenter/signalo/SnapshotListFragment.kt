@@ -86,6 +86,7 @@ class SnapshotListFragment : Fragment() {
             }, onRenameClick = { snapshot ->
 
                 val dialogBinding = TextInputLayoutBinding.inflate(layoutInflater)
+                dialogBinding.editSnapshotName.setText(snapshot.name)
                 val dialog = MaterialAlertDialogBuilder(requireContext())
                     .setTitle(getString(R.string.snapshot_rename_dialog_title))
                     .setView(dialogBinding.root)
