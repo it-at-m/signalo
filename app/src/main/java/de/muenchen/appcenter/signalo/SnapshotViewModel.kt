@@ -9,6 +9,10 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
+/**
+ * Connects the snapshot screens (list and display) with SnapshotRepository.
+ * Snapshots are identified by their ID (creationDate).
+ */
 class SnapshotViewModel(private val repository: SnapshotRepository) : ViewModel() {
     private val _currentSnapshot = MutableLiveData<Snapshot>()
     val currentSnapshot: LiveData<Snapshot> = _currentSnapshot

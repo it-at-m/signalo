@@ -10,6 +10,10 @@ import java.io.InputStream
 import java.io.OutputStream
 import java.security.GeneralSecurityException
 
+/**
+ * Converts Snapshots(kotlin object) to JSON bytes and encrypts them
+ * Data is encrypted before writing and decrypted after reading.
+ */
 object SnapshotSerializer : Serializer<SnapshotContainer> {
     override suspend fun readFrom(input: InputStream): SnapshotContainer {
         return try {

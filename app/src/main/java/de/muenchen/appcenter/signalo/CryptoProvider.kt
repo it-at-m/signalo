@@ -12,8 +12,16 @@ import com.google.crypto.tink.aead.AeadConfig
 import com.google.crypto.tink.aead.PredefinedAeadParameters
 import com.google.crypto.tink.integration.android.AndroidKeystore
 import de.muenchen.appcenter.signalo.utils.Constants
+import java.io.IOException
 
-
+/**
+ * Provides the key to encrypt and decrypt snapshots using Google Tink
+ *
+ * * Envelope encryption with AES-256-GCM (AEAD):
+ * - Master key: stored in the Android Keystore (protected storage on hardware or software), never leaves it
+ * - Keyset: encrypts the snapshots, saved encrypted by the master key in SharedPreferences
+ *
+ */
 @SuppressLint("StaticFieldLeak")
 object CryptoProvider {
 
@@ -22,6 +30,7 @@ object CryptoProvider {
         appContext = context.applicationContext
     }
 
+    // Created once on first use, then reused
     val aead: Aead by lazy {
         AeadConfig.register()
         if (!AndroidKeystore.hasKey(Constants.MASTER_KEY_ALIAS)) {
@@ -31,8 +40,8 @@ object CryptoProvider {
         val sharedPrefsFile =
             appContext.getSharedPreferences(Constants.KEYSET_PREFS_FILE, MODE_PRIVATE)
         val storedKeySet64 = sharedPrefsFile.getString(Constants.KEYSET_NAME, null)
+        // Keyset exists: decrypt it with the master key
         val keyHandle = if (!storedKeySet64.isNullOrEmpty()) {
-            //keyset is not Empty
             TinkProtoKeysetFormat.parseEncryptedKeyset(
                 Base64.decode(storedKeySet64, Base64.NO_WRAP),
                 masterAEAD,
@@ -47,11 +56,14 @@ object CryptoProvider {
                 Constants.ASSOCIATED_DATA.toByteArray(), RegistryConfiguration.get()
             )
             val newKeyset64 = Base64.encodeToString(encryptedKeyset, Base64.NO_WRAP)
-            sharedPrefsFile.edit().putString(
+            val saved = sharedPrefsFile.edit().putString(
                 Constants.KEYSET_NAME,
                 newKeyset64
             ).commit()
-            // TODO: catch failed commit
+            // Never use  unsaved keyset to prevent data loss
+            if (!saved) {
+                throw IOException("Keyset could not be saved")
+            }
             newKeysetHandle
         }
         keyHandle.getPrimitive(RegistryConfiguration.get(), Aead::class.java)

@@ -2,16 +2,34 @@ package de.muenchen.appcenter.signalo
 
 import kotlinx.serialization.Serializable
 
-@kotlinx.serialization.Serializable
+/**
+ * Data structure for snapshots
+ * This structure is saved as JSON (before it is encrypted)
+ * Caution: renaming or removing fields might lead to data loss.
+ */
+
+
+/**
+ * One saved measurement(snapshot).
+ *
+ * @property name named by user
+ * @property creationDate used to display time of creation
+ * and the unique ID of a Snapshot
+ * @property details the network specific values
+ */
+@Serializable
 data class Snapshot(
     val name: String,
     val creationDate: Long,
     val details: SnapshotDetails
 )
 
-@kotlinx.serialization.Serializable
+/**
+ * A snapshot is always either Wifi or Cellular, never both.
+ */
+@Serializable
 sealed class SnapshotDetails {
-    @kotlinx.serialization.Serializable
+    @Serializable
     data class Cellular(
         val dbm: Double,
         val cellId: String,

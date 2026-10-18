@@ -1,6 +1,5 @@
 package de.muenchen.appcenter.signalo
 
-import android.annotation.SuppressLint
 import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.dataStore
@@ -9,6 +8,13 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import timber.log.Timber
 
+
+/***
+ * Handles all DataStore logic for snapshots:
+ * reading, adding, deleting and renaming.
+ *
+ * Careful: changing the file name after release loses all saved snapshots.
+ */
 val Context.snapshotDataStore: DataStore<SnapshotContainer> by dataStore(
     fileName = "snapshots.json",
     serializer = SnapshotSerializer
@@ -28,19 +34,18 @@ class SnapshotRepository(private val snapshotDatastore: DataStore<SnapshotContai
             val namedSnapshot = snapshot.copy(name = finalName)
             current.copy(
                 snapshots = current.snapshots + namedSnapshot,
-                counter = current.counter + 1
+                counter = nextCounter
             )
         }
     }
 
-    @SuppressLint("BinaryOperationInTimber")
     suspend fun delete(snapshot: Snapshot) {
         snapshotDatastore.updateData { current ->
             current.copy(
                 snapshots = current.snapshots - snapshot
             )
         }
-        Timber.d("repo has deleted snapshot: " + snapshot.name)
+        Timber.d("repo has deleted snapshot: %s", snapshot.name)
     }
 
     suspend fun rename(snapshot: Snapshot, newName: String) {
