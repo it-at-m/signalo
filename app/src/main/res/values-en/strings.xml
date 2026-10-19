@@ -119,5 +119,6 @@
     <string name="snapshot_rename_toast">Snapshot renamed successfully.</string>
     <string name="snapshots_empty_hint">No snapshots yet.\nCreate your first snapshot on the main page and it will show up here.</string>
     <string name="snapshot_anzeige">Snapshot display</string>
+    <string name="snapshot_add_failed_toast">Error saving Snapshot</string>
 
 </resources>

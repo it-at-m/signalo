@@ -119,5 +119,6 @@
     <string name="snapshot_rename_toast">Snapshot wurde erfolgreich Umbennant.</string>
     <string name="snapshots_empty_hint">Keine Snapshots bis jetzt.\nErstelle deinen ersten Snapshot und er wird hier angezeigt.</string>
     <string name="snapshot_anzeige">Snapshot Anzeige</string>
+    <string name="snapshot_add_failed_toast">Fehler: Speichern fehlgeschlagen</string>
 
 </resources>

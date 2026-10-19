@@ -881,14 +881,25 @@ class MainFragment : Fragment() {
                 .setPositiveButton(getString(R.string.save)) { dialog, _ ->
                     val name = dialogBinding.editSnapshotName.text?.toString()
                         ?.takeIf { it.isNotBlank() } ?: Constants.EMPTY
-                    viewmodel.addSnapshot(name)
-                    dialog.dismiss()
-                    Toast.makeText(
-                        requireContext(),
-                        getString(R.string.Snapshot_on_save),
-                        Toast.LENGTH_LONG
-                    )
-                        .show()
+                    try {
+                        viewmodel.addSnapshot(name)
+                        dialog.dismiss()
+                        Toast.makeText(
+                            requireContext(),
+                            getString(R.string.Snapshot_on_save),
+                            Toast.LENGTH_LONG
+                        )
+                            .show()
+                    } catch (e: Exception) {
+                        dialog.dismiss()
+                        Toast.makeText(
+                            requireContext(),
+                            getString(R.string.snapshot_add_failed_toast),
+                            Toast.LENGTH_LONG
+                        )
+                            .show()
+                    }
+
                 }
                 .setNegativeButton(R.string.speedtest_dialog_negative_button) { dialog, _ ->
                     dialog.dismiss()
