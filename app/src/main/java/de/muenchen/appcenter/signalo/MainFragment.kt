@@ -873,7 +873,6 @@ class MainFragment : Fragment() {
     private fun initSnapshotButton() {
         _binding.fabSnapshot.setOnClickListener {
             val dialogBinding = TextInputLayoutBinding.inflate(layoutInflater)
-            dialogBinding.root.removeView(dialogBinding.root)
             MaterialAlertDialogBuilder(requireContext())
                 .setTitle(R.string.SnapshotDialogTitle)
                 .setMessage(getString(R.string.Snapshot_Dialog_Message))
