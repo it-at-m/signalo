@@ -1,0 +1,134 @@
+<androidx.constraintlayout.widget.ConstraintLayout android:id="@+id/wifiContainer"
+    android:layout_width="291dp"
+    android:layout_height="272dp"
+    android:layout_marginTop="8dp"
+    android:visibility="gone"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/toggleButtonGroup"
+    tools:visibility="invisible"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <ImageView
+        android:id="@+id/imageViewSSID"
+        android:layout_width="36dp"
+        android:layout_height="39dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/wifi_24px"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textViewSSIDValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="@string/wifi_value_SSID"
+        android:textSize="20sp"
+        app:layout_constraintStart_toEndOf="@+id/imageViewSSID"
+        app:layout_constraintTop_toTopOf="@+id/imageViewSSID" />
+
+    <TextView
+        android:id="@+id/textViewSSIDdesc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="@string/wifi_desc_SSID"
+        android:textSize="12sp"
+        app:layout_constraintStart_toEndOf="@+id/imageViewSSID"
+        app:layout_constraintTop_toBottomOf="@+id/textViewSSIDValue" />
+
+    <ImageView
+        android:id="@+id/imageViewfreq"
+        android:layout_width="36dp"
+        android:layout_height="39dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:src="@drawable/wifi_channel_24px"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageViewSSID" />
+
+    <TextView
+        android:id="@+id/textViewFreqValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="@string/wifi_value_freq"
+        android:textSize="20sp"
+        app:layout_constraintStart_toEndOf="@+id/imageViewfreq"
+        app:layout_constraintTop_toTopOf="@+id/imageViewfreq" />
+
+    <TextView
+        android:id="@+id/textViewFreqDesc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="@string/wifi_desc_freq"
+        android:textSize="12sp"
+        app:layout_constraintStart_toEndOf="@+id/imageViewfreq"
+        app:layout_constraintTop_toBottomOf="@+id/textViewFreqValue" />
+
+    <ImageView
+        android:id="@+id/imageViewchannel"
+        android:layout_width="36dp"
+        android:layout_height="39dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:src="@drawable/shield_lock_24px"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageViewfreq" />
+
+    <TextView
+        android:id="@+id/textViewEncryptionTypeValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="@string/wifi_value_encryptionType"
+        android:textSize="20sp"
+        app:layout_constraintStart_toEndOf="@+id/imageViewchannel"
+        app:layout_constraintTop_toTopOf="@+id/imageViewchannel" />
+
+    <TextView
+        android:id="@+id/textViewChannelDesc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="@string/wifi_desc_Channel"
+        android:textSize="12sp"
+        app:layout_constraintStart_toEndOf="@+id/imageViewchannel"
+        app:layout_constraintTop_toBottomOf="@+id/textViewEncryptionTypeValue" />
+
+    <ImageView
+        android:id="@+id/imageViewLinkspeed"
+        android:layout_width="36dp"
+        android:layout_height="39dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:src="@drawable/speed_24px"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageViewchannel" />
+
+    <TextView
+        android:id="@+id/textViewLinkspeedValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="@string/wifi_value_linkspeed"
+        android:textSize="20sp"
+        app:layout_constraintStart_toEndOf="@+id/imageViewLinkspeed"
+        app:layout_constraintTop_toTopOf="@+id/imageViewLinkspeed" />
+
+    <TextView
+        android:id="@+id/textViewLinkspeedDesc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="@string/wifi_desc_linkspeed"
+        android:textSize="12sp"
+        app:layout_constraintStart_toEndOf="@+id/imageViewLinkspeed"
+        app:layout_constraintTop_toBottomOf="@+id/textViewLinkspeedValue" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

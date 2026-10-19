@@ -7,5 +7,6 @@ class Signalo : Application() {
     override fun onCreate() {
         super.onCreate()
         Timber.plant(CustomDebugTree())
+        CryptoProvider.init(this)
     }
 }

@@ -47,16 +47,21 @@ import androidx.annotation.RequiresPermission
 import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.getMainExecutor
 import androidx.core.content.edit
-import androidx.core.graphics.toColorInt
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.setFragmentResultListener
 import androidx.transition.TransitionManager
-import com.ekn.gruzer.gaugelibrary.Range
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.transition.MaterialSharedAxis
 import de.muenchen.appcenter.signalo.databinding.FragmentMainBinding
+import de.muenchen.appcenter.signalo.databinding.TextInputLayoutBinding
 import de.muenchen.appcenter.signalo.utils.Constants
+import de.muenchen.appcenter.signalo.utils.Formatters.formatCellBand
+import de.muenchen.appcenter.signalo.utils.GaugeConfig
+import de.muenchen.appcenter.signalo.utils.NetworkIcons
+import de.muenchen.appcenter.signalo.utils.NetworkIcons.getCellularTypeIcon
+import de.muenchen.appcenter.signalo.utils.NetworkIcons.providerIcons
 import kotlinx.coroutines.Job
 import timber.log.Timber
 
@@ -118,6 +123,7 @@ class MainFragment : Fragment() {
         checkPermissions()
         initRefreshGesture()
         initToggleButtons()
+        initSnapshotButton()
         checkLocationSetting()
     }
 
@@ -448,14 +454,6 @@ class MainFragment : Fragment() {
     }
 
     /**
-     * helper function for Cellular band to format it accordingly to 3GPP standard
-     */
-    private fun formatCellBand(cellBand: IntArray, praefix: String): String {
-        val formattedCellBand = cellBand.joinToString(", ", transform = { praefix.plus(it) })
-        return formattedCellBand
-    }
-
-    /**
      * fetch and demeter how many simcards are usable
      * if 2 Simcards are usable, call functions for dualsim
      * if none are useable deactivate cellular button and change to wifi
@@ -578,7 +576,9 @@ class MainFragment : Fragment() {
                         else -> {}
                     }
                     viewmodel.setCellularType(cellularType)
-                    setCellularTypeIcons(cellularType)
+                    _binding.cellularContainer.imageViewNetType.setImageResource(
+                        getCellularTypeIcon(cellularType)
+                    )
                 }
             }
         cellularTypeCallBack?.let { callback ->
@@ -590,24 +590,6 @@ class MainFragment : Fragment() {
         }
     }
 
-    /**sets the icons in the UI accordingly to the cellular type
-     * @param cellularType the value containing the current cellularType as a String,
-     */
-    private fun setCellularTypeIcons(cellularType: String) {
-        when (cellularType) {
-            Constants.NETWORKTYPE_5G_PLUS -> _binding.imageViewNetType.setImageResource(R.drawable._g_24px)
-            Constants.NETWORKTYPE_5G_NSA -> _binding.imageViewNetType.setImageResource(R.drawable._g_24px)
-            Constants.NETWORKTYPE_5G_SA -> _binding.imageViewNetType.setImageResource(R.drawable._g_24px)
-            Constants.NETWORKTYPE_4G_PLUS -> _binding.imageViewNetType.setImageResource(R.drawable._g_plus_mobiledata_24px)
-            Constants.NETWORKTYPE_LTE -> _binding.imageViewNetType.setImageResource(R.drawable.lte_mobiledata_24px)
-            Constants.NETWORKTYPE_3G_PLUS -> _binding.imageViewNetType.setImageResource(R.drawable._g_mobiledata_24px)
-            Constants.NETWORKTYPE_3G -> _binding.imageViewNetType.setImageResource(R.drawable._g_mobiledata_24px)
-            Constants.NETWORKTYPE_EDGE -> _binding.imageViewNetType.setImageResource(R.drawable.e_mobiledata_24px)
-            Constants.NETWORKTYPE_2G -> _binding.imageViewNetType.setImageResource(R.drawable.e_mobiledata_24px)
-            Constants.NETWORKTYPE_UNKNOWN -> _binding.imageViewNetType.setImageResource(R.drawable.help_center_24px)
-            else -> _binding.imageViewNetType.setImageResource(R.drawable.help_center_24px)
-        }
-    }
 
     /**
      * calls setProviderIcons to demeter the provider name based on the selected logo (which is based on the MNC and MCC code)
@@ -679,43 +661,9 @@ class MainFragment : Fragment() {
      * @param currentProviderCode Int value fetched by fetchCellularProvider
      */
     private fun setProviderIcons(currentProviderCode: Int): Int? {
-        val providerIcons = mapOf(
-            //telekom
-            26201 to R.drawable.deutsche_telekom_2022_svg,
-            26206 to R.drawable.deutsche_telekom_2022_svg,
-            //Vodafone
-            26202 to R.drawable.vodafone_kabel_deutschland_logo_vector,
-            26204 to R.drawable.vodafone_kabel_deutschland_logo_vector,
-            26209 to R.drawable.vodafone_kabel_deutschland_logo_vector,
-            //O2
-            26203 to R.drawable.o2_svg,
-            26205 to R.drawable.o2_svg,
-            26207 to R.drawable.o2_svg,
-            26208 to R.drawable.o2_svg,
-            26211 to R.drawable.o2_svg,
-            //1&1
-            26223 to R.drawable.__1_logo,
-            //Österreich
-            //A1
-            23201 to R.drawable.logo_of_a1,
-            23202 to R.drawable.logo_of_a1,
-            23209 to R.drawable.logo_of_a1,
-
-            //Magenta (telekom Österreich)
-            23203 to R.drawable.deutsche_telekom_2022_svg,
-            23204 to R.drawable.deutsche_telekom_2022_svg,
-            23207 to R.drawable.deutsche_telekom_2022_svg,
-            //Schweiz
-            //swiss com
-            22801 to R.drawable.scmn_sw_38a30a24,
-            //sunrise Commnunications
-            22802 to R.drawable.sunrise_2022_svg,
-            //Salt Mobile (Orange)
-            22803 to R.drawable.icones_logosalt_black,
-
-            )
+        NetworkIcons.providerIcons
         requireActivity().runOnUiThread {
-            _binding.imageViewCellularProvider.setImageResource(
+            _binding.cellularContainer.imageViewCellularProvider.setImageResource(
                 providerIcons[currentProviderCode] ?: R.drawable.help_center_24px
             )
         }
@@ -907,63 +855,57 @@ class MainFragment : Fragment() {
     private fun initGauge() {
         val cellularGauge = _binding.cellularGauge
         val wifiGauge = _binding.wifiGauge
-
-        val range = Range()
-        val range2 = Range()
-        val range3 = Range()
         //Wifi
-        wifiGauge.addRange(createRange(-100.0, -81.0, Constants.GAUGE_RANGE1_COLOR.toColorInt()))
-        wifiGauge.addRange(createRange(-80.0, -68.0, Constants.GAUGE_RANGE2_COLOR.toColorInt()))
-        wifiGauge.addRange(createRange(-67.0, -30.0, Constants.GAUGE_RANGE3_COLOR.toColorInt()))
-        wifiGauge.addRange(range)
-        wifiGauge.addRange(range2)
-        wifiGauge.addRange(range3)
-        wifiGauge.minValue = Constants.GAUGE_WIFI_MIN
-        wifiGauge.maxValue = Constants.GAUGE_WIFI_MAX
-        wifiGauge.setValueColorAttr(android.R.attr.textColorPrimary)
-        wifiGauge.setFormatter { value ->
-            "${value.toInt()} dBm"
-        }
+        GaugeConfig.createGauge(
+            wifiGauge, Constants.GAUGE_WIFI_MIN, Constants.GAUGE_WIFI_LIMIT1,
+            Constants.GAUGE_WIFI_LIMIT2, Constants.GAUGE_WIFI_MAX
+        )
         //Cellular
-        cellularGauge.addRange(
-            createRange(
-                Constants.GAUGE_CELLULAR_MIN,
-                -100.0, Constants.GAUGE_RANGE1_COLOR.toColorInt()
-            )
+        GaugeConfig.createGauge(
+            cellularGauge,
+            Constants.GAUGE_CELLULAR_MIN,
+            Constants.GAUGE_CELLULAR_LIMIT1,
+            Constants.GAUGE_CELLULAR_LIMIT2,
+            Constants.GAUGE_CELLULAR_MAX
         )
-        cellularGauge.addRange(createRange(-99.0, -80.0, Constants.GAUGE_RANGE2_COLOR.toColorInt()))
-        cellularGauge.addRange(
-            createRange(
-                -79.0,
-                Constants.GAUGE_CELLULAR_MAX,
-                Constants.GAUGE_RANGE3_COLOR.toColorInt()
-            )
-        )
-        cellularGauge.addRange(range)
-        cellularGauge.addRange(range2)
-        cellularGauge.addRange(range3)
-        cellularGauge.minValue = Constants.GAUGE_CELLULAR_MIN
-        cellularGauge.maxValue = Constants.GAUGE_CELLULAR_MAX
-        cellularGauge.setValueColorAttr(android.R.attr.textColorPrimary)
-        cellularGauge.setFormatter { value ->
-            "${value.toInt()} dBm"
-        }
     }
 
-    /**
-     * helper fun for initGauge,
-     * Creates the Object with the following parameters
-     * @param from starting point of the Range
-     * @param to ending point of the Range
-     * @param color the color in hex which the Range should have
-     * Returns the range object
-     */
-    private fun createRange(from: Double, to: Double, color: Int): Range {
-        val range = Range()
-        range.from = from
-        range.to = to
-        range.color = color
-        return range
+    private fun initSnapshotButton() {
+        _binding.fabSnapshot.setOnClickListener {
+            val dialogBinding = TextInputLayoutBinding.inflate(layoutInflater)
+            MaterialAlertDialogBuilder(requireContext())
+                .setTitle(R.string.SnapshotDialogTitle)
+                .setMessage(getString(R.string.Snapshot_Dialog_Message))
+                .setView(dialogBinding.root)
+                .setCancelable(false)
+                .setPositiveButton(getString(R.string.save)) { dialog, _ ->
+                    val name = dialogBinding.editSnapshotName.text?.toString()
+                        ?.takeIf { it.isNotBlank() } ?: Constants.EMPTY
+                    try {
+                        viewmodel.addSnapshot(name)
+                        dialog.dismiss()
+                        Toast.makeText(
+                            requireContext(),
+                            getString(R.string.Snapshot_on_save),
+                            Toast.LENGTH_LONG
+                        )
+                            .show()
+                    } catch (e: Exception) {
+                        dialog.dismiss()
+                        Toast.makeText(
+                            requireContext(),
+                            getString(R.string.snapshot_add_failed_toast),
+                            Toast.LENGTH_LONG
+                        )
+                            .show()
+                    }
+
+                }
+                .setNegativeButton(R.string.speedtest_dialog_negative_button) { dialog, _ ->
+                    dialog.dismiss()
+                }
+                .show()
+        }
     }
 
     /**
@@ -1025,8 +967,8 @@ class MainFragment : Fragment() {
                 _binding.cellularGauge.visibility = GONE
                 _binding.wifiGauge.visibility = VISIBLE
 
-                _binding.cellularContainer.visibility = GONE
-                _binding.wifiContainer.visibility = VISIBLE
+                _binding.cellularContainer.root.visibility = GONE
+                _binding.wifiContainer.root.visibility = VISIBLE
             }
 
             Constants.CELLULAR -> {
@@ -1039,8 +981,8 @@ class MainFragment : Fragment() {
 
                 _binding.wifiGauge.visibility = GONE
                 _binding.cellularGauge.visibility = VISIBLE
-                _binding.wifiContainer.visibility = GONE
-                _binding.cellularContainer.visibility = VISIBLE
+                _binding.wifiContainer.root.visibility = GONE
+                _binding.cellularContainer.root.visibility = VISIBLE
             }
 
             Constants.SECOND_SIM -> {
@@ -1050,8 +992,8 @@ class MainFragment : Fragment() {
                 )
                 _binding.wifiGauge.visibility = GONE
                 _binding.cellularGauge.visibility = VISIBLE
-                _binding.wifiContainer.visibility = GONE
-                _binding.cellularContainer.visibility = VISIBLE
+                _binding.wifiContainer.root.visibility = GONE
+                _binding.cellularContainer.root.visibility = VISIBLE
             }
         }
     }
@@ -1198,26 +1140,26 @@ class MainFragment : Fragment() {
         }
         viewmodel.currentCellularBand.observe(viewLifecycleOwner) { band ->
             val textFeld = getString(R.string.card_value3, band)
-            _binding.textViewCellularIpValue.text = textFeld
+            _binding.cellularContainer.textViewCellularFrequencyValue.text = textFeld
         }
         viewmodel.cellularType.observe(viewLifecycleOwner) { cellularValue ->
             Timber.d("Der Cellular Network Type ist: " + cellularValue)
             val textFeld = getString(R.string.card_value2, cellularValue.toString())
-            _binding.textViewNetTypeValue.text = textFeld
+            _binding.cellularContainer.textViewNetTypeValue.text = textFeld
         }
         viewmodel.cellId.observe(viewLifecycleOwner) { cellIdValue ->
             val textFeld = getString(R.string.card_value4, cellIdValue.toString())
-            _binding.textViewCellIdValue.text = textFeld
+            _binding.cellularContainer.textViewCellIdValue.text = textFeld
         }
         viewmodel.currentNetprovider.observe(viewLifecycleOwner) { netProviderValue ->
             Timber.d("Der aktuelle Provider des Netzwerks ist: " + netProviderValue)
             val textFeld = getString(R.string.card_value1, netProviderValue)
-            _binding.textViewCellularProviderValue.text = textFeld
+            _binding.cellularContainer.textViewCellularProviderValue.text = textFeld
         }
         viewmodel.currentSSID.observe(viewLifecycleOwner) { currentSSIDValue ->
             Timber.d("Das akutell verbundene Wlan hat SSID: " + currentSSIDValue)
             val textFeld = getString(R.string.wifi_value_SSID, currentSSIDValue)
-            _binding.textViewSSIDValue.text = textFeld
+            _binding.wifiContainer.textViewSSIDValue.text = textFeld
         }
         viewmodel.currentFrequency.observe(viewLifecycleOwner) { currentFrequencyValue ->
             Timber.d(
@@ -1225,16 +1167,16 @@ class MainFragment : Fragment() {
                 "Das akutell verbundene Wlan hat Frequenz: " + currentFrequencyValue
             )
             val textFeld = getString(R.string.wifi_value_SSID, currentFrequencyValue)
-            _binding.textViewFreqValue.text = textFeld
+            _binding.wifiContainer.textViewFreqValue.text = textFeld
         }
         viewmodel.currentLinkspeed.observe(viewLifecycleOwner) { currentLinkspeedValue ->
             val textFeld = getString(R.string.wifi_value_linkspeed, currentLinkspeedValue)
-            _binding.textViewLinkspeedValue.text = textFeld
+            _binding.wifiContainer.textViewLinkspeedValue.text = textFeld
         }
         viewmodel.currentEncryptionType.observe(viewLifecycleOwner) { currentEncryptionTypeValue ->
             val textFeld =
                 getString(R.string.wifi_value_encryptionType, currentEncryptionTypeValue)
-            _binding.textViewEncryptionTypeValue.text = textFeld
+            _binding.wifiContainer.textViewEncryptionTypeValue.text = textFeld
         }
     }
 
