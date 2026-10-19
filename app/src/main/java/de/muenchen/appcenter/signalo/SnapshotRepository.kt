@@ -9,17 +9,16 @@ import kotlinx.coroutines.flow.map
 import timber.log.Timber
 
 
-/***
- * Handles all DataStore logic for snapshots:
- * reading, adding, deleting and renaming.
- *
- * Careful: changing the file name after release loses all saved snapshots.
- */
+//Careful: changing the file name after release loses all saved snapshots.
 val Context.snapshotDataStore: DataStore<SnapshotContainer> by dataStore(
     fileName = "snapshots.json",
     serializer = SnapshotSerializer
 )
 
+/**
+ * Handles all DataStore logic for snapshots:
+ * reading, adding, deleting and renaming.
+ */
 class SnapshotRepository(private val snapshotDatastore: DataStore<SnapshotContainer>) {
     val snapshots: Flow<List<Snapshot>> =
         snapshotDatastore.data.map { it.snapshots }

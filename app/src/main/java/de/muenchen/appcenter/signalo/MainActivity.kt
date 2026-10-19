@@ -100,6 +100,8 @@ class MainActivity : AppCompatActivity() {
             .show()
     }
 
+    // if no master key exists yet, return 9
+    // 9 is not a valid security level, so the dialog shows "unknown level".
     private fun getMasterKeySecLevel(): Int {
         val keyStore = KeyStore.getInstance("AndroidKeyStore").apply { load(null) }
         val key = keyStore.getKey(Constants.MASTER_KEY_ALIAS, null) ?: return 9

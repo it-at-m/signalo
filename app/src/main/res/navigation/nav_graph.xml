@@ -42,7 +42,7 @@
     <fragment
         android:id="@+id/SnapshotDisplay"
         android:name="de.muenchen.appcenter.signalo.SnapshotDisplayFragment"
-        android:label="Snapshot Anzeige"
+        android:label="@string/snapshot_anzeige"
         tools:layout="@layout/fragment_snapshot_display">
         <argument
             android:name="creationDate"

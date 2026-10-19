@@ -42,7 +42,6 @@ dependencies {
     implementation(libs.tink.android)
     implementation(libs.androidx.datastore)
     implementation(libs.kotlinx.serialization.json)
-    implementation(libs.kotlinx.collections.immutable)
     implementation(libs.timber)
     implementation(libs.androidx.swiperefreshlayout)
     implementation(project(":gaugelibrary"))
