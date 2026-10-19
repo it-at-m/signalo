@@ -22,6 +22,7 @@ import java.io.IOException
  * - Keyset: encrypts the snapshots, saved encrypted by the master key in SharedPreferences
  *
  */
+// Safe: only the application context is stored
 @SuppressLint("StaticFieldLeak")
 object CryptoProvider {
 

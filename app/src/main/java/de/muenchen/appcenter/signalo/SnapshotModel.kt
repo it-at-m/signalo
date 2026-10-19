@@ -2,10 +2,11 @@ package de.muenchen.appcenter.signalo
 
 import kotlinx.serialization.Serializable
 
-/**
+/*
  * Data structure for snapshots
  * This structure is saved as JSON (before it is encrypted)
  * Caution: renaming or removing fields might lead to data loss.
+ * Always add default values to new values
  */
 
 
