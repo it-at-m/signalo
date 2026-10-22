@@ -55,14 +55,14 @@ class SnapshotDisplayFragment : Fragment() {
 
     }
 
-    fun displayGeneralValues(currentSnapshot: Snapshot) {
+    private fun displayGeneralValues(currentSnapshot: Snapshot) {
         _binding.textViewSnapshotName.text = currentSnapshot.name
         _binding.textViewSnapshotDate.text =
             Formatters.formatTimestamp(currentSnapshot.creationDate)
 
     }
 
-    fun displayCellularValues(details: SnapshotDetails.Cellular) {
+    private fun displayCellularValues(details: SnapshotDetails.Cellular) {
         _binding.cellularContainer.root.visibility = VISIBLE
         _binding.wifiContainer.root.visibility = GONE
         _binding.cellularGauge.visibility = VISIBLE
@@ -91,7 +91,7 @@ class SnapshotDisplayFragment : Fragment() {
         _binding.cellularContainer.textViewCellIdValue.text = details.cellId
     }
 
-    fun displayWifiValues(details: SnapshotDetails.Wifi) {
+    private fun displayWifiValues(details: SnapshotDetails.Wifi) {
         _binding.cellularGauge.visibility = GONE
         _binding.wifiGauge.visibility = VISIBLE
         _binding.cellularContainer.root.visibility = GONE
