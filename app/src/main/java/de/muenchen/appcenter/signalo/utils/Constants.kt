@@ -9,10 +9,6 @@ class Constants {
         const val WIFI = "wifi"
         const val CELLULAR = "cellular"
         const val SECOND_SIM = "second_Sim"
-        const val GAUGE_WIFI_MIN = -120.0
-        const val GAUGE_WIFI_MAX = -30.0
-        const val GAUGE_CELLULAR_MIN = -125.0
-        const val GAUGE_CELLULAR_MAX = -50.0
         const val SWITCH_ANIMATION_MS = 800
         const val NETWORKTYPE_5G_PLUS = "5G+"
         const val NETWORKTYPE_5G_NSA = "5G NSA"
@@ -36,5 +32,21 @@ class Constants {
         const val PROVIDER_SWISSCOM = "Swisscom"
         const val PROVIDER_SUNRISE = "Sunrise"
         const val PROVIDER_SALT = "Salt"
+        const val EMPTY = "leer"
+        const val GAUGE_WIFI_MIN = -120.0
+        const val GAUGE_WIFI_LIMIT1 = -81.0
+        const val GAUGE_WIFI_LIMIT2 = -68.0
+        const val GAUGE_WIFI_MAX = -30.0
+        const val GAUGE_CELLULAR_MIN = -125.0
+        const val GAUGE_CELLULAR_LIMIT1 = -100.0
+        const val GAUGE_CELLULAR_LIMIT2 = -80.0
+        const val GAUGE_CELLULAR_MAX = -50.0
+
+        // ENCRYPTION CONSTANTS - DO NOT CHANGE AFTER RELEASE!
+        // Changing any value makes all existing data permanently unreadable
+        const val MASTER_KEY_ALIAS = "signalo_snapshot_master_key"
+        const val KEYSET_NAME = "signalo_snapshot_keyset"
+        const val KEYSET_PREFS_FILE = "signalo_snapshot_keyset_prefs"
+        const val ASSOCIATED_DATA = "signalo-snapshot-v1"
     }
 }

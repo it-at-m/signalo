@@ -36,7 +36,7 @@
     <!--    Welcome Dialog -->
     <string name="welcome_dialog_heading">Welcome to Signalo!</string>
     <string name="erforderlich">Required</string>
-    <string name="Datenschutz_Hinweis">All data collected in this app is never stored, shared or sold. The data is used for display only.</string>
+    <string name="Datenschutz_Hinweis">All data collected in this app is never shared or sold. The data is only displayed and stored locally on your device.</string>
 
     <string name="permission_name2">Precise Location </string>
     <string name="permission_desc2">Required to display the Cell ID and frequency band. The permission is only used to access network info. Your actual location is not tracked.</string>
@@ -94,5 +94,31 @@
     <string name="welcome_dialog_start">Start</string>
     <string name="location_missing_value">[Location needed]</string>
     <string name="permission_missing_value">[Permission missing]</string>
+    <string name="snapshots_fragment_lable">Snapshots</string>
+    <string name="Input_Text_hint">Name of the Snapshot</string>
+    <string name="Input_text_Placeholder">Office on the 3rd floor</string>
+    <string name="SnapshotDialogTitle">Name the snapshot</string>
+    <string name="Snapshot_Dialog_Message">Give the snapshot a name so you can find it later.</string>
+    <string name="save">Save</string>
+    <string name="hint">Hint:</string>
+    <string name="Snapshot_on_save">Snapshot saved</string>
+    <string name="encryption_info_message"><![CDATA[Snapshots are <b>always</b><br> stored encrypted on your device. The key never leaves your device.<br><br> <b>Security level on this device:</b><br><br>]]></string>
+    <string name="encryption_info_strongbox"><![CDATA[<b>StrongBox:</b><br>A dedicated security chip protects the key. (Extremely secure)]]></string>
+    <string name="encryption_info_trusted_env"><![CDATA[<b>Trusted Execution Environment:</b><br>An isolated area of the processor protects the key.]]></string>
+    <string name="encryption_info_software"><![CDATA[<b>Software:</b><br>The key is managed by the operating system.]]></string>
+    <string name="encryption_info_unknown_level"><![CDATA[<b>Unknown:</b><br>Please create a snapshot first to see the security level.]]></string>
+    <string name="encryption">Encryption</string>
+    <string name="delete">Delete</string>
+    <string name="rename">Rename</string>
+    <string name="snapshot_list_delete_snapshot">Delete this snapshot</string>
+    <string name="snapshot_deleted_toast">" was deleted"</string>
+    <string name="snapshot_item_delete_dialog_message">The snapshot \'%1$s\' will be permanently deleted from this device.</string>
+    <string name="snapshot_item_delete_dialog_title">Delete snapshot?</string>
+    <string name="snapshot_rename_dialog_message">Please enter the new name</string>
+    <string name="snapshot_rename_dialog_title">Rename Snapshot</string>
+    <string name="snapshot_rename_toast">Snapshot renamed successfully.</string>
+    <string name="snapshots_empty_hint">No snapshots yet.\nCreate your first snapshot on the main page and it will show up here.</string>
+    <string name="snapshot_anzeige">Snapshot display</string>
+    <string name="snapshot_add_failed_toast">Error saving Snapshot</string>
 
 </resources>

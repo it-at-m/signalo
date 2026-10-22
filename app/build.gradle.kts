@@ -1,5 +1,8 @@
 plugins {
     alias(libs.plugins.android.application)
+    alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.navigation.safeargs)
+
 }
 
 android {
@@ -36,6 +39,9 @@ android {
 }
 
 dependencies {
+    implementation(libs.tink.android)
+    implementation(libs.androidx.datastore)
+    implementation(libs.kotlinx.serialization.json)
     implementation(libs.timber)
     implementation(libs.androidx.swiperefreshlayout)
     implementation(project(":gaugelibrary"))
