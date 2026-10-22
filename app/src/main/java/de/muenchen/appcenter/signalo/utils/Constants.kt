@@ -37,8 +37,8 @@ class Constants {
         const val GAUGE_WIFI_LIMIT1 = -81.0
         const val GAUGE_WIFI_LIMIT2 = -68.0
         const val GAUGE_WIFI_MAX = -30.0
-        const val GAUGE_CELLULAR_MIN = -125.0
-        const val GAUGE_CELLULAR_LIMIT1 = -100.0
+        const val GAUGE_CELLULAR_MIN = -140.0
+        const val GAUGE_CELLULAR_LIMIT1 = -115.0
         const val GAUGE_CELLULAR_LIMIT2 = -80.0
         const val GAUGE_CELLULAR_MAX = -50.0
 
