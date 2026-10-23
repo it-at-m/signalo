@@ -1,17 +1,20 @@
 plugins {
     alias(libs.plugins.android.application)
+    alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.navigation.safeargs)
+
 }
 
 android {
     namespace = "de.muenchen.appcenter.signalo"
-    compileSdk = 36
+    compileSdk = 37
 
     defaultConfig {
         applicationId = "de.muenchen.appcenter.signalo"
         minSdk = 31
-        targetSdk = 36
-        versionCode = 11
-        versionName = "1.1.0"
+        targetSdk = 37
+        versionCode = 12
+        versionName = "1.2.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -36,6 +39,9 @@ android {
 }
 
 dependencies {
+    implementation(libs.tink.android)
+    implementation(libs.androidx.datastore)
+    implementation(libs.kotlinx.serialization.json)
     implementation(libs.timber)
     implementation(libs.androidx.swiperefreshlayout)
     implementation(project(":gaugelibrary"))

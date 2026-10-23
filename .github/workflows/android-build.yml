@@ -23,7 +23,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Inject External Gauge Library
         run: |
@@ -32,10 +32,10 @@ jobs:
           rm -rf better-gauge-android
 
       - name: Set up JDK 21
-        uses: actions/setup-java@v5
+        uses: actions/setup-java@v6
         with:
           distribution: "temurin"
-          java-version: "21"
+          java-version: "25.0.5+8.0.LTS"
 
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v6
