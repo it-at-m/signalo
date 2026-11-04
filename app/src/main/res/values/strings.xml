@@ -57,7 +57,7 @@
     <string name="title_infodialog_refresh">Aktualisierung der Daten</string>
     <string name="description_infodialog_refresh"><![CDATA[Die Mobilfunk-Signalstärke (dbm-Wert) wird automatisch aktualisiert. Bei Wifi kann dies allerdings unregelmäßig sein. <br><br> Für eine manuelle Aktualisierung wische von oben nach unten. <b>Das ist nur alle 30 Sekunden möglich</b>.]]></string>
     <string name="message_cellid_missing_permission">(Berechtigung fehlt)</string>
-    <string name="message_network_disconnected">Ausgewähltes Netzwerk ist nicht verbunden - OFFLINE</string>
+    <string name="message_network_disconnected">Ausgewähltes Netzwerk ist nicht verbunden: OFFLINE</string>
     <string name="title_cooldown_info_button">Cooldown aktiv</string>
     <string name="description_cooldown_info_button"><![CDATA[Die WLAN-Signalstärke wurde soeben aktualisiert.<br><br> Um die Systemressourcen zu schonen, ist eine erneute Aktualisierung erst in <b>30 Sekunden</b> möglich. Das Schloss-Symbol verschwindet automatisch, sobald wieder aktualisieren werden kann.]]></string>
     <string name="sim_slot1_displayname">SIM1</string>
