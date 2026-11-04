@@ -13,8 +13,8 @@ android {
         applicationId = "de.muenchen.appcenter.signalo"
         minSdk = 31
         targetSdk = 37
-        versionCode = 12
-        versionName = "1.2.0"
+        versionCode = 13
+        versionName = "1.2.1"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
