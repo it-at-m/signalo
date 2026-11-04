@@ -747,7 +747,7 @@ class MainFragment : Fragment() {
                     }
                 }
             }
-        connectivityManager.registerDefaultNetworkCallback(networkCallbackWifi!!)
+        connectivityManager.registerDefaultNetworkCallback(networkCallbackWifi!!, handler)
         Timber.d("networkCallback2 is registered")
     }
 

@@ -6,7 +6,9 @@ import timber.log.Timber
 class Signalo : Application() {
     override fun onCreate() {
         super.onCreate()
-        Timber.plant(CustomDebugTree())
+        if (BuildConfig.DEBUG) {
+            Timber.plant(CustomDebugTree())
+        }
         CryptoProvider.init(this)
     }
 }
